@@ -11,16 +11,16 @@ document.addEventListener('click', e => {
   }
   
   const routers = {
-    '/': 'main.html',
-    '/action-set-a': 'action-set-a.html',
-    '/action-set-b': 'action-set-b.html',
-    '/animal-set-a': 'animal-set-a.html',
-    '/animal-set-b': 'animal-set-b.html',
-    '/clothes': 'clothes.html',
-    '/emotions': 'emotions.html',
-    '/food': 'food.html',
-    '/movement': 'movement.html',
-    '/statistic': 'statistic.html'
+    '/': './pages/main.html',
+    '/activities': './pages/activities.html',
+    '/nature': './pages/nature.html',
+    '/animals': './pages/animals.html',
+    '/body': './pages/body.html',
+    '/clothes': './pages/clothes.html',
+    '/emotions': './pages/emotions.html',
+    '/food': './pages/food.html',
+    '/home': './pages/home.html',
+    '/statistic': './pages/statistic.html'
   }
   
   const handleLocation = async () => {
