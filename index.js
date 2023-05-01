@@ -1,3 +1,6 @@
+/*
+switch pages
+*/
 document.addEventListener('click', e => {
     if (e.target.tagName === 'A') {
       route(e);
@@ -34,6 +37,9 @@ document.addEventListener('click', e => {
   handleLocation();
 
 
+/*
+Burger menu
+*/
 const navigation = document.getElementById("mySidenav");
 const openButton = document.querySelector(".menu-button");
 const closeButton = document.querySelector(".close-button");
@@ -53,4 +59,25 @@ function closeNav() {
 
 openButton.addEventListener("click", openNav);
 closeButton.addEventListener("click", closeNav);
+/*
+Toggle
+*/
+const toggle = document.querySelector(".switch");
+const toggleType = document.querySelector(".toggle");
+const train = document.querySelector(".train");
+const play = document.querySelector(".play");
+
+function check() {
+  if (toggleType.checked) {
+    toggleType.checked = false;
+    play.style.color = "#ADACAC";
+    train.style.color = "#87C159";
+  } else {
+    toggleType.checked = true;
+    play.style.color = "#F3C301";
+    train.style.color = "#ADACAC";
+  }
+}
+
+toggle.addEventListener("click", check);
 

@@ -89,3 +89,14 @@ header {
     .sidenav a {font-size: 18px;}
 }
 
+.train, .play {
+    font-size: 2.5rem;
+}
+
+.train {
+    color: $color-train-light;
+}
+
+.play {
+    color: $color-inactive;
+}
