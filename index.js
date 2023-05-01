@@ -3,7 +3,7 @@ document.addEventListener('click', e => {
       route(e);
     }
     e.preventDefault();
-  });
+});
   
   const route = (e) => {
     window.history.pushState({}, '', e.target.href);
@@ -32,3 +32,25 @@ document.addEventListener('click', e => {
   window.onpopstate = handleLocation;
   window.route = route;
   handleLocation();
+
+
+const navigation = document.getElementById("mySidenav");
+const openButton = document.querySelector(".menu-button");
+const closeButton = document.querySelector(".close-button");
+const background = document.querySelector(".sidenav-background");
+
+function openNav() {
+  navigation.style.width = "300px";
+  document.body.style.overflow = 'hidden';
+  background.classList.add('active');
+}
+  
+function closeNav() {
+  navigation.style.width = "0";
+  document.body.style.overflow = '';
+  background.classList.remove('active');
+}
+
+openButton.addEventListener("click", openNav);
+closeButton.addEventListener("click", closeNav);
+

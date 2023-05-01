@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    background-color: #F3FBEC;
+    background-color: $color-background;
 }
 
 h1 {
@@ -17,13 +17,13 @@ h1 {
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
-    color: #058240;
+    color: $color-train-dark;
 }
 
 header {
     height: 84px;
-    border-bottom: 4px solid #058240;
-    background-color: #FFFFFF;
+    border-bottom: 4px solid $color-train-dark;
+    background-color: $color-card;
 }
 
 .menu-button {
@@ -32,4 +32,60 @@ header {
     height: 31px;
 }
 
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: $color-train-light;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+  
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: $color-text;
+    display: block;
+    transition: 0.3s;
+}
+  
+.sidenav a:hover {
+    color: $color-background;
+}
+  
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sidenav-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(41, 41, 41, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s all;
+}
+
+.sidenav-background.active {
+    opacity: 1;
+    pointer-events: all;
+    transition: 0.5s all;
+}
+  
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
 
