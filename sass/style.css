@@ -1,10 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-size: 10px;
   font-family: "Roboto", sans-serif;
 }
 
 body {
-  background-color: #f3fbec;
+  background-color: #F3FBEC;
 }
 
 h1 {
@@ -12,6 +17,19 @@ h1 {
   font-style: normal;
   font-weight: 400;
   font-size: 40px;
+  color: #058240;
+}
+
+header {
+  height: 84px;
+  border-bottom: 4px solid #058240;
+  background-color: #FFFFFF;
+}
+
+.menu-button {
+  background-image: url("../../img/icons/icon-park_hamburger-button.svg");
+  width: 31px;
+  height: 31px;
 }
 
 .wrapper {
@@ -26,6 +44,10 @@ h1 {
   max-width: 1075px;
   column-gap: 54px;
   row-gap: 38px;
+}
+
+.header-wrapper {
+  display: flex;
 }
 
 .card {
