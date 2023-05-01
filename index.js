@@ -12,14 +12,14 @@ document.addEventListener('click', e => {
   
   const routers = {
     '/': './pages/main.html',
-    '/activities': './pages/activities.html',
-    '/nature': './pages/nature.html',
-    '/animals': './pages/animals.html',
-    '/body': './pages/body.html',
+    '/actions_set_a': './pages/actions_set_a.html',
+    '/actions_set_b': './pages/actions_set_b.html',
+    '/animals_set_a': './pages/animals_set_a.html',
+    '/animals_set_b': './pages/animals_set_b.html',
     '/clothes': './pages/clothes.html',
     '/emotions': './pages/emotions.html',
     '/food': './pages/food.html',
-    '/home': './pages/home.html',
+    '/fairytales': './pages/fairytales.html',
     '/statistic': './pages/statistic.html'
   }
   

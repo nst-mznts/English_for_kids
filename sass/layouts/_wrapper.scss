@@ -1,0 +1,13 @@
+.wrapper {
+    max-width: $content-width;
+    margin: 0 auto;
+}
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 1075px;
+    column-gap: 54px;
+    row-gap: 38px;
+}

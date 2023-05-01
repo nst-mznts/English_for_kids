@@ -1,0 +1,42 @@
+html {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: #f3fbec;
+}
+
+h1 {
+  font-family: "Neucha", cursive;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1075px;
+  column-gap: 54px;
+  row-gap: 38px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  width: 322px;
+  height: 290px;
+}
+
+/*# sourceMappingURL=style.css.map */
