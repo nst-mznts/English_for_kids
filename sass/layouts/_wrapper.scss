@@ -1,26 +1,38 @@
 .wrapper {
     max-width: $content-width;
     margin: 0 auto;
+    padding: 0 40px;
 }
 
 .card-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    max-width: 1075px;
-    column-gap: 54px;
-    row-gap: 38px;
+    justify-content: space-between;
+    max-width: $content-width;
+    column-gap: 40px;
+    row-gap: 40px;
+    padding: 40px 0;
 }
 
 .header-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 60px 1fr 204px;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 0;
 }
 
 .toggle-wrapper {
     display: flex;
     column-gap: 2rem;
     align-items: center;
+    justify-self: end;
+}
+
+.title-wrapper {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    width: 323px;
 }

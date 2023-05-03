@@ -1,6 +1,8 @@
 /*
 switch pages
 */
+const body = document.body;
+
 document.addEventListener('click', e => {
     if (e.target.tagName === 'A') {
       route(e);
@@ -47,18 +49,24 @@ const background = document.querySelector(".sidenav-background");
 
 function openNav() {
   navigation.style.width = "300px";
-  document.body.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
   background.classList.add('active');
 }
   
 function closeNav() {
   navigation.style.width = "0";
-  document.body.style.overflow = '';
+  body.style.overflow = '';
   background.classList.remove('active');
 }
 
 openButton.addEventListener("click", openNav);
 closeButton.addEventListener("click", closeNav);
+
+document.addEventListener('click', (e) => {
+  if(e.target === background) {
+    closeNav();
+  }
+});
 /*
 Toggle
 */
@@ -72,10 +80,12 @@ function check() {
     toggleType.checked = false;
     play.style.color = "#ADACAC";
     train.style.color = "#87C159";
+    body.style.background = "#F6F6F6";
   } else {
     toggleType.checked = true;
     play.style.color = "#F3C301";
     train.style.color = "#ADACAC";
+    body.style.background = "#FEE3A2";
   }
 }
 
