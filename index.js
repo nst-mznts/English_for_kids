@@ -7,6 +7,27 @@ import cards from './cards.js';
 let wrapper = document.querySelector(".card-wrapper");
 let btns = document.querySelectorAll('a');
 
+function getArray(dataset, btn='') {
+	let array = [];
+	for (let i=0; i<cards[0].length;i++) {
+		if (dataset == cards[0][i]) {
+      if(!btn=='') {
+        btn.classList.add('active');
+      }
+			array = cards[i+1];
+		}
+	};
+	return array;
+};
+
+btns.forEach((btn) => {
+	btn.addEventListener('click', () => {
+		wrapper.innerHTML = '';
+		loadCards(getArray(btn.dataset.about, btn), btn.dataset.about);
+	})
+});
+
+/**
 function getArray(dataset) {
 	let array = [];
 	for (let i=0; i<cards[0].length;i++) {
@@ -23,6 +44,7 @@ btns.forEach((btn) => {
 		loadCards(getArray(btn.dataset.about), btn.dataset.about);
 	})
 });
+ */
 
 function loadCards(data, dataset) {
   for (let i = 0; i < 8; i++) {
@@ -66,7 +88,6 @@ function rotation() {
   let id = this.id;
   let datas = getArray(this.dataset.about);
   let card = document.getElementById('card'+id);
-  card.style.boxShadow = "0px 4px 7px 1px rgba(0, 0, 0, 0.25)";
   card.classList.add('card-rotited');
   let word = document.getElementById('title'+id);
   word.innerText = datas[id].translation.toUpperCase();
@@ -97,25 +118,29 @@ cardsWithWords.forEach((card) => {
 Burger menu
 */
 const navigation = document.getElementById("mySidenav");
-const openButton = document.querySelector(".menu-button");
-const closeButton = document.querySelector(".close-button");
+const burger = document.querySelector(".burger");
 const background = document.querySelector(".sidenav-background");
-const link = document.querySelectorAll('.link');
+const link = document.querySelectorAll(".link");
 
 function openNav() {
-  navigation.style.width = "300px";
-  body.style.overflow = 'hidden';
-  background.classList.add('active');
+  if (burger.classList.contains('burger_active')) {
+    closeNav();
+  } else {
+    burger.classList.add('burger_active');
+    navigation.style.width = "300px";
+    body.style.overflow = 'hidden';
+    background.classList.add('active');
+  }
 }
   
 function closeNav() {
+  burger.classList.remove('burger_active');
   navigation.style.width = "0";
   body.style.overflow = '';
   background.classList.remove('active');
 }
 
-openButton.addEventListener("click", openNav);
-closeButton.addEventListener("click", closeNav);
+burger.addEventListener("click", openNav);
 
 document.addEventListener('click', (e) => {
   if(e.target === background) {

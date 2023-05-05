@@ -1,5 +1,5 @@
-@charset "UTF-8";
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -16,8 +16,8 @@ body {
 h1 {
   font-family: "Neucha", cursive;
   font-style: normal;
-  font-weight: 400;
-  font-size: 40px;
+  font-weight: 500;
+  font-size: 42px;
   color: #058240;
 }
 
@@ -34,22 +34,14 @@ header {
   background-color: #F3FBEC;
 }
 
-.menu-button {
-  background-image: url("../../img/icons/icon-park_hamburger-button.svg");
-  background-repeat: no-repeat;
-  width: 31px;
-  height: 31px;
-  justify-self: start;
-}
-
 .sidenav {
   height: 100%;
   width: 0;
   position: fixed;
   z-index: 10;
-  top: 0;
+  top: 90px;
   left: 0;
-  background-color: #87C159;
+  background-color: #058240;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -59,26 +51,24 @@ header {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #333333;
+  color: #FFFFFF;
   display: block;
   transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: #F6F6F6;
+  color: #333333;
+  background-color: #F3FBEC;
 }
 
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+.sidenav a.active {
+  color: #333333;
+  background-color: #87C159;
 }
 
 .sidenav-background {
   position: fixed;
-  top: 0;
+  top: 90px;
   right: 0;
   width: 100%;
   height: 100vh;
@@ -103,18 +93,6 @@ header {
     font-size: 18px;
   }
 }
-.train, .play {
-  font-size: 2.5rem;
-}
-
-.train {
-  color: #87C159;
-}
-
-.play {
-  color: #ADACAC;
-}
-
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -188,13 +166,13 @@ header {
 }
 
 .rotate-icon {
-  background-image: url("./img/icons/repeat.svg");
+  background-image: url("../../img/icons/repeat.svg");
   background-repeat: no-repeat;
-  background-size: 100%;
-  width: 28px;
-  height: 28px;
+  background-size: cover;
+  width: 70%;
+  height: 70%;
   display: block;
-  margin-top: 11px;
+  margin-top: 8px;
 }
 
 .rotate {
@@ -228,7 +206,6 @@ header {
   right: 0;
   bottom: 0;
   background-color: #87C159;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -240,7 +217,6 @@ header {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -253,18 +229,70 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-/* Закругленные ползунки */
 .slider.round {
   border-radius: 34px;
 }
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.train, .play {
+  font-size: 2.5rem;
+}
+
+.train {
+  color: #87C159;
+}
+
+.play {
+  color: #ADACAC;
+}
+
+.burger {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  position: relative;
+  margin-right: 20px;
+}
+
+.burger-line {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: #058240;
+  position: absolute;
+  left: 0;
+  transition: 0.3s all linear;
+}
+
+.burger-line-first {
+  top: 0;
+}
+
+.burger-line-second, .burger-line-third {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.burger-line-fourth {
+  bottom: 0;
+}
+
+.burger_active .burger-line-first, .burger_active .burger-line-fourth {
+  opacity: 0;
+}
+
+.burger_active .burger-line-second {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.burger_active .burger-line-third {
+  transform: translateY(-50%) rotate(-45deg);
 }
 
 /*# sourceMappingURL=style.css.map */

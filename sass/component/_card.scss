@@ -31,13 +31,13 @@
 }
 
 .rotate-icon {
-    background-image: url("./img/icons/repeat.svg");
+    background-image: url('../../img/icons/repeat.svg');
     background-repeat: no-repeat;
-    background-size: 100%;
-    width: 28px;
-    height: 28px;
+    background-size: cover;
+    width: 70%;
+    height: 70%;
     display: block;
-    margin-top: 11px;
+    margin-top: 8px;
 }
 
 .rotate {
