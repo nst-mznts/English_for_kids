@@ -2,43 +2,97 @@
 switch pages
 */
 const body = document.body;
+import cards from './cards.js';
 
-document.addEventListener('click', e => {
-    if (e.target.tagName === 'A') {
-      route(e);
-    }
-    e.preventDefault();
+let wrapper = document.querySelector(".card-wrapper");
+let btns = document.querySelectorAll('a');
+
+function getArray(dataset) {
+	let array = [];
+	for (let i=0; i<cards[0].length;i++) {
+		if (dataset == cards[0][i]) {
+			array = cards[i+1];
+		}
+	};
+	return array;
+};
+
+btns.forEach((btn) => {
+	btn.addEventListener('click', () => {
+		wrapper.innerHTML = '';
+		loadCards(getArray(btn.dataset.about), btn.dataset.about);
+	})
 });
-  
-  const route = (e) => {
-    window.history.pushState({}, '', e.target.href);
-    handleLocation();
-  }
-  
-  const routers = {
-    '/': './pages/main.html',
-    '/actions_set_a': './pages/actions_set_a.html',
-    '/actions_set_b': './pages/actions_set_b.html',
-    '/animals_set_a': './pages/animals_set_a.html',
-    '/animals_set_b': './pages/animals_set_b.html',
-    '/clothes': './pages/clothes.html',
-    '/emotions': './pages/emotions.html',
-    '/food': './pages/food.html',
-    '/fairytales': './pages/fairytales.html',
-    '/statistic': './pages/statistic.html'
-  }
-  
-  const handleLocation = async () => {
-    const path = window.location.pathname;
-    const html = await fetch(routers[path]).then((data) => data.text());
-    document.querySelector('.container').innerHTML = html;
-  }
-  
-  window.onpopstate = handleLocation;
-  window.route = route;
-  handleLocation();
 
+function loadCards(data, dataset) {
+  for (let i = 0; i < 8; i++) {
+    let card = document.createElement('div');
+    card.classList.add('card');
+    card.id = 'card'+i;
+	  card.setAttribute('data-about', dataset);
+    wrapper.appendChild(card);
+    card.addEventListener('mouseout', removeRotation);
+    let img = document.createElement("img");
+    img.classList.add('card-image');
+    img.src = data[i].image;
+    card.appendChild(img);
+	  let titleWrapper = document.createElement("div");
+    titleWrapper.classList.add('title-wrapper');
+    card.appendChild(titleWrapper);
+    let title = document.createElement("h3");
+    title.classList.add('card-title');
+    title.innerText = data[i].word.toUpperCase();
+	  title.id = 'title'+i;
+    titleWrapper.appendChild(title)
+	  let btn = document.createElement("div");
+    btn.classList.add('rotate');
+	  btn.id = 'rotate'+i;
+    titleWrapper.appendChild(btn);
+	  let icon = document.createElement("span");
+    icon.classList.add('rotate-icon');
+	  icon.id = i;
+	  icon.setAttribute('data-about', dataset);
+    btn.appendChild(icon);
+	  icon.addEventListener('click', rotation);
+  }
+};
+/*
+Rotation cards
+*/
+const rotateBtns = document.querySelectorAll(".rotate-icon");
+const cardsWithWords = document.querySelectorAll(".card");
 
+function rotation() {
+  let id = this.id;
+  let datas = getArray(this.dataset.about);
+  let card = document.getElementById('card'+id);
+  card.style.boxShadow = "0px 4px 7px 1px rgba(0, 0, 0, 0.25)";
+  card.classList.add('card-rotited');
+  let word = document.getElementById('title'+id);
+  word.innerText = datas[id].translation.toUpperCase();
+  let btn = document.getElementById('rotate'+id);
+  btn.style.opacity = '0';
+};
+
+rotateBtns.forEach((btn) => {
+	btn.addEventListener('click', rotation);
+});
+
+function removeRotation(){	
+	if (this.classList.contains('card-rotited')) {	
+		this.classList.remove('card-rotited');
+		let id = this.id[this.id.length - 1];
+		let datas = getArray(this.dataset.about);
+		let word = document.getElementById('title'+id);
+		word.innerText = datas[id].word.toUpperCase();
+		let btn = document.getElementById('rotate'+id);
+		btn.style.opacity = '1';
+	}
+};
+
+cardsWithWords.forEach((card) => {
+	card.addEventListener('mouseout', removeRotation);
+});
 /*
 Burger menu
 */
@@ -46,6 +100,7 @@ const navigation = document.getElementById("mySidenav");
 const openButton = document.querySelector(".menu-button");
 const closeButton = document.querySelector(".close-button");
 const background = document.querySelector(".sidenav-background");
+const link = document.querySelectorAll('.link');
 
 function openNav() {
   navigation.style.width = "300px";
@@ -66,6 +121,10 @@ document.addEventListener('click', (e) => {
   if(e.target === background) {
     closeNav();
   }
+});
+
+link.forEach((element) => {
+	element.addEventListener('click', closeNav);
 });
 /*
 Toggle
@@ -90,4 +149,3 @@ function check() {
 }
 
 toggle.addEventListener("click", check);
-

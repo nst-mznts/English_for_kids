@@ -9,10 +9,11 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    max-width: $content-width;
+    max-width: 1200px;
     column-gap: 40px;
     row-gap: 40px;
     padding: 40px 0;
+	margin: 0 auto;
 }
 
 .header-wrapper {
@@ -32,7 +33,7 @@
 
 .title-wrapper {
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: space-between;
-    width: 323px;
+	width: 300px;
 }

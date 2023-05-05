@@ -1,21 +1,25 @@
 .card {
-    display: flex;
+	display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: $color-card;
+    text-align: center;
+    background: #FFFFFF;
     box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     width: 323px;
     height: 290px;
-    transition: 1s;
+    transition: transform 0.5s;
 }
 
 .card:hover {
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
     box-shadow: 0px 4px 17px rgba(5, 130, 64, 0.68);
+}
+
+.card-rotited {
+	transform-style: preserve-3d;
+	transform: rotateY(180deg) scaleX(-1);
+	transition: transform 0.5s;
 }
 
 .card-image {
@@ -27,41 +31,21 @@
 }
 
 .rotate-icon {
-    background-image: url("../../img/icons/repeat.svg");
+    background-image: url("./img/icons/repeat.svg");
     background-repeat: no-repeat;
     background-size: 100%;
     width: 28px;
     height: 28px;
     display: block;
-    margin-top: 15px;
-    margin-left: 5px;
-}
-
-.sound-icon {
-    background-image: url("../../img/icons/sound.svg");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 28px;
-    height: 28px;
-    display: block;
-    margin-top: 15px;
-    margin-right: 10px;
-}
-
-.card-buttons {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-}
-
-.sound {
-    background-color: $color-train-light;
-    border-radius: 0px 45px 0px 8px;
+    margin-top: 11px;
 }
 
 .rotate {
-    background-color: $color-train-dark;
-    border-radius: 45px 0px 8px;
+	display: flex;
+    align-content: center;
+    justify-content: center;
+    background: #87C159;
+	border-radius: 50px;
+	width: 50px;
+	height: 50px;
 }
