@@ -47,21 +47,21 @@ header {
   padding-top: 60px;
 }
 
-.sidenav a {
+.link {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #FFFFFF;
-  display: block;
   transition: 0.3s;
+  display: block;
 }
 
-.sidenav a:hover {
+.link:hover {
   color: #333333;
   background-color: #F3FBEC;
 }
 
-.sidenav a.active {
+.link.active {
   color: #333333;
   background-color: #87C159;
 }

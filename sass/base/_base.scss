@@ -46,22 +46,22 @@ header {
     transition: 0.5s;
     padding-top: 60px;
 }
-  
-.sidenav a {
+
+.link {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: $color-card;
-    display: block;
     transition: 0.3s;
+    display: block;
 }
   
-.sidenav a:hover {
+.link:hover {
     color: $color-text;
     background-color: $color-header;
 }
 
-.sidenav a.active {
+.link.active {
     color: $color-text;
     background-color: $color-train-light;
 }

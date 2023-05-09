@@ -10,14 +10,19 @@ let btns = document.querySelectorAll('a');
 function getArray(dataset, btn='') {
 	let array = [];
 	for (let i=0; i<cards[0].length;i++) {
-		if (dataset == cards[0][i]) {
+    if (dataset == cards[0][i]) {
       if(!btn=='') {
+        if (document.querySelector("a.active")) {
+          document.querySelector("a.active").classList.remove('active');
+        }
         btn.classList.add('active');
       }
-			array = cards[i+1];
-		}
-	};
-	return array;
+      array = cards[i+1];
+    } else if (dataset == "Main") {
+      array = cards[0];
+    }
+	}
+  return array;
 };
 
 btns.forEach((btn) => {
@@ -27,55 +32,49 @@ btns.forEach((btn) => {
 	})
 });
 
-/**
-function getArray(dataset) {
-	let array = [];
-	for (let i=0; i<cards[0].length;i++) {
-		if (dataset == cards[0][i]) {
-			array = cards[i+1];
-		}
-	};
-	return array;
-};
-
-btns.forEach((btn) => {
-	btn.addEventListener('click', () => {
-		wrapper.innerHTML = '';
-		loadCards(getArray(btn.dataset.about), btn.dataset.about);
-	})
-});
- */
-
 function loadCards(data, dataset) {
+  console.log(data);
   for (let i = 0; i < 8; i++) {
     let card = document.createElement('div');
     card.classList.add('card');
     card.id = 'card'+i;
 	  card.setAttribute('data-about', dataset);
     wrapper.appendChild(card);
-    card.addEventListener('mouseout', removeRotation);
-    let img = document.createElement("img");
-    img.classList.add('card-image');
-    img.src = data[i].image;
-    card.appendChild(img);
-	  let titleWrapper = document.createElement("div");
-    titleWrapper.classList.add('title-wrapper');
-    card.appendChild(titleWrapper);
-    let title = document.createElement("h3");
-    title.classList.add('card-title');
-    title.innerText = data[i].word.toUpperCase();
-	  title.id = 'title'+i;
-    titleWrapper.appendChild(title)
-	  let btn = document.createElement("div");
-    btn.classList.add('rotate');
-	  btn.id = 'rotate'+i;
-    titleWrapper.appendChild(btn);
-	  let icon = document.createElement("span");
-    icon.classList.add('rotate-icon');
-	  icon.id = i;
-	  icon.setAttribute('data-about', dataset);
-    btn.appendChild(icon);
-	  icon.addEventListener('click', rotation);
+    if (dataset == "Main") {
+      let img = document.createElement("img");
+      img.classList.add('card-image');
+      img.src = cards[i+1][6].image;
+      card.appendChild(img);
+      let title = document.createElement("h3");
+      title.classList.add('card-title');
+      title.innerText = data[i].toUpperCase();
+      title.id = 'title'+i;
+      card.appendChild(title)
+    } else {
+      card.addEventListener('mouseout', removeRotation);
+      let img = document.createElement("img");
+      img.classList.add('card-image');
+      img.src = data[i].image;
+      card.appendChild(img);
+      let titleWrapper = document.createElement("div");
+      titleWrapper.classList.add('title-wrapper');
+      card.appendChild(titleWrapper);
+      let title = document.createElement("h3");
+      title.classList.add('card-title');
+      title.innerText = data[i].word.toUpperCase();
+      title.id = 'title'+i;
+      titleWrapper.appendChild(title)
+      let btn = document.createElement("div");
+      btn.classList.add('rotate');
+      btn.id = 'rotate'+i;
+      titleWrapper.appendChild(btn);
+      let icon = document.createElement("span");
+      icon.classList.add('rotate-icon');
+      icon.id = i;
+      icon.setAttribute('data-about', dataset);
+      btn.appendChild(icon);
+      icon.addEventListener('click', rotation);
+    }
   }
 };
 /*
