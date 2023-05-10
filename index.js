@@ -52,6 +52,7 @@ function loadCards(data, dataset) {
       card.appendChild(title)
     } else {
       card.addEventListener('mouseout', removeRotation);
+      card.addEventListener('click', playAudio);
       let img = document.createElement("img");
       img.classList.add('card-image');
       img.src = data[i].image;
@@ -113,6 +114,16 @@ function removeRotation(){
 cardsWithWords.forEach((card) => {
 	card.addEventListener('mouseout', removeRotation);
 });
+/*
+Audio
+*/
+function playAudio() {
+  let id = this.id[this.id.length - 1];
+  let datas = getArray(this.dataset.about);
+  let audio = new Audio();
+  audio.src = datas[id].audioSrc;
+  audio.play();
+}
 /*
 Burger menu
 */
