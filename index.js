@@ -28,15 +28,18 @@ function loadCards(data, dataset = 'Main') {
       title.id = 'title'+i;
       card.appendChild(title)
     } else {
+      card.classList.add('play-card');
       card.setAttribute('data-about', dataset);
       card.addEventListener('mouseleave', removeRotation);
       card.addEventListener('click', playAudio);
       let img = document.createElement("img");
       img.classList.add('card-image');
+      img.classList.add('play-image');
       img.src = data[i].image;
       card.appendChild(img);
       let titleWrapper = document.createElement("div");
       titleWrapper.classList.add('title-wrapper');
+      titleWrapper.classList.add('play');
       card.appendChild(titleWrapper);
       let title = document.createElement("h3");
       title.classList.add('card-title');
@@ -165,19 +168,45 @@ const toggle = document.querySelector(".switch");
 const toggleType = document.querySelector(".toggle");
 const train = document.querySelector(".train");
 const play = document.querySelector(".play");
+const footer = document.querySelector("footer");
+const startButton = document.querySelector(".start");
+
 
 function check() {
   if (toggleType.checked) {
     toggleType.checked = false;
     play.style.color = "#ADACAC";
     train.style.color = "#87C159";
-    body.style.background = "#F6F6F6";
+    footer.style.height = "0";
+    startButton.style.display = "none";
+    document.querySelectorAll(".play").forEach((element) => {
+      element.style.display = "flex";
+    });
+    document.querySelectorAll(".play-image").forEach((img) => {
+      img.style.width = "323px";
+      img.style.height = "215px";
+    });
+    document.querySelectorAll(".play-card").forEach((card) => {
+      card.style.height = "290px";
+    });
   } else {
     toggleType.checked = true;
     play.style.color = "#F3C301";
     train.style.color = "#ADACAC";
-    body.style.background = "#FEE3A2";
+    footer.style.height = "60px";
+    startButton.style.display = "flex";
+    document.querySelectorAll(".play").forEach((element) => {
+      element.style.display = "none";
+    });
+    document.querySelectorAll(".play-image").forEach((img) => {
+      img.style.width = "343px";
+      img.style.height = "235px";
+    });
+    document.querySelectorAll(".play-card").forEach((card) => {
+      card.style.height = "235px";
+    });
   }
 }
 
 toggle.addEventListener("click", check);
+

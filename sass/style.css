@@ -62,7 +62,7 @@ header {
 }
 
 .link.active {
-  color: #333333;
+  color: #FFFFFF;
   background-color: #87C159;
 }
 
@@ -83,6 +83,41 @@ header {
   z-index: 9;
   pointer-events: all;
   transition: 0.5s all;
+}
+
+footer {
+  height: 0;
+  width: 100%;
+  bottom: 0;
+  z-index: 5;
+  position: fixed;
+  transition: 0.7s;
+}
+
+.footer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  border-top: 4px solid #F3C301;
+  background-color: #FFF0CC;
+}
+
+.start {
+  border-radius: 50%;
+  background-color: #F3C301;
+  height: 100px;
+  width: 100px;
+  display: none;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 3rem;
+  font-weight: 600;
+  position: absolute;
+  bottom: 30%;
 }
 
 @media screen and (max-height: 450px) {
@@ -107,7 +142,7 @@ header {
   max-width: 1200px;
   column-gap: 40px;
   row-gap: 40px;
-  padding: 40px 0;
+  padding: 75px 0;
   margin: 0 auto;
 }
 
@@ -144,6 +179,7 @@ header {
   border-radius: 8px;
   width: 323px;
   height: 290px;
+  overflow: hidden;
   transition: transform 0.5s;
 }
 
@@ -160,6 +196,8 @@ header {
 
 .card-image {
   border-radius: 8px 8px 0px 0px;
+  width: 323px;
+  height: 215px;
 }
 
 .card-title {

@@ -62,7 +62,7 @@ header {
 }
 
 .link.active {
-    color: $color-text;
+    color: $color-card;
     background-color: $color-train-light;
 }
 
@@ -84,7 +84,42 @@ header {
     pointer-events: all;
     transition: 0.5s all;
 }
-  
+
+footer {
+    height: 0;
+    width: 100%;
+    bottom: 0;
+    z-index: 5;
+    position: fixed;
+    transition: 0.7s;
+}
+
+.footer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    border-top: 4px solid $color-play-dark;
+    background-color: $color-play-light;
+}
+
+.start {
+    border-radius: 50%;
+    background-color: $color-play-dark;
+    height: 100px;
+    width: 100px;
+    display: none;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    color: $color-card;
+    font-size: 3rem;
+    font-weight: 600;
+    position: absolute;
+    bottom: 30%;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
