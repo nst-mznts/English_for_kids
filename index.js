@@ -5,42 +5,19 @@ const body = document.body;
 import cards from './cards.js';
 
 let wrapper = document.querySelector(".card-wrapper");
-let btns = document.querySelectorAll('a');
+let menuLinks = document.querySelectorAll('a');
+loadCards(cards[0]);
 
-function getArray(dataset, btn='') {
-	let array = [];
-	for (let i=0; i<cards[0].length;i++) {
-    if (dataset == cards[0][i]) {
-      if(!btn=='') {
-        if (document.querySelector("a.active")) {
-          document.querySelector("a.active").classList.remove('active');
-        }
-        btn.classList.add('active');
-      }
-      array = cards[i+1];
-    } else if (dataset == "Main") {
-      array = cards[0];
-    }
-	}
-  return array;
-};
-
-btns.forEach((btn) => {
-	btn.addEventListener('click', () => {
-		wrapper.innerHTML = '';
-		loadCards(getArray(btn.dataset.about, btn), btn.dataset.about);
-	})
-});
-
-function loadCards(data, dataset) {
-  console.log(data);
+function loadCards(data, dataset = 'Main') {
   for (let i = 0; i < 8; i++) {
     let card = document.createElement('div');
     card.classList.add('card');
-    card.id = 'card'+i;
-	  card.setAttribute('data-about', dataset);
+    card.id = 'card'+i;	  
     wrapper.appendChild(card);
     if (dataset == "Main") {
+      card.classList.add('main');
+      card.setAttribute('data-about', cards[0][i]);
+      card.addEventListener('click', changePage);
       let img = document.createElement("img");
       img.classList.add('card-image');
       img.src = cards[i+1][6].image;
@@ -51,7 +28,8 @@ function loadCards(data, dataset) {
       title.id = 'title'+i;
       card.appendChild(title)
     } else {
-      card.addEventListener('mouseout', removeRotation);
+      card.setAttribute('data-about', dataset);
+      card.addEventListener('mouseleave', removeRotation);
       card.addEventListener('click', playAudio);
       let img = document.createElement("img");
       img.classList.add('card-image');
@@ -78,12 +56,37 @@ function loadCards(data, dataset) {
     }
   }
 };
+
+function getArray(dataset) {
+	let array = [];
+	for (let i=0; i<cards[0].length;i++) {
+    if (dataset == cards[0][i]) {
+      array = cards[i+1];
+    } else if (dataset == "Main") {
+      array = cards[0];
+    }
+	}
+  return array;
+};
+
+function changePage() {
+  let arr = document.querySelectorAll('a');
+  for (let i=0; i<arr.length; i++) {
+    arr[i].classList.remove('active');
+    if (arr[i].dataset.about == this.dataset.about) {
+      arr[i].classList.add('active');
+    }
+  }
+  wrapper.innerHTML = '';
+  loadCards(getArray(this.dataset.about), this.dataset.about);
+};
+
+menuLinks.forEach((link) => {
+	link.addEventListener('click', changePage);
+});
 /*
 Rotation cards
 */
-const rotateBtns = document.querySelectorAll(".rotate-icon");
-const cardsWithWords = document.querySelectorAll(".card");
-
 function rotation() {
   let id = this.id;
   let datas = getArray(this.dataset.about);
@@ -95,11 +98,7 @@ function rotation() {
   btn.style.opacity = '0';
 };
 
-rotateBtns.forEach((btn) => {
-	btn.addEventListener('click', rotation);
-});
-
-function removeRotation(){	
+function removeRotation(){
 	if (this.classList.contains('card-rotited')) {	
 		this.classList.remove('card-rotited');
 		let id = this.id[this.id.length - 1];
@@ -110,19 +109,17 @@ function removeRotation(){
 		btn.style.opacity = '1';
 	}
 };
-
-cardsWithWords.forEach((card) => {
-	card.addEventListener('mouseout', removeRotation);
-});
 /*
 Audio
 */
 function playAudio() {
   let id = this.id[this.id.length - 1];
   let datas = getArray(this.dataset.about);
-  let audio = new Audio();
-  audio.src = datas[id].audioSrc;
-  audio.play();
+  if (!this.classList.contains('card-rotited')) {
+    let audio = new Audio();
+    audio.src = datas[id].audioSrc;
+    audio.play();
+  }
 }
 /*
 Burger menu
