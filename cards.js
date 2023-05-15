@@ -305,49 +305,49 @@ const cards = [
       word: 'dragon',
       translation: 'дракон',
       image: './img/card-imgs/dragon.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/dragon.mp3'
     },
     {
       word: 'fairy',
       translation: 'фея',
       image: './img/card-imgs/fairy.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/fairy.mp3'
     },
     {
       word: 'king',
       translation: 'король',
       image: './img/card-imgs/king.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/king.mp3'
     },
     {
       word: 'knight',
       translation: 'рыцарь',
       image: './img/card-imgs/knight.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/knight.mp3'
     },
     {
       word: 'mermaid',
       translation: 'русалка',
       image: './img/card-imgs/mermaid.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/mermaid.mp3'
     },
     {
       word: 'princess',
       translation: 'принцесса',
       image: './img/card-imgs/princess.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/princess.mp3'
     },
     {
       word: 'witch',
       translation: 'ведьма',
       image: './img/card-imgs/witch.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/witch.mp3'
     },
     {
       word: 'wizard',
       translation: 'волшебник',
       image: './img/card-imgs/wizard.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/wizard.mp3'
     }
   ],
   [
@@ -355,49 +355,49 @@ const cards = [
       word: 'apple',
       translation: 'яблоко',
       image: './img/card-imgs/apple.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/apple.mp3'
     },
     {
       word: 'banana',
       translation: 'банан',
       image: './img/card-imgs/banana.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/banana.mp3'
     },
     {
       word: 'bread',
       translation: 'хлеб',
       image: './img/card-imgs/bread.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/bread.mp3'
     },
     {
       word: 'cake',
       translation: 'торт',
       image: './img/card-imgs/cake.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/cake.mp3'
     },
     {
       word: 'cheese',
       translation: 'сыр',
       image: './img/card-imgs/cheese.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/cheese.mp3'
     },
     {
-      word: 'pumkin',
-      translation: 'тыква',
-      image: './img/card-imgs/pumkin.png',
-      audioSrc: './audio/'
+      word: 'tomato',
+      translation: 'помидор',
+      image: './img/card-imgs/tomato.png',
+      audioSrc: './audio/tomato.mp3'
     },
     {
       word: 'salad',
       translation: 'салат',
       image: './img/card-imgs/salad.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/salad.mp3'
     },
     {
       word: 'sausage',
       translation: 'колбаса',
       image: './img/card-imgs/sausage.png',
-      audioSrc: './audio/'
+      audioSrc: './audio/sausage.mp3'
     }
   ]
 ]
