@@ -39,7 +39,7 @@ function loadCards(data, dataset = 'Main') {
       card.appendChild(img);
       let titleWrapper = document.createElement("div");
       titleWrapper.classList.add('title-wrapper');
-      titleWrapper.classList.add('play');
+      titleWrapper.classList.add('play-title');
       card.appendChild(titleWrapper);
       let title = document.createElement("h3");
       title.classList.add('card-title');
@@ -179,7 +179,7 @@ function check() {
     train.style.color = "#87C159";
     footer.style.height = "0";
     startButton.style.display = "none";
-    document.querySelectorAll(".play").forEach((element) => {
+    document.querySelectorAll(".play-title").forEach((element) => {
       element.style.display = "flex";
     });
     document.querySelectorAll(".play-image").forEach((img) => {
@@ -195,7 +195,7 @@ function check() {
     train.style.color = "#ADACAC";
     footer.style.height = "60px";
     startButton.style.display = "flex";
-    document.querySelectorAll(".play").forEach((element) => {
+    document.querySelectorAll(".play-title").forEach((element) => {
       element.style.display = "none";
     });
     document.querySelectorAll(".play-image").forEach((img) => {
