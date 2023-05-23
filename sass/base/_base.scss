@@ -123,6 +123,7 @@ footer {
 .start:hover {
     animation: shake 0.5s;
     animation-iteration-count: infinite;
+    cursor: pointer;
   }
   
   @keyframes shake {
@@ -142,4 +143,9 @@ footer {
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+.star {
+    height: 48px;
+    width: 48px;
 }

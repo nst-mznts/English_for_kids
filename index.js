@@ -31,11 +31,13 @@ function loadCards(data, dataset = 'Main') {
       card.classList.add('play-card');
       card.setAttribute('data-about', dataset);
       card.addEventListener('mouseleave', removeRotation);
-      card.addEventListener('click', playAudio);
+      //card.addEventListener('click', playAudio);
       let img = document.createElement("img");
       img.classList.add('card-image');
       img.classList.add('play-image');
       img.src = data[i].image;
+      img.alt = data[i].word;
+      img.addEventListener('click', handleCardClick);
       card.appendChild(img);
       let titleWrapper = document.createElement("div");
       titleWrapper.classList.add('title-wrapper');
@@ -209,4 +211,65 @@ function check() {
 }
 
 toggle.addEventListener("click", check);
+startButton.addEventListener("click", StartGame);
+/*
+Start the game
+*/
+let starsWrapper = document.querySelector(".stars-wrapper");
+let currentIndex = 0;
+let audioElement = null;
 
+function StartGame() {
+  let dataAttribute = document.querySelector("a.active").dataset.about;
+  let array = getArray(dataAttribute);
+  console.log(array);
+  if (audioElement === null) {
+    audioElement = new Audio();
+  }
+  audioElement.src = array[currentIndex].audioSrc;
+  audioElement.play();
+}
+
+
+function handleCardClick(event) {
+  let dataAttribute = document.querySelector("a.active").dataset.about;
+  let array = getArray(dataAttribute);
+  const clickedImg = event.target;
+  const clickedWord = event.target.getAttribute('alt');
+
+  if (clickedWord === array[currentIndex].word) {
+    console.log(clickedImg);
+    clickedImg.style.opacity = "0.5";
+    let starWin = document.createElement("img");
+    starWin.classList.add('star');
+    starWin.src = './img/icons/star-win.svg';
+    starWin.alt = 'star';
+    starsWrapper.appendChild(starWin);
+    let successAudio = new Audio();
+    successAudio.src = './audio/success.mp3';
+    successAudio.play();
+    currentIndex++;
+
+    if (currentIndex < array.length) {
+      setTimeout(StartGame, 2000);
+    } else {
+      audioElement = null;
+      starsWrapper.innerHTML = '';
+    }
+  } else {
+    let star = document.createElement("img");
+    star.classList.add('star');
+    star.src = './img/icons/star.svg';
+    star.alt = 'star';
+    starsWrapper.appendChild(star);
+    let successAudio = new Audio();
+    successAudio.src = './audio/failure.mp3';
+    successAudio.play();
+  }
+}
+
+const cardElements = document.querySelectorAll('.play-image');
+
+cardElements.forEach(function(cardElement) {
+  cardElement.addEventListener('click', handleCardClick);
+});
