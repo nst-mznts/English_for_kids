@@ -113,11 +113,17 @@ footer {
     z-index: 5;
     align-items: center;
     justify-content: center;
-    color: $color-card;
-    font-size: 3rem;
-    font-weight: 600;
     position: absolute;
-    bottom: 30%;
+    bottom: 25%;
+}
+
+.start-icon {
+    background-image: url('../../img/icons/play.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+    height: 50%;
+    display: block;
 }
 
 .start:hover {
@@ -148,4 +154,13 @@ footer {
 .star {
     height: 48px;
     width: 48px;
+}
+
+.logo:hover {
+    color: $color-train-light;
+    cursor: pointer;
+}
+
+.result-img {
+    height: 200px;
 }

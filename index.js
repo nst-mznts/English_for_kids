@@ -6,7 +6,8 @@ import cards from './cards.js';
 
 let wrapper = document.querySelector(".card-wrapper");
 let menuLinks = document.querySelectorAll('a');
-loadCards(cards[0]);
+let logo = document.querySelector(".logo");
+mainPage();
 
 function loadCards(data, dataset = 'Main') {
   for (let i = 0; i < 8; i++) {
@@ -216,13 +217,16 @@ startButton.addEventListener("click", StartGame);
 Start the game
 */
 let starsWrapper = document.querySelector(".stars-wrapper");
+const startIcon = document.querySelector(".start-icon");
 let currentIndex = 0;
 let audioElement = null;
+let wrongAnswers = [];
 
 function StartGame() {
+  startIcon.style.backgroundImage = "url('../../img/icons/repeat.svg')";
   let dataAttribute = document.querySelector("a.active").dataset.about;
   let array = getArray(dataAttribute);
-  console.log(array);
+
   if (audioElement === null) {
     audioElement = new Audio();
   }
@@ -238,33 +242,34 @@ function handleCardClick(event) {
   const clickedWord = event.target.getAttribute('alt');
 
   if (clickedWord === array[currentIndex].word) {
-    console.log(clickedImg);
     clickedImg.style.opacity = "0.5";
     let starWin = document.createElement("img");
     starWin.classList.add('star');
     starWin.src = './img/icons/star-win.svg';
     starWin.alt = 'star';
     starsWrapper.appendChild(starWin);
-    let successAudio = new Audio();
-    successAudio.src = './audio/success.mp3';
-    successAudio.play();
+    let correctAudio = new Audio();
+    correctAudio.src = './audio/correct.mp3';
+    correctAudio.play();
     currentIndex++;
 
     if (currentIndex < array.length) {
       setTimeout(StartGame, 2000);
     } else {
       audioElement = null;
-      starsWrapper.innerHTML = '';
+      setTimeout(EndTheGame, 2000);
     }
   } else {
+    wrongAnswers.push(array[currentIndex].word);
+    console.log(wrongAnswers);
     let star = document.createElement("img");
     star.classList.add('star');
     star.src = './img/icons/star.svg';
     star.alt = 'star';
     starsWrapper.appendChild(star);
-    let successAudio = new Audio();
-    successAudio.src = './audio/failure.mp3';
-    successAudio.play();
+    let errorAudio = new Audio();
+    errorAudio.src = './audio/error.mp3';
+    errorAudio.play();
   }
 }
 
@@ -273,3 +278,52 @@ const cardElements = document.querySelectorAll('.play-image');
 cardElements.forEach(function(cardElement) {
   cardElement.addEventListener('click', handleCardClick);
 });
+
+/*
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+*/
+function EndTheGame() {
+  starsWrapper.innerHTML = '';
+  wrapper.innerHTML = '';
+  startIcon.style.backgroundImage = "url('../../img/icons/play.svg')";
+  const resultWrapper = document.createElement("div");
+  resultWrapper.classList.add('result-wrapper');
+  wrapper.appendChild(resultWrapper);
+  if (wrongAnswers.length === 0) {
+    let successAudio = new Audio();
+    successAudio.src = './audio/success.mp3';
+    successAudio.play();
+    resultWrapper.innerHTML = 'YOU WIN!';
+    let imgSuccess = document.createElement("img");
+    imgSuccess.classList.add('result-img');
+    imgSuccess.src = './img/icons/success.jpg';
+    resultWrapper.appendChild(imgSuccess);
+  } else {
+    let failureAudio = new Audio();
+    failureAudio.src = './audio/failure.mp3';
+    failureAudio.play();
+    resultWrapper.innerHTML = 'KEEP TRYING! NEXT TIME YOU WILL WIN!';
+    resultWrapper.innerHTML = 'WRONG ANSWERS: ' + wrongAnswers.length;
+    let imgFailure = document.createElement("img");
+    imgFailure.classList.add('result-img');
+    imgFailure.src = './img/icons/failure.jpg';
+    resultWrapper.appendChild(imgFailure);
+  }
+  setTimeout(mainPage, 4000);
+  currentIndex = 0;
+  wrongAnswers = [];
+  check();
+}
+
+function mainPage() {
+  wrapper.innerHTML = '';
+  loadCards(cards[0]);
+}
+
+logo.addEventListener('click', mainPage);

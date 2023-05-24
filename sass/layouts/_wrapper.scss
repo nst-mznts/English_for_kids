@@ -44,3 +44,18 @@
     display: flex;
     align-items: center;
 }
+
+.result-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    align-items: center;
+    justify-content: center;
+	width: 40%;
+    font-size: 30px;
+    font-weight: 400;
+    background-color: $color-card;
+    color: $color-text;
+    margin: 90px auto;
+    padding: 20px;
+}

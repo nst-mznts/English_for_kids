@@ -113,11 +113,17 @@ footer {
   z-index: 5;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
-  font-size: 3rem;
-  font-weight: 600;
   position: absolute;
-  bottom: 30%;
+  bottom: 25%;
+}
+
+.start-icon {
+  background-image: url("../../img/icons/play.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50%;
+  height: 50%;
+  display: block;
 }
 
 .start:hover {
@@ -174,6 +180,15 @@ footer {
   width: 48px;
 }
 
+.logo:hover {
+  color: #87C159;
+  cursor: pointer;
+}
+
+.result-img {
+  height: 200px;
+}
+
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -221,6 +236,21 @@ footer {
   align-items: center;
 }
 
+.result-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  font-size: 30px;
+  font-weight: 400;
+  background-color: #FFFFFF;
+  color: #333333;
+  margin: 90px auto;
+  padding: 20px;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -258,13 +288,13 @@ footer {
 }
 
 .rotate-icon {
-  background-image: url("../../img/icons/repeat.svg");
+  background-image: url("../../img/icons/rotate.svg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 70%;
   height: 70%;
   display: block;
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 .rotate {
@@ -274,7 +304,7 @@ footer {
   background: #87C159;
   border-radius: 50px;
   width: 50px;
-  height: 50px;
+  height: 48px;
 }
 
 .rotate:hover {

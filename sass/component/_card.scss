@@ -35,13 +35,13 @@
 }
 
 .rotate-icon {
-    background-image: url('../../img/icons/repeat.svg');
+    background-image: url('../../img/icons/rotate.svg');
     background-repeat: no-repeat;
     background-size: cover;
     width: 70%;
     height: 70%;
     display: block;
-    margin-top: 8px;
+    margin-top: 7px;
 }
 
 .rotate {
@@ -51,7 +51,7 @@
     background: $color-train-light;
 	border-radius: 50px;
 	width: 50px;
-	height: 50px;
+	height: 48px;
 }
 
 .rotate:hover {
