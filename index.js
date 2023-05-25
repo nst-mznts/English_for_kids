@@ -4,12 +4,15 @@ switch pages
 const body = document.body;
 import cards from './cards.js';
 
+//let statistic = {};
 let wrapper = document.querySelector(".card-wrapper");
-let menuLinks = document.querySelectorAll('a');
+let menuLinks = document.querySelectorAll('.cards-menu');
 let logo = document.querySelector(".logo");
+const starsWrapper = document.querySelector(".stars-wrapper");
 mainPage();
 
 function loadCards(data, dataset = 'Main') {
+  starsWrapper.innerHTML = '';
   for (let i = 0; i < 8; i++) {
     let card = document.createElement('div');
     card.classList.add('card');
@@ -59,6 +62,8 @@ function loadCards(data, dataset = 'Main') {
       icon.setAttribute('data-about', dataset);
       btn.appendChild(icon);
       icon.addEventListener('click', rotation);
+      //statistic[data[i].word] = [data[i].translation, card.dataset.about, 0, 0, 0, 0];
+      //localStorage.setItem('statistic', JSON.stringify(statistic));
     }
   }
 };
@@ -216,7 +221,6 @@ startButton.addEventListener("click", StartGame);
 /*
 Start the game
 */
-let starsWrapper = document.querySelector(".stars-wrapper");
 const startIcon = document.querySelector(".start-icon");
 let currentIndex = 0;
 let audioElement = null;
@@ -327,3 +331,51 @@ function mainPage() {
 }
 
 logo.addEventListener('click', mainPage);
+/*
+Statistic
+*/
+const statisticLink = document.querySelector('.statistic');
+const headers = ['№', 'Words', 'Translation', 'Categories', 'Trained', 'Correct', 'Incorrect', '%'];
+let numberCounter = 1;
+function showStatistic() {
+  wrapper.innerHTML = '';
+  starsWrapper.innerHTML = '';
+  numberCounter = 1;
+  let difficultWords = document.createElement('button');
+  difficultWords.innerHTML = 'Repeat difficult words';
+  difficultWords.classList.add('statistic-btn');
+  difficultWords.classList.add('repeat-words');
+  starsWrapper.appendChild(difficultWords);
+  let reset = document.createElement('button');
+  reset.innerHTML = 'Reset';
+  reset.classList.add('statistic-btn');
+  reset.classList.add('reset');
+  starsWrapper.appendChild(reset);
+  let table = document.createElement('table');
+  table.classList.add('statistic-table');
+  wrapper.appendChild(table);
+  let row = document.createElement('tr');
+  table.appendChild(row);
+  for (let i = 0; i < headers.length; i++) {
+    let tableHeader = document.createElement('th');
+    tableHeader.innerHTML = headers[i];
+    row.appendChild(tableHeader);
+    for (let j = 0; j < 8; j++) {
+      let tableRow = document.createElement('tr');
+      tableRow.innerHTML = `
+        <td>${numberCounter}</td>
+        <td>${cards[i+1][j].word}</td>
+        <td>${cards[i+1][j].translation}</td>
+        <td>${cards[0][i]}</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      `;
+      table.appendChild(tableRow);
+      numberCounter +=1;
+    }
+  } 
+}
+
+statisticLink.addEventListener('click', showStatistic);
