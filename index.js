@@ -1,135 +1,136 @@
 /*
 switch pages
 */
-const body = document.body;
-import cards from './cards.js';
+import cards from "./cards.js";
+import { GridView } from "./class/GridView.js";
+import { WordCards } from "./class/WordCards.js";
 
-//let statistic = {};
-let wrapper = document.querySelector(".card-wrapper");
-let menuLinks = document.querySelectorAll('.cards-menu');
-let logo = document.querySelector(".logo");
+const body = document.body;
+let statistic = {};
+checkStatistic();
+console.log(statistic);
+const wrapper = document.querySelector(".card-wrapper");
+let menuLinks = document.querySelectorAll(".cards-menu");
+const logo = document.querySelector(".logo");
 const starsWrapper = document.querySelector(".stars-wrapper");
 mainPage();
 
-function loadCards(data, dataset = 'Main') {
-  starsWrapper.innerHTML = '';
+function loadCards(data, dataset = "Main") {
+  starsWrapper.innerHTML = "";
+  let titleCard = 0;
   for (let i = 0; i < 8; i++) {
-    let card = document.createElement('div');
-    card.classList.add('card');
-    card.id = 'card'+i;	  
-    wrapper.appendChild(card);
     if (dataset == "Main") {
-      card.classList.add('main');
-      card.setAttribute('data-about', cards[0][i]);
-      card.addEventListener('click', changePage);
-      let img = document.createElement("img");
-      img.classList.add('card-image');
-      img.src = cards[i+1][6].image;
-      card.appendChild(img);
-      let title = document.createElement("h3");
-      title.classList.add('card-title');
-      title.innerText = data[i].toUpperCase();
-      title.id = 'title'+i;
-      card.appendChild(title)
+      let card = new WordCards(
+        cards[i + 1][6].image,
+        cards[i + 1][6].word,
+        titleCard,
+        data[i].toUpperCase(),
+        i,
+        dataset
+      ).makeCard();
+      card.classList.add("main");
+      card.setAttribute("data-about", cards[0][i]);
+      card.addEventListener("click", changePage);
     } else {
-      card.classList.add('play-card');
-      card.setAttribute('data-about', dataset);
-      card.addEventListener('mouseleave', removeRotation);
-      //card.addEventListener('click', playAudio);
-      let img = document.createElement("img");
-      img.classList.add('card-image');
-      img.classList.add('play-image');
-      img.src = data[i].image;
-      img.alt = data[i].word;
-      img.addEventListener('click', handleCardClick);
-      card.appendChild(img);
-      let titleWrapper = document.createElement("div");
-      titleWrapper.classList.add('title-wrapper');
-      titleWrapper.classList.add('play-title');
-      card.appendChild(titleWrapper);
-      let title = document.createElement("h3");
-      title.classList.add('card-title');
-      title.innerText = data[i].word.toUpperCase();
-      title.id = 'title'+i;
-      titleWrapper.appendChild(title)
-      let btn = document.createElement("div");
-      btn.classList.add('rotate');
-      btn.id = 'rotate'+i;
-      titleWrapper.appendChild(btn);
-      let icon = document.createElement("span");
-      icon.classList.add('rotate-icon');
-      icon.id = i;
-      icon.setAttribute('data-about', dataset);
-      btn.appendChild(icon);
-      icon.addEventListener('click', rotation);
-      //statistic[data[i].word] = [data[i].translation, card.dataset.about, 0, 0, 0, 0];
-      //localStorage.setItem('statistic', JSON.stringify(statistic));
+      titleCard = 1;
+      let card = new WordCards(
+        data[i].image,
+        data[i].word,
+        titleCard,
+        data[i].word.toUpperCase(),
+        i,
+        dataset
+      ).makeCard();
+      card.classList.add("play-card");
+      card.setAttribute("data-about", dataset);
+      card.addEventListener("mouseleave", removeRotation);
+      card.addEventListener("click", playAudio);
+      //statistic[data[i].word] = {'translation': data[i].translation, 'categories': card.dataset.about, 'trained': 0, 'correct': 0, 'incorrect': 0};
+      //saveStatisticToLS();
+      document.querySelectorAll(".card-image").forEach((img) => {
+        img.classList.add("play-image");
+        img.addEventListener("click", handleCardClick);
+      });
+      document.querySelectorAll(".rotate-icon").forEach((icon) => {
+        icon.addEventListener("click", rotation);
+      });
     }
   }
-};
+}
 
 function getArray(dataset) {
-	let array = [];
-	for (let i=0; i<cards[0].length;i++) {
+  let array = [];
+  for (let i = 0; i < cards[0].length; i++) {
     if (dataset == cards[0][i]) {
-      array = cards[i+1];
+      array = cards[i + 1];
     } else if (dataset == "Main") {
       array = cards[0];
     }
-	}
+  }
   return array;
-};
+}
 
 function changePage() {
-  let arr = document.querySelectorAll('a');
-  for (let i=0; i<arr.length; i++) {
-    arr[i].classList.remove('active');
+  let arr = document.querySelectorAll("a");
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].classList.remove("active");
     if (arr[i].dataset.about == this.dataset.about) {
-      arr[i].classList.add('active');
+      arr[i].classList.add("active");
     }
   }
-  wrapper.innerHTML = '';
+  wrapper.innerHTML = "";
   loadCards(getArray(this.dataset.about), this.dataset.about);
-};
+}
 
 menuLinks.forEach((link) => {
-	link.addEventListener('click', changePage);
+  link.addEventListener("click", changePage);
 });
+
+function mainPage() {
+  wrapper.innerHTML = "";
+  loadCards(cards[0]);
+}
+
+logo.addEventListener("click", mainPage);
+logo.addEventListener("click", changePage);
 /*
 Rotation cards
 */
 function rotation() {
   let id = this.id;
   let datas = getArray(this.dataset.about);
-  let card = document.getElementById('card'+id);
-  card.classList.add('card-rotited');
-  let word = document.getElementById('title'+id);
+  let card = document.getElementById("card" + id);
+  card.classList.add("card-rotited");
+  let word = document.getElementById("title" + id);
   word.innerText = datas[id].translation.toUpperCase();
-  let btn = document.getElementById('rotate'+id);
-  btn.style.opacity = '0';
-};
+  let btn = document.getElementById("rotate" + id);
+  btn.style.opacity = "0";
+}
 
-function removeRotation(){
-	if (this.classList.contains('card-rotited')) {	
-		this.classList.remove('card-rotited');
-		let id = this.id[this.id.length - 1];
-		let datas = getArray(this.dataset.about);
-		let word = document.getElementById('title'+id);
-		word.innerText = datas[id].word.toUpperCase();
-		let btn = document.getElementById('rotate'+id);
-		btn.style.opacity = '1';
-	}
-};
+function removeRotation() {
+  if (this.classList.contains("card-rotited")) {
+    this.classList.remove("card-rotited");
+    let id = this.id[this.id.length - 1];
+    let datas = getArray(this.dataset.about);
+    let word = document.getElementById("title" + id);
+    word.innerText = datas[id].word.toUpperCase();
+    let btn = document.getElementById("rotate" + id);
+    btn.style.opacity = "1";
+  }
+}
 /*
 Audio
 */
 function playAudio() {
   let id = this.id[this.id.length - 1];
   let datas = getArray(this.dataset.about);
-  if (!this.classList.contains('card-rotited')) {
+  if (!this.classList.contains("card-rotited")) {
     let audio = new Audio();
     audio.src = datas[id].audioSrc;
     audio.play();
+    //statistic[datas[id].word].trained += 1;
+    //saveStatisticToLS();
+    //checkStatistic();
   }
 }
 /*
@@ -141,33 +142,33 @@ const background = document.querySelector(".sidenav-background");
 const link = document.querySelectorAll(".link");
 
 function openNav() {
-  if (burger.classList.contains('burger_active')) {
+  if (burger.classList.contains("burger_active")) {
     closeNav();
   } else {
-    burger.classList.add('burger_active');
+    burger.classList.add("burger_active");
     navigation.style.width = "300px";
-    body.style.overflow = 'hidden';
-    background.classList.add('active');
+    body.style.overflow = "hidden";
+    background.classList.add("active");
   }
 }
-  
+
 function closeNav() {
-  burger.classList.remove('burger_active');
+  burger.classList.remove("burger_active");
   navigation.style.width = "0";
-  body.style.overflow = '';
-  background.classList.remove('active');
+  body.style.overflow = "";
+  background.classList.remove("active");
 }
 
 burger.addEventListener("click", openNav);
 
-document.addEventListener('click', (e) => {
-  if(e.target === background) {
+document.addEventListener("click", (e) => {
+  if (e.target === background) {
     closeNav();
   }
 });
 
 link.forEach((element) => {
-	element.addEventListener('click', closeNav);
+  element.addEventListener("click", closeNav);
 });
 /*
 Toggle
@@ -178,7 +179,6 @@ const train = document.querySelector(".train");
 const play = document.querySelector(".play");
 const footer = document.querySelector("footer");
 const startButton = document.querySelector(".start");
-
 
 function check() {
   if (toggleType.checked) {
@@ -196,6 +196,7 @@ function check() {
     });
     document.querySelectorAll(".play-card").forEach((card) => {
       card.style.height = "290px";
+      card.addEventListener("click", playAudio);
     });
   } else {
     toggleType.checked = true;
@@ -212,6 +213,7 @@ function check() {
     });
     document.querySelectorAll(".play-card").forEach((card) => {
       card.style.height = "235px";
+      card.removeEventListener("click", playAudio);
     });
   }
 }
@@ -227,60 +229,72 @@ let audioElement = null;
 let wrongAnswers = [];
 
 function StartGame() {
-  startIcon.style.backgroundImage = "url('../../img/icons/repeat.svg')";
-  let dataAttribute = document.querySelector("a.active").dataset.about;
-  let array = getArray(dataAttribute);
+  if (footer.style.height === "60px") {
+    startIcon.style.backgroundImage = "url('../../img/icons/repeat.svg')";
+    startIcon.setAttribute("alt", "repeat");
+    let dataAttribute = document.querySelector("a.active").dataset.about;
+    let array = getArray(dataAttribute);
 
-  if (audioElement === null) {
-    audioElement = new Audio();
+    if (audioElement === null) {
+      audioElement = new Audio();
+    }
+    audioElement.src = array[currentIndex].audioSrc;
+    audioElement.play();
   }
-  audioElement.src = array[currentIndex].audioSrc;
-  audioElement.play();
 }
-
 
 function handleCardClick(event) {
-  let dataAttribute = document.querySelector("a.active").dataset.about;
-  let array = getArray(dataAttribute);
-  const clickedImg = event.target;
-  const clickedWord = event.target.getAttribute('alt');
+  if (
+    footer.style.height === "60px" &&
+    startIcon.getAttribute("alt") === "repeat"
+  ) {
+    let dataAttribute = document.querySelector("a.active").dataset.about;
+    let array = getArray(dataAttribute);
+    const clickedImg = event.target;
+    const clickedWord = event.target.getAttribute("alt");
 
-  if (clickedWord === array[currentIndex].word) {
-    clickedImg.style.opacity = "0.5";
-    let starWin = document.createElement("img");
-    starWin.classList.add('star');
-    starWin.src = './img/icons/star-win.svg';
-    starWin.alt = 'star';
-    starsWrapper.appendChild(starWin);
-    let correctAudio = new Audio();
-    correctAudio.src = './audio/correct.mp3';
-    correctAudio.play();
-    currentIndex++;
+    if (clickedWord === array[currentIndex].word) {
+      //statistic[array[currentIndex].word].correct += 1;
+      //console.log(statistic[array[currentIndex].word].correct);
+      clickedImg.style.opacity = "0.5";
+      let starWin = document.createElement("img");
+      starWin.classList.add("star");
+      starWin.src = "./img/icons/star-win.svg";
+      starWin.alt = "star";
+      starsWrapper.appendChild(starWin);
+      let correctAudio = new Audio();
+      correctAudio.src = "./audio/correct.mp3";
+      correctAudio.play();
+      currentIndex++;
 
-    if (currentIndex < array.length) {
-      setTimeout(StartGame, 2000);
+      if (currentIndex < array.length) {
+        setTimeout(StartGame, 2000);
+      } else {
+        audioElement = null;
+        setTimeout(EndTheGame, 2000);
+      }
     } else {
-      audioElement = null;
-      setTimeout(EndTheGame, 2000);
+      //statistic[array[currentIndex].word].incorrect += 1;
+      wrongAnswers.push(array[currentIndex].word);
+      console.log(wrongAnswers);
+      let star = document.createElement("img");
+      star.classList.add("star");
+      star.src = "./img/icons/star.svg";
+      star.alt = "star";
+      starsWrapper.appendChild(star);
+      let errorAudio = new Audio();
+      errorAudio.src = "./audio/error.mp3";
+      errorAudio.play();
     }
-  } else {
-    wrongAnswers.push(array[currentIndex].word);
-    console.log(wrongAnswers);
-    let star = document.createElement("img");
-    star.classList.add('star');
-    star.src = './img/icons/star.svg';
-    star.alt = 'star';
-    starsWrapper.appendChild(star);
-    let errorAudio = new Audio();
-    errorAudio.src = './audio/error.mp3';
-    errorAudio.play();
+    saveStatisticToLS();
+    checkStatistic();
   }
 }
 
-const cardElements = document.querySelectorAll('.play-image');
+const cardElements = document.querySelectorAll(".play-image");
 
-cardElements.forEach(function(cardElement) {
-  cardElement.addEventListener('click', handleCardClick);
+cardElements.forEach(function (cardElement) {
+  cardElement.addEventListener("click", handleCardClick);
 });
 
 /*
@@ -293,89 +307,82 @@ function shuffle(array) {
 }
 */
 function EndTheGame() {
-  starsWrapper.innerHTML = '';
-  wrapper.innerHTML = '';
+  starsWrapper.innerHTML = "";
+  wrapper.innerHTML = "";
   startIcon.style.backgroundImage = "url('../../img/icons/play.svg')";
+  startIcon.setAttribute("alt", "start");
   const resultWrapper = document.createElement("div");
-  resultWrapper.classList.add('result-wrapper');
+  resultWrapper.classList.add("result-wrapper");
   wrapper.appendChild(resultWrapper);
   if (wrongAnswers.length === 0) {
     let successAudio = new Audio();
-    successAudio.src = './audio/success.mp3';
+    successAudio.src = "./audio/success.mp3";
     successAudio.play();
-    resultWrapper.innerHTML = 'YOU WIN!';
+    resultWrapper.innerHTML = "YOU WIN!";
     let imgSuccess = document.createElement("img");
-    imgSuccess.classList.add('result-img');
-    imgSuccess.src = './img/icons/success.jpg';
+    imgSuccess.classList.add("result-img");
+    imgSuccess.src = "./img/icons/success.jpg";
     resultWrapper.appendChild(imgSuccess);
   } else {
     let failureAudio = new Audio();
-    failureAudio.src = './audio/failure.mp3';
+    failureAudio.src = "./audio/failure.mp3";
     failureAudio.play();
-    resultWrapper.innerHTML = 'KEEP TRYING! NEXT TIME YOU WILL WIN!';
-    resultWrapper.innerHTML = 'WRONG ANSWERS: ' + wrongAnswers.length;
+    resultWrapper.innerHTML = "KEEP TRYING! NEXT TIME YOU WILL WIN!";
+    resultWrapper.innerHTML = "WRONG ANSWERS: " + wrongAnswers.length;
     let imgFailure = document.createElement("img");
-    imgFailure.classList.add('result-img');
-    imgFailure.src = './img/icons/failure.jpg';
+    imgFailure.classList.add("result-img");
+    imgFailure.src = "./img/icons/failure.jpg";
     resultWrapper.appendChild(imgFailure);
   }
   setTimeout(mainPage, 4000);
   currentIndex = 0;
   wrongAnswers = [];
   check();
+  saveStatisticToLS();
 }
 
-function mainPage() {
-  wrapper.innerHTML = '';
-  loadCards(cards[0]);
-}
-
-logo.addEventListener('click', mainPage);
 /*
 Statistic
 */
-const statisticLink = document.querySelector('.statistic');
-const headers = ['№', 'Words', 'Translation', 'Categories', 'Trained', 'Correct', 'Incorrect', '%'];
-let numberCounter = 1;
-function showStatistic() {
-  wrapper.innerHTML = '';
-  starsWrapper.innerHTML = '';
-  numberCounter = 1;
-  let difficultWords = document.createElement('button');
-  difficultWords.innerHTML = 'Repeat difficult words';
-  difficultWords.classList.add('statistic-btn');
-  difficultWords.classList.add('repeat-words');
-  starsWrapper.appendChild(difficultWords);
-  let reset = document.createElement('button');
-  reset.innerHTML = 'Reset';
-  reset.classList.add('statistic-btn');
-  reset.classList.add('reset');
-  starsWrapper.appendChild(reset);
-  let table = document.createElement('table');
-  table.classList.add('statistic-table');
-  wrapper.appendChild(table);
-  let row = document.createElement('tr');
-  table.appendChild(row);
-  for (let i = 0; i < headers.length; i++) {
-    let tableHeader = document.createElement('th');
-    tableHeader.innerHTML = headers[i];
-    row.appendChild(tableHeader);
-    for (let j = 0; j < 8; j++) {
-      let tableRow = document.createElement('tr');
-      tableRow.innerHTML = `
-        <td>${numberCounter}</td>
-        <td>${cards[i+1][j].word}</td>
-        <td>${cards[i+1][j].translation}</td>
-        <td>${cards[0][i]}</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      `;
-      table.appendChild(tableRow);
-      numberCounter +=1;
-    }
-  } 
+document.querySelector(".statistic").addEventListener("click", function () {
+  wrapper.innerHTML = "";
+  starsWrapper.innerHTML = "";
+  let gridView = new GridView();
+  gridView.attribute = [
+    "№",
+    "Words",
+    "Translation",
+    "Categories",
+    "Trained",
+    "Correct",
+    "Incorrect",
+    "%",
+  ];
+  gridView.data = cards;
+  gridView.render();
+  document.querySelectorAll("a").forEach((link) => {
+    link.classList.remove("active");
+  });
+});
+
+/*
+function wrongAnswersStatistic(incorrect, correct) {
+  let result = (incorrect / correct) * 100;
+  if (result > 100) {
+    return 100;
+  }
+  return Math.round(result);
+}*/
+
+// Check basket in the localStorage
+function checkStatistic() {
+  if (localStorage.getItem("statistic") !== null) {
+    statistic = JSON.parse(localStorage.getItem("statistic"));
+  }
 }
 
-statisticLink.addEventListener('click', showStatistic);
+// Save statistic to localStorage
+function saveStatisticToLS() {
+  localStorage.setItem("statistic", JSON.stringify(statistic));
+  //location.reload();
+}
