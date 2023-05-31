@@ -4,6 +4,7 @@ export class GridView {
    * @param [array] data
    * @param [array] attribute
    * @param 'string' _element
+   * @param {object} stat
    */
 
   constructor() {
@@ -14,6 +15,7 @@ export class GridView {
    * Method for show GridViewTable
    */
   render() {
+    console.log(this.stat);
     let numberCounter = 1;
     // show table
     const table = document.createElement("table");
@@ -41,13 +43,25 @@ export class GridView {
         tableDataCatrgory.innerHTML = this.data[0][i];
         tableRow.appendChild(tableDataCatrgory);
         let tableDataTrained = document.createElement("td");
-        tableDataTrained.innerHTML = 0;
+        if (this.stat[this.data[i + 1][j].word] == undefined) {
+          tableDataTrained.innerHTML = 0;
+        } else {
+          tableDataTrained.innerHTML = this.stat[this.data[i + 1][j].word].trained;
+        }
         tableRow.appendChild(tableDataTrained);
         let tableDataCorrect = document.createElement("td");
-        tableDataCorrect.innerHTML = 0;
+        if (this.stat[this.data[i + 1][j].word] == undefined) {
+          tableDataCorrect.innerHTML = 0;
+        } else {
+          tableDataCorrect.innerHTML = this.stat[this.data[i + 1][j].word].correct;
+        }        
         tableRow.appendChild(tableDataCorrect);
         let tableDataIncorrect = document.createElement("td");
-        tableDataIncorrect.innerHTML = 0;
+        if (this.stat[this.data[i + 1][j].word] == undefined) {
+          tableDataIncorrect.innerHTML = 0;
+        } else {
+          tableDataIncorrect.innerHTML = this.stat[this.data[i + 1][j].word].incorrect;
+        }
         tableRow.appendChild(tableDataIncorrect);
         let tableDataStat = document.createElement("td");
         tableDataStat.innerHTML = 0;

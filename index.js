@@ -8,7 +8,6 @@ import { WordCards } from "./class/WordCards.js";
 const body = document.body;
 let statistic = {};
 checkStatistic();
-console.log(statistic);
 const wrapper = document.querySelector(".card-wrapper");
 let menuLinks = document.querySelectorAll(".cards-menu");
 const logo = document.querySelector(".logo");
@@ -16,6 +15,8 @@ const starsWrapper = document.querySelector(".stars-wrapper");
 mainPage();
 
 function loadCards(data, dataset = "Main") {
+  checkStatistic();
+  console.log(statistic);
   starsWrapper.innerHTML = "";
   let titleCard = 0;
   for (let i = 0; i < 8; i++) {
@@ -45,8 +46,11 @@ function loadCards(data, dataset = "Main") {
       card.setAttribute("data-about", dataset);
       card.addEventListener("mouseleave", removeRotation);
       card.addEventListener("click", playAudio);
-      //statistic[data[i].word] = {'translation': data[i].translation, 'categories': card.dataset.about, 'trained': 0, 'correct': 0, 'incorrect': 0};
-      //saveStatisticToLS();
+      if (statistic[data[i].word] == undefined) {
+        statistic[data[i].word] = {'translation': data[i].translation, 'categories': card.dataset.about, 'trained': 0, 'correct': 0, 'incorrect': 0, '%': 0};
+      }      
+      console.log(statistic[data[i].word]);
+      saveStatisticToLS();
       document.querySelectorAll(".card-image").forEach((img) => {
         img.classList.add("play-image");
         img.addEventListener("click", handleCardClick);
@@ -128,9 +132,9 @@ function playAudio() {
     let audio = new Audio();
     audio.src = datas[id].audioSrc;
     audio.play();
-    //statistic[datas[id].word].trained += 1;
-    //saveStatisticToLS();
-    //checkStatistic();
+    checkStatistic();
+    statistic[datas[id].word].trained += 1;
+    saveStatisticToLS();
   }
 }
 /*
@@ -225,7 +229,6 @@ startButton.addEventListener("click", StartGame);
 /*
 Start the game
 */
-
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -265,8 +268,7 @@ function handleCardClick(event) {
     const clickedWord = event.target.getAttribute("alt");
 
     if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
-      //statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
-      //console.log(statistic[array[arrayOfIndex[currentIndex]].word].correct);
+      statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
       clickedImg.style.opacity = "0.5";
       let starWin = document.createElement("img");
       starWin.classList.add("star");
@@ -285,7 +287,7 @@ function handleCardClick(event) {
         setTimeout(EndTheGame, 2000);
       }
     } else {
-      //statistic[array[currentIndex].word].incorrect += 1;
+      statistic[array[currentIndex].word].incorrect += 1;
       wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
       console.log(wrongAnswers);
       let star = document.createElement("img");
@@ -347,6 +349,8 @@ function EndTheGame() {
 Statistic
 */
 document.querySelector(".statistic").addEventListener("click", function () {
+  saveStatisticToLS();
+  checkStatistic();
   wrapper.innerHTML = "";
   starsWrapper.innerHTML = "";
   let gridView = new GridView();
@@ -361,6 +365,7 @@ document.querySelector(".statistic").addEventListener("click", function () {
     "%",
   ];
   gridView.data = cards;
+  gridView.stat = statistic;
   gridView.render();
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
