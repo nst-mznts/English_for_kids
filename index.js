@@ -179,6 +179,7 @@ const train = document.querySelector(".train");
 const play = document.querySelector(".play");
 const footer = document.querySelector("footer");
 const startButton = document.querySelector(".start");
+let arrayOfIndex = [];
 
 function check() {
   if (toggleType.checked) {
@@ -215,6 +216,7 @@ function check() {
       card.style.height = "235px";
       card.removeEventListener("click", playAudio);
     });
+    arrayOfIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
   }
 }
 
@@ -223,6 +225,15 @@ startButton.addEventListener("click", StartGame);
 /*
 Start the game
 */
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 const startIcon = document.querySelector(".start-icon");
 let currentIndex = 0;
 let audioElement = null;
@@ -238,7 +249,7 @@ function StartGame() {
     if (audioElement === null) {
       audioElement = new Audio();
     }
-    audioElement.src = array[currentIndex].audioSrc;
+    audioElement.src = array[arrayOfIndex[currentIndex]].audioSrc;
     audioElement.play();
   }
 }
@@ -253,9 +264,9 @@ function handleCardClick(event) {
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
 
-    if (clickedWord === array[currentIndex].word) {
-      //statistic[array[currentIndex].word].correct += 1;
-      //console.log(statistic[array[currentIndex].word].correct);
+    if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
+      //statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
+      //console.log(statistic[array[arrayOfIndex[currentIndex]].word].correct);
       clickedImg.style.opacity = "0.5";
       let starWin = document.createElement("img");
       starWin.classList.add("star");
@@ -275,7 +286,7 @@ function handleCardClick(event) {
       }
     } else {
       //statistic[array[currentIndex].word].incorrect += 1;
-      wrongAnswers.push(array[currentIndex].word);
+      wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
       console.log(wrongAnswers);
       let star = document.createElement("img");
       star.classList.add("star");
@@ -297,15 +308,6 @@ cardElements.forEach(function (cardElement) {
   cardElement.addEventListener("click", handleCardClick);
 });
 
-/*
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-*/
 function EndTheGame() {
   starsWrapper.innerHTML = "";
   wrapper.innerHTML = "";
