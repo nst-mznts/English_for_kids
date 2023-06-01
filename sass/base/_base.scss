@@ -211,7 +211,7 @@ td {
 
 .statistic-btn {
     padding: 6px;
-    color: $color-text;
+    color: $color-card;
     font-size: 18px;
     font-weight: 400;
     margin-right: 20px;
@@ -234,4 +234,5 @@ td {
 
 .repeat-words:hover, .reset:hover {
     cursor: pointer;
+    opacity: 0.8;
 }

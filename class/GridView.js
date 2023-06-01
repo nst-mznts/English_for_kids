@@ -8,8 +8,9 @@ export class GridView {
    */
 
   constructor() {
-    this._element = '.card-wrapper';
+    this._element = ".card-wrapper";
     this.attribute = [];
+    this.stat = {};
   }
   /**
    * Method for show GridViewTable
@@ -30,6 +31,7 @@ export class GridView {
       for (let j = 0; j < this.data.length - 1; j++) {
         let tableRow = document.createElement("tr");
         table.appendChild(tableRow);
+
         let tableDataCounter = document.createElement("td");
         tableDataCounter.innerHTML = numberCounter;
         tableRow.appendChild(tableDataCounter);
@@ -46,25 +48,32 @@ export class GridView {
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataTrained.innerHTML = 0;
         } else {
-          tableDataTrained.innerHTML = this.stat[this.data[i + 1][j].word].trained;
+          tableDataTrained.innerHTML =
+            this.stat[this.data[i + 1][j].word].trained;
         }
         tableRow.appendChild(tableDataTrained);
         let tableDataCorrect = document.createElement("td");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataCorrect.innerHTML = 0;
         } else {
-          tableDataCorrect.innerHTML = this.stat[this.data[i + 1][j].word].correct;
-        }        
+          tableDataCorrect.innerHTML =
+            this.stat[this.data[i + 1][j].word].correct;
+        }
         tableRow.appendChild(tableDataCorrect);
         let tableDataIncorrect = document.createElement("td");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataIncorrect.innerHTML = 0;
         } else {
-          tableDataIncorrect.innerHTML = this.stat[this.data[i + 1][j].word].incorrect;
+          tableDataIncorrect.innerHTML =
+            this.stat[this.data[i + 1][j].word].incorrect;
         }
         tableRow.appendChild(tableDataIncorrect);
         let tableDataStat = document.createElement("td");
-        tableDataStat.innerHTML = 0;
+        if (this.stat[this.data[i + 1][j].word] == undefined) {
+          tableDataStat.innerHTML = 0;
+        } else {
+          tableDataStat.innerHTML = this.stat[this.data[i + 1][j].word].percent;
+        }
         tableRow.appendChild(tableDataStat);
         numberCounter += 1;
       }

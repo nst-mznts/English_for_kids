@@ -47,8 +47,15 @@ function loadCards(data, dataset = "Main") {
       card.addEventListener("mouseleave", removeRotation);
       card.addEventListener("click", playAudio);
       if (statistic[data[i].word] == undefined) {
-        statistic[data[i].word] = {'translation': data[i].translation, 'categories': card.dataset.about, 'trained': 0, 'correct': 0, 'incorrect': 0, '%': 0};
-      }      
+        statistic[data[i].word] = {
+          translation: data[i].translation,
+          categories: card.dataset.about,
+          trained: 0,
+          correct: 0,
+          incorrect: 0,
+          percent: 0,
+        };
+      }
       console.log(statistic[data[i].word]);
       saveStatisticToLS();
       document.querySelectorAll(".card-image").forEach((img) => {
@@ -348,11 +355,27 @@ function EndTheGame() {
 /*
 Statistic
 */
-document.querySelector(".statistic").addEventListener("click", function () {
+
+function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
   wrapper.innerHTML = "";
   starsWrapper.innerHTML = "";
+  let difficultWords = document.createElement('button');
+  difficultWords.innerHTML = 'Repeat difficult words';
+  difficultWords.classList.add('statistic-btn');
+  difficultWords.classList.add('repeat-words');
+  starsWrapper.appendChild(difficultWords);
+  let reset = document.createElement('button');
+  reset.innerHTML = 'Reset';
+  reset.classList.add('statistic-btn');
+  reset.classList.add('reset');
+  starsWrapper.appendChild(reset);
+  reset.addEventListener("click", function () {
+    statistic = {};
+    saveStatisticToLS();
+    showStatistic();
+  });
   let gridView = new GridView();
   gridView.attribute = [
     "№",
@@ -370,8 +393,8 @@ document.querySelector(".statistic").addEventListener("click", function () {
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
   });
-});
-
+};
+document.querySelector(".statistic").addEventListener("click", showStatistic);
 /*
 function wrongAnswersStatistic(incorrect, correct) {
   let result = (incorrect / correct) * 100;
