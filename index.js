@@ -16,7 +16,6 @@ mainPage();
 
 function loadCards(data, dataset = "Main") {
   checkStatistic();
-  console.log(statistic);
   starsWrapper.innerHTML = "";
   let titleCard = 0;
   for (let i = 0; i < 8; i++) {
@@ -54,9 +53,9 @@ function loadCards(data, dataset = "Main") {
           correct: 0,
           incorrect: 0,
           percent: 0,
+          img: data[i].image,
         };
       }
-      console.log(statistic[data[i].word]);
       saveStatisticToLS();
       document.querySelectorAll(".card-image").forEach((img) => {
         img.classList.add("play-image");
@@ -255,6 +254,7 @@ function StartGame() {
     startIcon.setAttribute("alt", "repeat");
     let dataAttribute = document.querySelector("a.active").dataset.about;
     let array = getArray(dataAttribute);
+    console.log(array);
 
     if (audioElement === null) {
       audioElement = new Audio();
@@ -277,6 +277,7 @@ function handleCardClick(event) {
     if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
       statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
       clickedImg.style.opacity = "0.5";
+      clickedImg.removeEventListener("click", handleCardClick);
       let starWin = document.createElement("img");
       starWin.classList.add("star");
       starWin.src = "./img/icons/star-win.svg";
@@ -310,7 +311,6 @@ function handleCardClick(event) {
     checkStatistic();
   }
 }
-
 const cardElements = document.querySelectorAll(".play-image");
 
 cardElements.forEach(function (cardElement) {
@@ -355,21 +355,54 @@ function EndTheGame() {
 /*
 Statistic
 */
+function repeatDifficultWords() {
+  starsWrapper.innerHTML = "";
+  wrapper.innerHTML = "";
+  checkStatistic();
+  let count = 0;
+  let titleCard = 1;
+  console.log(statistic);
+  for (let key in statistic) {
+    if (statistic[key].percent != 0 && count < 8) {
+      let card = new WordCards(
+        statistic[key].img,
+        key,
+        titleCard,
+        key.toUpperCase(),
+        count,
+        statistic[key].categories
+      ).makeCard();
+      card.classList.add("play-card");
+      card.setAttribute("data-about", statistic[key].categories);
+      card.addEventListener("mouseleave", removeRotation);
+      card.addEventListener("click", playAudio);
+      document.querySelectorAll(".card-image").forEach((img) => {
+        img.classList.add("play-image");
+        img.addEventListener("click", handleCardClick);
+      });
+      document.querySelectorAll(".rotate-icon").forEach((icon) => {
+        icon.addEventListener("click", rotation);
+      });
+    }
+    count += 1;
+  }
+}
 
 function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
   wrapper.innerHTML = "";
   starsWrapper.innerHTML = "";
-  let difficultWords = document.createElement('button');
-  difficultWords.innerHTML = 'Repeat difficult words';
-  difficultWords.classList.add('statistic-btn');
-  difficultWords.classList.add('repeat-words');
+  let difficultWords = document.createElement("button");
+  difficultWords.innerHTML = "Repeat difficult words";
+  difficultWords.classList.add("statistic-btn");
+  difficultWords.classList.add("repeat-words");
   starsWrapper.appendChild(difficultWords);
-  let reset = document.createElement('button');
-  reset.innerHTML = 'Reset';
-  reset.classList.add('statistic-btn');
-  reset.classList.add('reset');
+  difficultWords.addEventListener("click", repeatDifficultWords);
+  let reset = document.createElement("button");
+  reset.innerHTML = "Reset";
+  reset.classList.add("statistic-btn");
+  reset.classList.add("reset");
   starsWrapper.appendChild(reset);
   reset.addEventListener("click", function () {
     statistic = {};
@@ -393,17 +426,107 @@ function showStatistic() {
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
   });
-};
+  document.querySelectorAll(".string").forEach((header) => {
+    header.addEventListener("click", function () {
+      sortTable(this.id);
+    });
+  });
+  document.querySelectorAll(".number").forEach((header) => {
+    header.addEventListener("click", function () {
+      sortNumberTable(this.id);
+    });
+  });
+}
 document.querySelector(".statistic").addEventListener("click", showStatistic);
-/*
-function wrongAnswersStatistic(incorrect, correct) {
-  let result = (incorrect / correct) * 100;
-  if (result > 100) {
-    return 100;
+function sortNumberTable(n) {
+  let table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.querySelector("#table");
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
   }
-  return Math.round(result);
-}*/
+}
 
+function sortTable(n) {
+  let table,
+    rows,
+    switching,
+    i,
+    x,
+    y,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  table = document.querySelector("#table");
+  switching = true;
+  dir = "asc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
 // Check basket in the localStorage
 function checkStatistic() {
   if (localStorage.getItem("statistic") !== null) {

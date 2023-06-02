@@ -21,17 +21,33 @@ export class GridView {
     // show table
     const table = document.createElement("table");
     table.classList.add("statistic-table");
+    table.id = "table";
+    let thead = document.createElement("thead");
+    table.appendChild(thead);
+    let tbody = document.createElement("tbody");
+    table.appendChild(tbody);
     let row = document.createElement("tr");
-    table.appendChild(row);
+    thead.appendChild(row);
     // draw table
     for (let i = 0; i < this.attribute.length; i++) {
       let tableHeader = document.createElement("th");
       tableHeader.innerHTML = this.attribute[i];
+      tableHeader.id = i;
+      if (
+        tableHeader.id == 0 ||
+        tableHeader.id == 4 ||
+        tableHeader.id == 5 ||
+        tableHeader.id == 6 ||
+        tableHeader.id == 7
+      ) {
+        tableHeader.classList.add("number");
+      } else {
+        tableHeader.classList.add("string");
+      }
       row.appendChild(tableHeader);
       for (let j = 0; j < this.data.length - 1; j++) {
         let tableRow = document.createElement("tr");
-        table.appendChild(tableRow);
-
+        tbody.appendChild(tableRow);
         let tableDataCounter = document.createElement("td");
         tableDataCounter.innerHTML = numberCounter;
         tableRow.appendChild(tableDataCounter);
@@ -72,7 +88,16 @@ export class GridView {
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataStat.innerHTML = 0;
         } else {
-          tableDataStat.innerHTML = this.stat[this.data[i + 1][j].word].percent;
+          let percent = Math.round(
+            (this.stat[this.data[i + 1][j].word].incorrect /
+              this.stat[this.data[i + 1][j].word].correct) *
+            100
+          );
+          if (percent > 100) {
+            tableDataStat.innerHTML = 100;
+          } else {
+            tableDataStat.innerHTML = percent;
+          }
         }
         tableRow.appendChild(tableDataStat);
         numberCounter += 1;

@@ -182,6 +182,7 @@ footer {
 
 .statistic:hover {
   cursor: pointer;
+  transform: scale(0.95);
 }
 
 .statistic-icon {
@@ -221,6 +222,11 @@ th {
   padding: 6px;
 }
 
+th:hover {
+  background-color: #87C159;
+  cursor: pointer;
+}
+
 tr:nth-child(even) {
   background-color: #FFF0CC;
 }
@@ -235,7 +241,7 @@ td {
 
 .statistic-btn {
   padding: 6px;
-  color: #FFFFFF;
+  color: #333333;
   font-size: 18px;
   font-weight: 400;
   margin-right: 20px;
@@ -258,7 +264,7 @@ td {
 
 .repeat-words:hover, .reset:hover {
   cursor: pointer;
-  opacity: 0.8;
+  transform: scale(0.95);
 }
 
 .wrapper {
