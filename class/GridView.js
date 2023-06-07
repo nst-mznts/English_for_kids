@@ -1,4 +1,4 @@
-export class GridView {
+export default class GridView {
   /**
    * properties
    * @param [array] data
@@ -33,34 +33,28 @@ export class GridView {
       let tableHeader = document.createElement("th");
       tableHeader.innerHTML = this.attribute[i];
       tableHeader.id = i;
-      if (
-        tableHeader.id == 0 ||
-        tableHeader.id == 4 ||
-        tableHeader.id == 5 ||
-        tableHeader.id == 6 ||
-        tableHeader.id == 7
-      ) {
-        tableHeader.classList.add("number");
-      } else {
-        tableHeader.classList.add("string");
-      }
       row.appendChild(tableHeader);
       for (let j = 0; j < this.data.length - 1; j++) {
         let tableRow = document.createElement("tr");
         tbody.appendChild(tableRow);
         let tableDataCounter = document.createElement("td");
+        tableDataCounter.classList.add("number");
         tableDataCounter.innerHTML = numberCounter;
         tableRow.appendChild(tableDataCounter);
         let tableDataWord = document.createElement("td");
+        tableDataWord.classList.add("string");
         tableDataWord.innerHTML = this.data[i + 1][j].word;
         tableRow.appendChild(tableDataWord);
         let tableDataTranslation = document.createElement("td");
+        tableDataTranslation.classList.add("string");
         tableDataTranslation.innerHTML = this.data[i + 1][j].translation;
         tableRow.appendChild(tableDataTranslation);
         let tableDataCatrgory = document.createElement("td");
+        tableDataCatrgory.classList.add("string");
         tableDataCatrgory.innerHTML = this.data[0][i];
         tableRow.appendChild(tableDataCatrgory);
         let tableDataTrained = document.createElement("td");
+        tableDataTrained.classList.add("number");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataTrained.innerHTML = 0;
         } else {
@@ -69,6 +63,7 @@ export class GridView {
         }
         tableRow.appendChild(tableDataTrained);
         let tableDataCorrect = document.createElement("td");
+        tableDataCorrect.classList.add("number");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataCorrect.innerHTML = 0;
         } else {
@@ -77,6 +72,7 @@ export class GridView {
         }
         tableRow.appendChild(tableDataCorrect);
         let tableDataIncorrect = document.createElement("td");
+        tableDataIncorrect.classList.add("number");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataIncorrect.innerHTML = 0;
         } else {
@@ -85,19 +81,12 @@ export class GridView {
         }
         tableRow.appendChild(tableDataIncorrect);
         let tableDataStat = document.createElement("td");
+        tableDataStat.classList.add("number");
         if (this.stat[this.data[i + 1][j].word] == undefined) {
           tableDataStat.innerHTML = 0;
         } else {
-          let percent = Math.round(
-            (this.stat[this.data[i + 1][j].word].incorrect /
-              this.stat[this.data[i + 1][j].word].correct) *
-            100
-          );
-          if (percent > 100) {
-            tableDataStat.innerHTML = 100;
-          } else {
-            tableDataStat.innerHTML = percent;
-          }
+          tableDataStat.innerHTML = 
+            this.stat[this.data[i + 1][j].word].percent;
         }
         tableRow.appendChild(tableDataStat);
         numberCounter += 1;

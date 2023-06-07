@@ -2,8 +2,8 @@
 switch pages
 */
 import cards from "./cards.js";
-import { GridView } from "./class/GridView.js";
-import { WordCards } from "./class/WordCards.js";
+import GridView from "./class/GridView.js";
+import WordCards from "./class/WordCards.js";
 
 const body = document.body;
 let statistic = {};
@@ -273,7 +273,13 @@ function handleCardClick(event) {
     let array = getArray(dataAttribute);
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
-
+    let starsLength = document.querySelectorAll('.star');
+    console.log(starsLength.length);
+    if (starsLength.length > 22) {
+      const firstStar = document.querySelector('.star')
+      const parent = firstStar.parentNode
+      parent.removeChild(firstStar)
+    }
     if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
       statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
       clickedImg.style.opacity = "0.5";
@@ -349,6 +355,17 @@ function EndTheGame() {
   currentIndex = 0;
   wrongAnswers = [];
   check();
+  for (let key in statistic) {
+    if (statistic[key].incorrect != 0) {
+      let res = statistic[key].incorrect / statistic[key].correct;
+      let percent = Math.round(res * 100);
+      if (percent > 100) {
+        statistic[key].percent = 100;
+      } else {
+        statistic[key].percent = percent;
+      }      
+    }
+  }
   saveStatisticToLS();
 }
 
@@ -359,11 +376,11 @@ function repeatDifficultWords() {
   starsWrapper.innerHTML = "";
   wrapper.innerHTML = "";
   checkStatistic();
+  console.log(statistic);
   let count = 0;
   let titleCard = 1;
-  console.log(statistic);
   for (let key in statistic) {
-    if (statistic[key].percent != 0 && count < 8) {
+    if (statistic[key].percent != 0 && count < 13) {
       let card = new WordCards(
         statistic[key].img,
         key,
@@ -426,62 +443,14 @@ function showStatistic() {
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
   });
-  document.querySelectorAll(".string").forEach((header) => {
+  document.querySelectorAll("th").forEach((header) => {
     header.addEventListener("click", function () {
       sortTable(this.id);
     });
   });
-  document.querySelectorAll(".number").forEach((header) => {
-    header.addEventListener("click", function () {
-      sortNumberTable(this.id);
-    });
-  });
 }
+
 document.querySelector(".statistic").addEventListener("click", showStatistic);
-function sortNumberTable(n) {
-  let table,
-    rows,
-    switching,
-    i,
-    x,
-    y,
-    shouldSwitch,
-    dir,
-    switchcount = 0;
-  table = document.querySelector("#table");
-  switching = true;
-  dir = "asc";
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      if (dir == "asc") {
-        if (Number(x.innerHTML) > Number(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (Number(x.innerHTML) < Number(y.innerHTML)) {
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      switchcount++;
-    } else {
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-}
 
 function sortTable(n) {
   let table,
@@ -504,14 +473,29 @@ function sortTable(n) {
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
       if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
+        if (x.classList.contains('number')) {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (x.classList.contains('string')) {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
         }
+       
       } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
+        if (x.classList.contains('number')) {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (x.classList.contains('string')) {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
         }
       }
     }
@@ -527,7 +511,7 @@ function sortTable(n) {
     }
   }
 }
-// Check basket in the localStorage
+// Check statistic in the localStorage
 function checkStatistic() {
   if (localStorage.getItem("statistic") !== null) {
     statistic = JSON.parse(localStorage.getItem("statistic"));

@@ -1,4 +1,4 @@
-export class WordCards {
+export default class WordCards {
   constructor(imgSrc, imgAlt, titleCard, word, id, dataset) {
     this.imgSrc = imgSrc;
     this.imgAlt = imgAlt;
