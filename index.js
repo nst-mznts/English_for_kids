@@ -273,12 +273,12 @@ function handleCardClick(event) {
     let array = getArray(dataAttribute);
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
-    let starsLength = document.querySelectorAll('.star');
+    let starsLength = document.querySelectorAll(".star");
     console.log(starsLength.length);
     if (starsLength.length > 22) {
-      const firstStar = document.querySelector('.star')
-      const parent = firstStar.parentNode
-      parent.removeChild(firstStar)
+      const firstStar = document.querySelector(".star");
+      const parent = firstStar.parentNode;
+      parent.removeChild(firstStar);
     }
     if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
       statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
@@ -363,7 +363,7 @@ function EndTheGame() {
         statistic[key].percent = 100;
       } else {
         statistic[key].percent = percent;
-      }      
+      }
     }
   }
   saveStatisticToLS();
@@ -473,25 +473,24 @@ function sortTable(n) {
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
       if (dir == "asc") {
-        if (x.classList.contains('number')) {
+        if (x.classList.contains("number")) {
           if (Number(x.innerHTML) > Number(y.innerHTML)) {
             shouldSwitch = true;
             break;
           }
-        } else if (x.classList.contains('string')) {
+        } else if (x.classList.contains("string")) {
           if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
             shouldSwitch = true;
             break;
           }
         }
-       
       } else if (dir == "desc") {
-        if (x.classList.contains('number')) {
+        if (x.classList.contains("number")) {
           if (Number(x.innerHTML) < Number(y.innerHTML)) {
             shouldSwitch = true;
             break;
           }
-        } else if (x.classList.contains('string')) {
+        } else if (x.classList.contains("string")) {
           if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
             shouldSwitch = true;
             break;

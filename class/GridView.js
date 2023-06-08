@@ -1,12 +1,4 @@
 export default class GridView {
-  /**
-   * properties
-   * @param [array] data
-   * @param [array] attribute
-   * @param 'string' _element
-   * @param {object} stat
-   */
-
   constructor() {
     this._element = ".card-wrapper";
     this.attribute = [];
