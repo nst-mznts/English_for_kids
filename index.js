@@ -4,6 +4,7 @@ switch pages
 import cards from "./cards.js";
 import GridView from "./class/GridView.js";
 import WordCards from "./class/WordCards.js";
+import CategoryCards from "./class/CategoryCards.js";
 
 const body = document.body;
 let statistic = {};
@@ -17,13 +18,11 @@ mainPage();
 function loadCards(data, dataset = "Main") {
   checkStatistic();
   starsWrapper.innerHTML = "";
-  let titleCard = 0;
   for (let i = 0; i < 8; i++) {
     if (dataset == "Main") {
-      let card = new WordCards(
+      let card = new CategoryCards(
         cards[i + 1][6].image,
         cards[i + 1][6].word,
-        titleCard,
         data[i].toUpperCase(),
         i,
         dataset
@@ -36,7 +35,6 @@ function loadCards(data, dataset = "Main") {
       let card = new WordCards(
         data[i].image,
         data[i].word,
-        titleCard,
         data[i].word.toUpperCase(),
         i,
         dataset
