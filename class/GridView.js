@@ -1,12 +1,12 @@
 export default class GridView {
-  constructor() {
-    this._element = ".card-wrapper";
-    this.attribute = [];
-    this.stat = {};
+  constructor(element, attribute, stat, data) {
+    this._element = element;
+    this.attribute = attribute;
+    this.stat = stat;
+    this.data = data;
   }
   // Method for show GridViewTable
   render() {
-    console.log(this.stat);
     let numberCounter = 1;
     const table = document.createElement("table");
     table.classList.add("statistic-table");
@@ -32,7 +32,7 @@ export default class GridView {
           this.stat[this.data[i + 1][j].word].trained,
           this.stat[this.data[i + 1][j].word].correct,
           this.stat[this.data[i + 1][j].word].incorrect,
-          this.stat[this.data[i + 1][j].word].percent
+          this.stat[this.data[i + 1][j].word].percent,
         ];
         let tableRow = document.createElement("tr");
         tbody.appendChild(tableRow);
@@ -47,13 +47,10 @@ export default class GridView {
 }
 function makeTD(value) {
   let td = document.createElement("td");
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     td.classList.add("number");
-    if (value == undefined) {
-      td.innerHTML = 0;
-    }
-  } else if (typeof value === 'string') {
-    td.classList.add('string');
+  } else if (typeof value === "string") {
+    td.classList.add("string");
   }
   td.innerHTML = value;
   return td;

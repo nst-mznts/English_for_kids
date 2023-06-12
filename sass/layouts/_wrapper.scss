@@ -38,11 +38,20 @@
 	width: 300px;
 }
 
-.stars-wrapper {
-    height: 70px;
+.category-wrapper {
+    height: 30px;
     max-width: 1200px;
     display: flex;
     align-items: center;
+    margin: 16px 0 10px 0;
+}
+
+.stars-wrapper {
+    height: 50px;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .result-wrapper {

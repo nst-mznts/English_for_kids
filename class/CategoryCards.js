@@ -1,7 +1,8 @@
 import BaseCard from "./BaseCard.js";
 export default class CategoryCards extends BaseCard {
-    constructor (imgSrc, imgAlt, word, id) {
-        super(imgSrc, imgAlt, word, id);
+    constructor (imgSrc, imgAlt, id, word) {
+        super(imgSrc, imgAlt, id);
+        this.word = word;
     }
     render() {
         let card = super.makeCard();
@@ -10,5 +11,6 @@ export default class CategoryCards extends BaseCard {
         titleMain.innerText = this.word;
         titleMain.id = 'title'+ this.id;
         card.appendChild(titleMain);
+        return card;
     }
 }

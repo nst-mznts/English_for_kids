@@ -9,51 +9,59 @@ import CategoryCards from "./class/CategoryCards.js";
 const body = document.body;
 let statistic = {};
 checkStatistic();
+createStatistic();
 const wrapper = document.querySelector(".card-wrapper");
 let menuLinks = document.querySelectorAll(".cards-menu");
 const logo = document.querySelector(".logo");
 const starsWrapper = document.querySelector(".stars-wrapper");
+const categoryTitle = document.querySelector(".category-title");
 mainPage();
 
 function loadCards(data, dataset = "Main") {
   checkStatistic();
   starsWrapper.innerHTML = "";
-  for (let i = 0; i < 8; i++) {
+  categoryTitle.innerHTML = dataset;
+  for (let i = 0; i < data.length; i++) {
     if (dataset == "Main") {
-      let card = new CategoryCards(
+      let categoryCard = new CategoryCards(
         cards[i + 1][6].image,
         cards[i + 1][6].word,
-        data[i].toUpperCase(),
         i,
-        dataset
-      ).makeCard();
-      card.classList.add("main");
-      card.setAttribute("data-about", cards[0][i]);
-      card.addEventListener("click", changePage);
+        data[i].toUpperCase()
+      ).render();
+      categoryCard.classList.add("main");
+      categoryCard.setAttribute("data-about", data[i]);
+      categoryCard.addEventListener("click", changePage);
     } else {
-      titleCard = 1;
       let card = new WordCards(
         data[i].image,
         data[i].word,
-        data[i].word.toUpperCase(),
         i,
-        dataset
-      ).makeCard();
+        data[i].word.toUpperCase(),
+        dataset,
+        data[i].audioSrc,
+        data[i].translation
+      ).render();
       card.classList.add("play-card");
       card.setAttribute("data-about", dataset);
-      card.addEventListener("mouseleave", removeRotation);
-      card.addEventListener("click", playAudio);
-      if (statistic[data[i].word] == undefined) {
-        statistic[data[i].word] = {
-          translation: data[i].translation,
-          categories: card.dataset.about,
-          trained: 0,
-          correct: 0,
-          incorrect: 0,
-          percent: 0,
-          img: data[i].image,
-        };
+      if (toggleType.checked) {
+        document.querySelectorAll(".play-title").forEach((element) => {
+          element.style.display = "none";
+        });
+        document.querySelectorAll(".play-image").forEach((img) => {
+          img.style.width = "343px";
+          img.style.height = "235px";
+        });
+        document.querySelectorAll(".play-card").forEach((card) => {
+          card.style.height = "235px";
+          card.removeEventListener("click", playAudio);
+        });
+        arrayOfIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+      } else {
+        card.addEventListener("mouseleave", removeRotation);
+        card.addEventListener("click", playAudio);
       }
+      //statistic[data[i].word][categories] = card.dataset.about;
       saveStatisticToLS();
       document.querySelectorAll(".card-image").forEach((img) => {
         img.classList.add("play-image");
@@ -106,11 +114,10 @@ Rotation cards
 */
 function rotation() {
   let id = this.id;
-  let datas = getArray(this.dataset.about);
   let card = document.getElementById("card" + id);
   card.classList.add("card-rotited");
   let word = document.getElementById("title" + id);
-  word.innerText = datas[id].translation.toUpperCase();
+  word.innerText = word.dataset.translation.toUpperCase();
   let btn = document.getElementById("rotate" + id);
   btn.style.opacity = "0";
 }
@@ -119,9 +126,9 @@ function removeRotation() {
   if (this.classList.contains("card-rotited")) {
     this.classList.remove("card-rotited");
     let id = this.id[this.id.length - 1];
-    let datas = getArray(this.dataset.about);
+    let cardImg = document.getElementById("img" + id);
     let word = document.getElementById("title" + id);
-    word.innerText = datas[id].word.toUpperCase();
+    word.innerText = cardImg.alt.toUpperCase();
     let btn = document.getElementById("rotate" + id);
     btn.style.opacity = "1";
   }
@@ -130,14 +137,15 @@ function removeRotation() {
 Audio
 */
 function playAudio() {
-  let id = this.id[this.id.length - 1];
-  let datas = getArray(this.dataset.about);
   if (!this.classList.contains("card-rotited")) {
+    let id = this.id[this.id.length - 1];
+    let audioSrc = document.getElementById("audio" + id);
+    let cardImg = document.getElementById("img" + id);
     let audio = new Audio();
-    audio.src = datas[id].audioSrc;
+    audio.src = audioSrc.src;
     audio.play();
     checkStatistic();
-    statistic[datas[id].word].trained += 1;
+    statistic[cardImg.alt].trained += 1;
     saveStatisticToLS();
   }
 }
@@ -324,6 +332,7 @@ cardElements.forEach(function (cardElement) {
 function EndTheGame() {
   starsWrapper.innerHTML = "";
   wrapper.innerHTML = "";
+  categoryTitle.innerHTML = "";
   startIcon.style.backgroundImage = "url('../../img/icons/play.svg')";
   startIcon.setAttribute("alt", "start");
   const resultWrapper = document.createElement("div");
@@ -373,41 +382,35 @@ Statistic
 function repeatDifficultWords() {
   starsWrapper.innerHTML = "";
   wrapper.innerHTML = "";
+  categoryTitle.innerHTML = "Difficult words";
   checkStatistic();
   console.log(statistic);
-  let count = 0;
-  let titleCard = 1;
+  let newStat = [];
   for (let key in statistic) {
-    if (statistic[key].percent != 0 && count < 13) {
-      let card = new WordCards(
-        statistic[key].img,
-        key,
-        titleCard,
-        key.toUpperCase(),
-        count,
-        statistic[key].categories
-      ).makeCard();
-      card.classList.add("play-card");
-      card.setAttribute("data-about", statistic[key].categories);
-      card.addEventListener("mouseleave", removeRotation);
-      card.addEventListener("click", playAudio);
-      document.querySelectorAll(".card-image").forEach((img) => {
-        img.classList.add("play-image");
-        img.addEventListener("click", handleCardClick);
-      });
-      document.querySelectorAll(".rotate-icon").forEach((icon) => {
-        icon.addEventListener("click", rotation);
+    if (statistic[key].incorrect != 0) {
+      newStat.push({
+        word: key,
+        translation: statistic[key].translation,
+        image: statistic[key].img,
+        incorrect: statistic[key].incorrect,
+        audioSrc: statistic[key].audioSrc
       });
     }
-    count += 1;
+  }
+  newStat.sort((a, b) => a.incorrect < b.incorrect ? 1 : -1);
+  console.log(newStat);
+  if (newStat.length !== 0) {
+    loadCards(newStat, 'Difficult words');
   }
 }
 
 function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
+  console.log(statistic);
   wrapper.innerHTML = "";
   starsWrapper.innerHTML = "";
+  categoryTitle.innerHTML = 'Statistic';
   let difficultWords = document.createElement("button");
   difficultWords.innerHTML = "Repeat difficult words";
   difficultWords.classList.add("statistic-btn");
@@ -420,12 +423,17 @@ function showStatistic() {
   reset.classList.add("reset");
   starsWrapper.appendChild(reset);
   reset.addEventListener("click", function () {
-    statistic = {};
+    for (let key in statistic) {
+      statistic[key].trained = 0;
+      statistic[key].correct = 0;
+      statistic[key].incorrect = 0;
+      statistic[key].percent = 0;
+    }
     saveStatisticToLS();
     showStatistic();
   });
-  let gridView = new GridView();
-  gridView.attribute = [
+  
+  const attribute = [
     "№",
     "Words",
     "Translation",
@@ -435,8 +443,7 @@ function showStatistic() {
     "Incorrect",
     "%",
   ];
-  gridView.data = cards;
-  gridView.stat = statistic;
+  let gridView = new GridView(".card-wrapper", attribute, statistic, cards);
   gridView.render();
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
@@ -518,5 +525,23 @@ function checkStatistic() {
 // Save statistic to localStorage
 function saveStatisticToLS() {
   localStorage.setItem("statistic", JSON.stringify(statistic));
-  //location.reload();
+}
+
+function createStatistic() {
+  for (let i=1; i < cards.length; i++) {
+    for (let j=0; j < cards[i].length; j++) {
+      if (statistic[cards[i][j].word] == undefined) {
+        statistic[cards[i][j].word] = {
+        translation: cards[i][j].translation,
+        trained: 0,
+        correct: 0,
+        incorrect: 0,
+        percent: 0,
+        img: cards[i][j].image,
+        audioSrc: cards[i][j].audioSrc
+        };
+      }
+    }
+    saveStatisticToLS();
+  }
 }

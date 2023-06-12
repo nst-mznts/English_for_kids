@@ -28,6 +28,13 @@ h3 {
   color: #333333;
 }
 
+.category-title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #333333;
+}
+
 header {
   height: 90px;
   border-bottom: 4px solid #058240;
@@ -44,7 +51,7 @@ header {
   background-color: #058240;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 10px;
 }
 
 .link {
@@ -307,11 +314,20 @@ td {
   width: 300px;
 }
 
-.stars-wrapper {
-  height: 70px;
+.category-wrapper {
+  height: 30px;
   max-width: 1200px;
   display: flex;
   align-items: center;
+  margin: 16px 0 10px 0;
+}
+
+.stars-wrapper {
+  height: 50px;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .result-wrapper {

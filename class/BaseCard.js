@@ -1,8 +1,7 @@
 export default class BaseCard {
-    constructor (imgSrc, imgAlt, word, id) {
+    constructor (imgSrc, imgAlt, id) {
         this.imgSrc = imgSrc;
         this.imgAlt = imgAlt;
-        this.word = word;
         this.id = id;
     }
     makeCard() {
@@ -13,6 +12,7 @@ export default class BaseCard {
         let img = document.createElement("img");
         img.classList.add("card-image");
         img.src = this.imgSrc;
+        img.id = 'img' + this.id;
         img.alt = this.imgAlt;
         card.appendChild(img);
         return card;
