@@ -11,11 +11,11 @@
     height: 290px;
     overflow: hidden;
     transition: transform 0.5s;
+    cursor: pointer;
 }
 
 .card:hover {
     box-shadow: 0px 4px 17px rgba(5, 130, 64, 0.68);
-    cursor: pointer;
 }
 
 .card-rotited {

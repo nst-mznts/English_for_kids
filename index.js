@@ -258,14 +258,22 @@ function StartGame() {
   if (footer.style.height === "60px") {
     startIcon.style.backgroundImage = "url('../../img/icons/repeat.svg')";
     startIcon.setAttribute("alt", "repeat");
-    let dataAttribute = document.querySelector("a.active").dataset.about;
-    let array = getArray(dataAttribute);
+    //let dataAttribute = document.querySelector("a.active").dataset.about;
+    //let array = getArray(dataAttribute);
+    let array = [];
+    document.querySelectorAll("audio").forEach((audio) => {
+      //let src = audio.src;
+      //let result = src.replace("http://127.0.0.1:5500", ".");
+      //array.push(result);
+      array.push(audio.src);
+    });
     console.log(array);
 
     if (audioElement === null) {
       audioElement = new Audio();
     }
-    audioElement.src = array[arrayOfIndex[currentIndex]].audioSrc;
+    //audioElement.src = array[arrayOfIndex[currentIndex]].audioSrc;
+    audioElement.src = array[arrayOfIndex[currentIndex]];
     audioElement.play();
   }
 }
@@ -275,12 +283,19 @@ function handleCardClick(event) {
     footer.style.height === "60px" &&
     startIcon.getAttribute("alt") === "repeat"
   ) {
-    let dataAttribute = document.querySelector("a.active").dataset.about;
-    let array = getArray(dataAttribute);
+    //let dataAttribute = document.querySelector("a.active").dataset.about;
+    //let array = getArray(dataAttribute);
+    let array = [];
+    document.querySelectorAll("audio").forEach((audio) => {
+      //let src = audio.src;
+      //let result = src.replace("http://127.0.0.1:5500", ".");
+      //array.push(result);
+      array.push(audio.src);
+    });
+    console.log(array);
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
     let starsLength = document.querySelectorAll(".star");
-    console.log(starsLength.length);
     if (starsLength.length > 22) {
       const firstStar = document.querySelector(".star");
       const parent = firstStar.parentNode;
@@ -384,7 +399,7 @@ function repeatDifficultWords() {
   wrapper.innerHTML = "";
   categoryTitle.innerHTML = "Difficult words";
   checkStatistic();
-  console.log(statistic);
+  //console.log(statistic);
   let newStat = [];
   for (let key in statistic) {
     if (statistic[key].incorrect != 0) {
@@ -398,7 +413,7 @@ function repeatDifficultWords() {
     }
   }
   newStat.sort((a, b) => a.incorrect < b.incorrect ? 1 : -1);
-  console.log(newStat);
+  //console.log(newStat);
   if (newStat.length !== 0) {
     loadCards(newStat, 'Difficult words');
   }

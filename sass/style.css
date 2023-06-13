@@ -1,3 +1,11 @@
+.burger-line-second, .burger-line-third, .statistic-btn, .statistic, .link, h1 {
+  transition: all 0.3s ease-out;
+}
+
+footer, .sidenav-background.active {
+  transition: all 0.5s ease-in-out;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,21 +25,21 @@ h1 {
   font-family: "Neucha", cursive;
   font-style: normal;
   font-weight: 500;
-  font-size: 42px;
+  font-size: 4.2rem;
   color: #058240;
 }
 
 h3 {
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 2rem;
   color: #333333;
 }
 
 .category-title {
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 2.4rem;
   color: #333333;
 }
 
@@ -57,9 +65,10 @@ header {
 .link {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.5rem;
   color: #FFFFFF;
-  transition: 0.3s;
   display: block;
 }
 
@@ -89,7 +98,6 @@ header {
   opacity: 1;
   z-index: 9;
   pointer-events: all;
-  transition: 0.5s all;
 }
 
 footer {
@@ -98,7 +106,6 @@ footer {
   bottom: 0;
   z-index: 5;
   position: fixed;
-  transition: 0.7s;
 }
 
 .footer {
@@ -223,15 +230,16 @@ footer {
 
 th {
   background-color: #058240;
-  color: #FFFFFF;
-  font-size: 24px;
-  font-weight: 500;
   padding: 6px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.4rem;
+  color: #FFFFFF;
 }
 
 th:hover {
   background-color: #87C159;
-  cursor: pointer;
 }
 
 tr:nth-child(even) {
@@ -241,18 +249,21 @@ tr:nth-child(even) {
 td {
   text-align: center;
   padding: 6px;
-  color: #333333;
-  font-size: 18px;
+  font-style: normal;
   font-weight: 400;
+  font-size: 1.8rem;
+  color: #333333;
 }
 
 .statistic-btn {
   padding: 6px;
-  color: #333333;
-  font-size: 18px;
-  font-weight: 400;
   margin-right: 20px;
   height: 40px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.8rem;
+  color: #333333;
+  cursor: pointer;
 }
 
 .repeat-words {
@@ -270,8 +281,7 @@ td {
 }
 
 .repeat-words:hover, .reset:hover {
-  cursor: pointer;
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 .wrapper {
@@ -358,11 +368,11 @@ td {
   height: 290px;
   overflow: hidden;
   transition: transform 0.5s;
+  cursor: pointer;
 }
 
 .card:hover {
   box-shadow: 0px 4px 17px rgba(5, 130, 64, 0.68);
-  cursor: pointer;
 }
 
 .card-rotited {

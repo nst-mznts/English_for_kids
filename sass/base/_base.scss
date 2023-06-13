@@ -15,24 +15,16 @@ body {
 
 h1 {
     font-family: 'Neucha', cursive;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 42px;
-    color: $color-train-dark;
+    @include font(normal, 500, 4.2rem, $color-train-dark);
+    @extend %transition;
 }
 
 h3 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    color: $color-text;
+    @include font(normal, 600, 2rem, $color-text);
 }
 
 .category-title {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    color: $color-text;
+    @include font(normal, 400, 2.4rem, $color-text);
 }
 
 header {
@@ -57,9 +49,8 @@ header {
 .link {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: $color-card;
-    transition: 0.3s;
+    @include font(normal, 400, 2.5rem, $color-card);
+    @extend %transition;
     display: block;
 }
   
@@ -89,7 +80,7 @@ header {
     opacity: 1;
     z-index: 9;
     pointer-events: all;
-    transition: 0.5s all;
+    @extend %nav-transition;
 }
 
 footer {
@@ -98,7 +89,7 @@ footer {
     bottom: 0;
     z-index: 5;
     position: fixed;
-    transition: 0.7s;
+    @extend %nav-transition;
 }
 
 .footer {
@@ -161,6 +152,7 @@ footer {
 .statistic {
     width: 50px;
     height: 50px;
+    @extend %transition;
 }
 
 .statistic:hover {
@@ -199,15 +191,13 @@ footer {
 
 th {
     background-color: $color-train-dark;
-    color: $color-card;
-    font-size: 24px;
-    font-weight: 500;
     padding: 6px;
+    cursor: pointer;
+    @include font(normal, 500, 2.4rem, $color-card);
 }
 
 th:hover {
     background-color: $color-train-light;
-    cursor: pointer;
 }
 
 tr:nth-child(even) {
@@ -217,18 +207,16 @@ tr:nth-child(even) {
 td {
     text-align: center;
     padding: 6px;
-    color: $color-text;
-    font-size: 18px;
-    font-weight: 400;
+    @include font(normal, 400, 1.8rem, $color-text);
 }
 
 .statistic-btn {
     padding: 6px;
-    color: $color-text;
-    font-size: 18px;
-    font-weight: 400;
     margin-right: 20px;
     height: 40px;
+    @include font(normal, 400, 1.8rem, $color-text);
+    cursor: pointer;
+    @extend %transition;
 }
 
 .repeat-words {
@@ -246,6 +234,5 @@ td {
 }
 
 .repeat-words:hover, .reset:hover {
-    cursor: pointer;
-    transform: scale(0.95);
+    transform: scale(0.96);
 }

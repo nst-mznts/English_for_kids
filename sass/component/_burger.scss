@@ -23,6 +23,7 @@
 .burger-line-second,  .burger-line-third{
     top: 50%;
     transform: translateY(-50%);
+    @extend %transition;
 }
 
 .burger-line-fourth {
