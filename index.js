@@ -413,7 +413,6 @@ function repeatDifficultWords() {
     }
   }
   newStat.sort((a, b) => a.incorrect < b.incorrect ? 1 : -1);
-  //console.log(newStat);
   if (newStat.length !== 0) {
     loadCards(newStat, 'Difficult words');
   }

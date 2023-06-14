@@ -12,10 +12,9 @@
     overflow: hidden;
     transition: transform 0.5s;
     cursor: pointer;
-}
-
-.card:hover {
-    box-shadow: 0px 4px 17px rgba(5, 130, 64, 0.68);
+    &:hover {
+        box-shadow: 0px 4px 17px rgba(5, 130, 64, 0.68);
+    }
 }
 
 .card-rotited {
@@ -32,6 +31,7 @@
 
 .card-title {
     margin: 25px 0;
+    @include font(normal, 600, 2rem, $color-text);
 }
 
 .rotate-icon {
@@ -52,8 +52,8 @@
 	border-radius: 50px;
 	width: 50px;
 	height: 48px;
-}
-
-.rotate:hover {
-    background: $color-train-dark;
+    @extend %transition;
+    &:hover {
+        background: $color-train-dark;
+    }
 }

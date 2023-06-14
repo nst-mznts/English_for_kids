@@ -1,0 +1,46 @@
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 90px;
+    left: 0;
+    background-color: $color-train-dark;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 10px;
+}
+
+.link {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    @include font(normal, 400, 2.5rem, $color-card);
+    @extend %transition;
+    display: block;
+    &.active {
+        color: $color-card;
+        background-color: $color-train-light;
+    }
+    &:hover {
+        color: $color-text;
+        background-color: $color-header;
+    }
+}
+
+.sidenav-background {
+    position: fixed;
+    top: 90px;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(41, 41, 41, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s all;
+    &.active {
+        opacity: 1;
+        z-index: 9;
+        pointer-events: all;
+        @extend %nav-transition;
+    }
+}

@@ -1,9 +1,16 @@
 @import "../node_modules/normalize-scss/sass/normalize";
+
 @import "abstract/constants";
 @import "abstract/placeholders";
 @import "abstract/mixins";
+
 @import "base/base";
+@import "base/buttons";
+
 @import "layouts/wrapper";
+
 @import "component/card";
+@import "component/navigation";
 @import "component/toggle";
 @import "component/burger";
+@import "component/table";
