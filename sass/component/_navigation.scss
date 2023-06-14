@@ -7,8 +7,12 @@
     left: 0;
     background-color: $color-train-dark;
     overflow-x: hidden;
-    transition: 0.5s;
+    @extend %transition;
     padding-top: 10px;
+    @include media-mobile {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+    }
 }
 
 .link {
@@ -36,7 +40,7 @@
     background: rgba(41, 41, 41, 0.6);
     opacity: 0;
     pointer-events: none;
-    transition: 0.5s all;
+    @extend %transition;
     &.active {
         opacity: 1;
         z-index: 9;

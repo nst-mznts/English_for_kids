@@ -4,3 +4,36 @@
     font-size: $size;
     color: $color;
 }
+
+@mixin columns ($direction, $content, $items) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: $direction;
+    justify-content: $content;
+    align-items: $items;
+}
+
+@mixin icons ($url, $width, $height) {
+    background-image: url($url);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: $width;
+    height: $height;
+    display: block;
+}
+
+@mixin media-laptop {
+    @media (max-width: $content-width) { @content;}
+}
+
+@mixin media-tablet {
+    @media (max-width: $tablet-width) { @content;}
+}
+
+@mixin media-mobile {
+    @media (max-width: $mobile-big-width) { @content;}
+}
+
+@mixin media-mobilesmall {
+    @media (max-width: $mobile-small-width) { @content;}
+}

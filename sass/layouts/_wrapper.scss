@@ -1,27 +1,36 @@
 .wrapper {
-    max-width: $content-width;
+    @extend %max-width;
     margin: 0 auto;
     padding: 0 40px;
+    @include media-tablet {
+        padding: 0 20px;
+    }
 }
 
 .card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
+    @extend %max-width;
+    @include columns(row, space-between, center);
     column-gap: 40px;
     row-gap: 40px;
     padding: 0 0 70px 0;
 	margin: 0 auto;
+    @include media-tablet {
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+    @include media-mobile {
+        @include columns(column, center, center);
+    }
 }
 
 .header-wrapper {
-    display: grid;
-    grid-template-columns: 60px 1fr 80px 224px;
-    justify-content: space-between;
-    align-items: center;
+    @include columns(row, space-between, center);
     padding: 20px 0;
+}
+
+.header-wrapper-items {
+    @include columns(row, space-between, center);
+    column-gap: 20px;
 }
 
 .toggle-wrapper {
@@ -32,34 +41,27 @@
 }
 
 .title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include columns(row, space-between, center);
 	width: 300px;
 }
 
 .category-wrapper {
     height: 30px;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
+    @extend %max-width;
+    @include columns(row, start, center);
     margin: 16px 0 10px 0;
 }
 
 .stars-wrapper {
     height: 50px;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
+    @extend %max-width;
+    @include columns(row, start, center);
     margin-bottom: 10px;
 }
 
 .result-wrapper {
-    display: flex;
-    flex-direction: column;
+    @include columns(column, center, center);
     row-gap: 40px;
-    align-items: center;
-    justify-content: center;
 	width: 40%;
     font-size: 30px;
     font-weight: 400;

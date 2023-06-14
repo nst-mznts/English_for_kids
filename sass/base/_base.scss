@@ -6,11 +6,11 @@
 
 html {
     font-size: 10px;
-    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: $color-background;
+    font-family: 'Roboto', sans-serif;
+    @include font(normal, 400, 1.6rem, $color-text);
 }
 
 header {
@@ -24,9 +24,16 @@ header {
     @include font(normal, 500, 4.2rem, $color-train-dark);
     @extend %transition;
     cursor: pointer;
+    @include media-mobile {
+        display: none;
+    }
     &:hover {
         color: $color-train-light;
     }
+}
+
+main {
+    background-color: $color-background;
 }
 
 .category-title {
@@ -50,11 +57,6 @@ footer {
     justify-content: center;
     border-top: 4px solid $color-play-dark;
     background-color: $color-play-light;
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
 }
 
 .star {

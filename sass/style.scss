@@ -1,14 +1,20 @@
+// Normalize
 @import "../node_modules/normalize-scss/sass/normalize";
 
+// Abstract
 @import "abstract/constants";
 @import "abstract/placeholders";
 @import "abstract/mixins";
 
+// Base
 @import "base/base";
 @import "base/buttons";
+@import "base/icons";
 
+// Layouts
 @import "layouts/wrapper";
 
+// Component
 @import "component/card";
 @import "component/navigation";
 @import "component/toggle";
