@@ -10,9 +10,10 @@
     @extend %transition;
     padding-top: 10px;
     @include media-mobile {
+        top: 70px;
         .sidenav {padding-top: 15px;}
         .sidenav a {font-size: 18px;}
-    }
+    };
 }
 
 .link {
@@ -24,11 +25,11 @@
     &.active {
         color: $color-card;
         background-color: $color-train-light;
-    }
+    };
     &:hover {
         color: $color-text;
         background-color: $color-header;
-    }
+    };
 }
 
 .sidenav-background {
@@ -41,10 +42,13 @@
     opacity: 0;
     pointer-events: none;
     @extend %transition;
+    @include media-mobile {
+        top: 70px;
+    };
     &.active {
         opacity: 1;
         z-index: 9;
         pointer-events: all;
         @extend %nav-transition;
-    }
+    };
 }

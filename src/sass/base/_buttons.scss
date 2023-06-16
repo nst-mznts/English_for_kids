@@ -5,7 +5,11 @@
     cursor: pointer;
     &:hover {
         transform: scale(0.95);
-    }
+    };
+    @include media-mobile {
+        width: 40px;
+        height: 40px;
+    };
 }
 
 .start {
@@ -23,7 +27,10 @@
     &:hover {
         animation: shake 0.5s;
         animation-iteration-count: infinite;
-    }
+        @include media-mobile {
+            animation: none;
+        };
+    };
 }
 
 @keyframes shake {
@@ -42,7 +49,7 @@
 
 .statistic-btn {
     padding: 6px;
-    margin-right: 20px;
+    margin-right: 8px;
     height: 40px;
     box-shadow: 0 3px 4px 0 rgba(0,0,0,.3);
     background-color: transparent;
@@ -52,20 +59,40 @@
     @include font(normal, 500, 1.8rem, $color-card);
     cursor: pointer;
     @extend %btn-transition;
+    @include media-mobile {
+        @include font(normal, 500, 1.6rem, $color-card);
+        height: 30px;
+    };
+    @include media-mobilesmall {
+        @include font(normal, 500, 1.4rem, $color-card);
+        height: 30px;
+    };
 }
 
 .repeat-words {
     background-image: linear-gradient(-106deg,$color-train-dark,$color-play-dark);
     width: 200px;
+    @include media-mobile {
+        width: 180px;
+    };
+    @include media-mobilesmall {
+        width: 170px;
+    };
     &:hover {
         background-image: linear-gradient(160deg,$color-train-dark,$color-play-dark);
-    }
+    };
 }
 
 .reset {
     background-image: linear-gradient(-106deg,$color-additional,$color-play-dark);
-    width: 90px; 
+    width: 90px;
+    @include media-mobile {
+        width: 80px;
+    };
+    @include media-mobilesmall {
+        width: 70px;
+    };
     &:hover {
         background-image: linear-gradient(160deg,$color-additional,$color-play-dark);
-    }
+    };
 }

@@ -3,6 +3,10 @@
     height: 40px;
     cursor: pointer;
     position: relative;
+    @include media-mobile {
+        width: 30px;
+        height: 30px;
+    };
 }
 
 .burger-line {

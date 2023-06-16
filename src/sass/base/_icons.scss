@@ -1,0 +1,40 @@
+.statistic-icon {
+    @include icons('../../../src/assets/img/icons/statistic.svg', 100%, 100%);
+}
+
+.rotate-icon {
+    @include icons('../../../src/assets/img/icons/rotate.svg', 70%, 70%);
+    padding-top: 6px;
+}
+
+.start-icon {
+    @include icons('../../../src/assets/img/icons/play.svg', 50%, 50%);
+}
+
+.th-icon {
+    height: 25px;
+    width: 25px;
+    margin-right: 6px;
+    @include media-tablet {
+        height: 20px;
+        width: 20px;
+        margin-right: 0;
+    };
+    @include media-mobile {
+        height: 18px;
+        width: 18px;
+        margin-right: 0;
+    };
+}
+
+.train-icon {
+    @include statistic-icons('../../../src/assets/img/icons/train-icon.svg');
+}
+
+.correct-icon {
+    @include statistic-icons('../../../src/assets/img/icons/correct-icon.svg');
+}
+
+.wrong-icon {
+    @include statistic-icons('../../../src/assets/img/icons/wrong-icon.svg');
+}

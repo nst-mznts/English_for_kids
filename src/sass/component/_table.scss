@@ -1,0 +1,62 @@
+.statistic-table {
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.25);
+}
+
+th {
+    background-color: $color-train-dark;
+    padding: 6px;
+    cursor: pointer;
+    @include media-mobile {
+        padding: 3px;
+    };
+    @include media-mobilesmall {
+        padding: 1.5px;
+    };
+    &:hover {
+        background-color: $color-train-light;
+    };
+}
+
+.th-title {
+    width: 100%;
+    @include font(normal, 500, 2.2rem, $color-card);
+    @include media-tablet {
+        @include font(normal, 500, 1.8rem, $color-card);
+    };
+    @include media-mobile {
+        @include font(normal, 400, 1.4rem, $color-card);
+    };
+}
+
+.th-title-hidden {
+    @include media-tablet {
+        display: none;
+    };
+    @include media-mobile {
+        display: none;
+    };
+}
+
+tr:nth-child(even) {
+    background-color: $color-play-light;
+}
+
+td {
+    text-align: center;
+    padding: 6px;
+    @include font(normal, 400, 1.8rem, $color-text);
+    @include media-tablet {
+        @include font(normal, 400, 1.6rem, $color-text);
+        padding: 4px;
+    };
+    @include media-mobile {
+        @include font(normal, 400, 1.4rem, $color-text);
+        padding: 3px;
+    };
+    @include media-mobilesmall {
+        @include font(normal, 400, 1.2rem, $color-text);
+        padding: 1.5px;
+    };
+}

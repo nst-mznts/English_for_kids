@@ -17,6 +17,9 @@ header {
     height: 90px;
     border-bottom: 4px solid $color-train-dark;
     background-color: $color-header;
+    @include media-mobile {
+        height: 70px;
+    };
 }
 
 .logo {
@@ -26,10 +29,10 @@ header {
     cursor: pointer;
     @include media-mobile {
         display: none;
-    }
+    };
     &:hover {
         color: $color-train-light;
-    }
+    };
 }
 
 main {
@@ -38,6 +41,9 @@ main {
 
 .category-title {
     @include font(normal, 400, 2.4rem, $color-text);
+    @include media-mobile {
+        @include font(normal, 400, 1.8rem, $color-text);
+    };
 }
 
 footer {
@@ -62,6 +68,10 @@ footer {
 .star {
     height: 48px;
     width: 48px;
+    @include media-mobile {
+        height: 28px;
+        width: 28px;
+    };
 }
 
 .result-img {

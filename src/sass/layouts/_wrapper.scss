@@ -4,7 +4,10 @@
     padding: 0 40px;
     @include media-tablet {
         padding: 0 20px;
-    }
+    };
+    @include media-mobilesmall {
+        padding: 0 10px;
+    };
 }
 
 .card-wrapper {
@@ -17,15 +20,21 @@
     @include media-tablet {
         column-gap: 20px;
         row-gap: 20px;
-    }
+    };
     @include media-mobile {
         @include columns(column, center, center);
-    }
+    };
+    @include media-mobilesmall {
+        row-gap: 20px;
+    };
 }
 
 .header-wrapper {
     @include columns(row, space-between, center);
     padding: 20px 0;
+    @include media-mobilesmall {
+        padding: 10px 0;
+    };
 }
 
 .header-wrapper-items {
@@ -42,21 +51,23 @@
 
 .title-wrapper {
     @include columns(row, space-between, center);
-	width: 300px;
+	width: 250px;
 }
 
 .category-wrapper {
-    height: 30px;
     @extend %max-width;
     @include columns(row, start, center);
-    margin: 16px 0 10px 0;
+    padding: 16px 0 10px 0;
 }
 
 .stars-wrapper {
     height: 50px;
     @extend %max-width;
     @include columns(row, start, center);
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    @include media-mobile {
+        height: 30px;
+    };
 }
 
 .result-wrapper {
@@ -69,4 +80,8 @@
     color: $color-text;
     margin: 90px auto;
     padding: 20px;
+}
+
+.th-wrapper {
+    @include columns(row, center, center);
 }

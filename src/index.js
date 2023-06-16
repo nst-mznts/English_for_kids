@@ -1,10 +1,10 @@
 /*
 switch pages
 */
-import cards from "./cards.js";
-import GridView from "./class/GridView.js";
-import WordCards from "./class/WordCards.js";
-import CategoryCards from "./class/CategoryCards.js";
+import cards from "./js/cards.js";
+import GridView from "./js/class/GridView.js";
+import WordCards from "./js/class/WordCards.js";
+import CategoryCards from "./js/class/CategoryCards.js";
 
 const body = document.body;
 let statistic = {};
@@ -208,11 +208,11 @@ function check() {
       element.style.display = "flex";
     });
     document.querySelectorAll(".play-image").forEach((img) => {
-      img.style.width = "323px";
-      img.style.height = "215px";
+      img.style.width = "280px";
+      img.style.height = "172px";
     });
     document.querySelectorAll(".play-card").forEach((card) => {
-      card.style.height = "290px";
+      card.style.height = "247px";
       card.addEventListener("click", playAudio);
     });
   } else {
@@ -225,11 +225,11 @@ function check() {
       element.style.display = "none";
     });
     document.querySelectorAll(".play-image").forEach((img) => {
-      img.style.width = "343px";
-      img.style.height = "235px";
+      img.style.width = "280px";
+      img.style.height = "192px";
     });
     document.querySelectorAll(".play-card").forEach((card) => {
-      card.style.height = "235px";
+      card.style.height = "192px";
       card.removeEventListener("click", playAudio);
     });
     arrayOfIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
@@ -256,7 +256,7 @@ let wrongAnswers = [];
 
 function StartGame() {
   if (footer.style.height === "60px") {
-    startIcon.style.backgroundImage = "url('../../img/icons/repeat.svg')";
+    startIcon.style.backgroundImage = "url('../src/assets/img/icons/repeat.svg')";
     startIcon.setAttribute("alt", "repeat");
     //let dataAttribute = document.querySelector("a.active").dataset.about;
     //let array = getArray(dataAttribute);
@@ -307,11 +307,11 @@ function handleCardClick(event) {
       clickedImg.removeEventListener("click", handleCardClick);
       let starWin = document.createElement("img");
       starWin.classList.add("star");
-      starWin.src = "./img/icons/star-win.svg";
+      starWin.src = "../src/assets/img/icons/star-win.svg";
       starWin.alt = "star";
       starsWrapper.appendChild(starWin);
       let correctAudio = new Audio();
-      correctAudio.src = "./audio/correct.mp3";
+      correctAudio.src = "../src/assets/audio/correct.mp3";
       correctAudio.play();
       currentIndex++;
 
@@ -327,11 +327,11 @@ function handleCardClick(event) {
       console.log(wrongAnswers);
       let star = document.createElement("img");
       star.classList.add("star");
-      star.src = "./img/icons/star.svg";
+      star.src = "../src/assets/img/icons/star.svg";
       star.alt = "star";
       starsWrapper.appendChild(star);
       let errorAudio = new Audio();
-      errorAudio.src = "./audio/error.mp3";
+      errorAudio.src = "../src/assets/audio/error.mp3";
       errorAudio.play();
     }
     saveStatisticToLS();
@@ -348,29 +348,29 @@ function EndTheGame() {
   starsWrapper.innerHTML = "";
   wrapper.innerHTML = "";
   categoryTitle.innerHTML = "";
-  startIcon.style.backgroundImage = "url('../../img/icons/play.svg')";
+  startIcon.style.backgroundImage = "url('../src/assets/img/icons/play.svg')";
   startIcon.setAttribute("alt", "start");
   const resultWrapper = document.createElement("div");
   resultWrapper.classList.add("result-wrapper");
   wrapper.appendChild(resultWrapper);
   if (wrongAnswers.length === 0) {
     let successAudio = new Audio();
-    successAudio.src = "./audio/success.mp3";
+    successAudio.src = "../src/assets/audio/success.mp3";
     successAudio.play();
     resultWrapper.innerHTML = "YOU WIN!";
     let imgSuccess = document.createElement("img");
     imgSuccess.classList.add("result-img");
-    imgSuccess.src = "./img/icons/success.jpg";
+    imgSuccess.src = "../src/assets/img/icons/success.jpg";
     resultWrapper.appendChild(imgSuccess);
   } else {
     let failureAudio = new Audio();
-    failureAudio.src = "./audio/failure.mp3";
+    failureAudio.src = "../src/assets/audio/failure.mp3";
     failureAudio.play();
     resultWrapper.innerHTML = "KEEP TRYING! NEXT TIME YOU WILL WIN!";
     resultWrapper.innerHTML = "WRONG ANSWERS: " + wrongAnswers.length;
     let imgFailure = document.createElement("img");
     imgFailure.classList.add("result-img");
-    imgFailure.src = "./img/icons/failure.jpg";
+    imgFailure.src = "../src/assets/img/icons/failure.jpg";
     resultWrapper.appendChild(imgFailure);
   }
   setTimeout(mainPage, 4000);
@@ -454,7 +454,7 @@ function showStatistic() {
     "Categories",
     "Trained",
     "Correct",
-    "Incorrect",
+    "Wrong",
     "%",
   ];
   let gridView = new GridView(".card-wrapper", attribute, statistic, cards);
