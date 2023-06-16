@@ -76,4 +76,7 @@ footer {
 
 .result-img {
     height: 200px;
+    @include media-mobile {
+        height: 100px;
+    };
 }

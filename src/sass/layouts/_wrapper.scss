@@ -4,8 +4,14 @@
     padding: 0 40px;
     @include media-tablet {
         padding: 0 20px;
+        max-width: $tablet-width;
+    };
+    @include media-mobile {
+        max-width: $mobile-big-width;
+        padding: 0 10px;
     };
     @include media-mobilesmall {
+        max-width: $mobile-small-width;
         padding: 0 10px;
     };
 }
@@ -20,12 +26,15 @@
     @include media-tablet {
         column-gap: 20px;
         row-gap: 20px;
+        max-width: $tablet-width;
     };
     @include media-mobile {
         @include columns(column, center, center);
+        max-width: $mobile-big-width;
     };
     @include media-mobilesmall {
         row-gap: 20px;
+        max-width: $mobile-small-width;
     };
 }
 
@@ -58,15 +67,31 @@
     @extend %max-width;
     @include columns(row, start, center);
     padding: 16px 0 10px 0;
+    @include media-tablet {
+        max-width: $tablet-width;
+    };
+    @include media-mobile {
+        max-width: $mobile-big-width;
+    };
+    @include media-mobilesmall {
+        max-width: $mobile-small-width;
+    };
 }
 
 .stars-wrapper {
     height: 50px;
     @extend %max-width;
     @include columns(row, start, center);
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    @include media-tablet {
+        max-width: $tablet-width;
+    };
     @include media-mobile {
+        max-width: $mobile-big-width;
         height: 30px;
+    };
+    @include media-mobilesmall {
+        max-width: $mobile-small-width;
     };
 }
 
@@ -74,12 +99,14 @@
     @include columns(column, center, center);
     row-gap: 40px;
 	width: 40%;
-    font-size: 30px;
-    font-weight: 400;
     background-color: $color-card;
-    color: $color-text;
+    @include font(normal, 400, 3rem, $color-text);
     margin: 90px auto;
     padding: 20px;
+    @include media-mobile {
+        width: 60%;
+        @include font(normal, 400, 2rem, $color-text);
+    };
 }
 
 .th-wrapper {

@@ -232,7 +232,7 @@ function check() {
       card.style.height = "192px";
       card.removeEventListener("click", playAudio);
     });
-    arrayOfIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+    arrayOfIndex = shuffle(document.querySelectorAll(".play-card").length);
   }
 }
 
@@ -241,7 +241,11 @@ startButton.addEventListener("click", StartGame);
 /*
 Start the game
 */
-function shuffle(array) {
+function shuffle(length) {
+  let array = [];
+  for (let i=0; i < length; i++) {
+    array.push(i);
+  };
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -258,22 +262,16 @@ function StartGame() {
   if (footer.style.height === "60px") {
     startIcon.style.backgroundImage = "url('../src/assets/img/icons/repeat.svg')";
     startIcon.setAttribute("alt", "repeat");
-    //let dataAttribute = document.querySelector("a.active").dataset.about;
-    //let array = getArray(dataAttribute);
     let array = [];
     document.querySelectorAll("audio").forEach((audio) => {
-      //let src = audio.src;
-      //let result = src.replace("http://127.0.0.1:5500", ".");
-      //array.push(result);
-      array.push(audio.src);
+      array.push({audio:audio.src, word:audio.dataset.word.toLocaleLowerCase()});
     });
     console.log(array);
 
     if (audioElement === null) {
       audioElement = new Audio();
     }
-    //audioElement.src = array[arrayOfIndex[currentIndex]].audioSrc;
-    audioElement.src = array[arrayOfIndex[currentIndex]];
+    audioElement.src = array[arrayOfIndex[currentIndex]].audio;
     audioElement.play();
   }
 }
@@ -283,14 +281,10 @@ function handleCardClick(event) {
     footer.style.height === "60px" &&
     startIcon.getAttribute("alt") === "repeat"
   ) {
-    //let dataAttribute = document.querySelector("a.active").dataset.about;
-    //let array = getArray(dataAttribute);
+
     let array = [];
     document.querySelectorAll("audio").forEach((audio) => {
-      //let src = audio.src;
-      //let result = src.replace("http://127.0.0.1:5500", ".");
-      //array.push(result);
-      array.push(audio.src);
+      array.push({audio:audio.src, word:audio.dataset.word.toLocaleLowerCase()});
     });
     console.log(array);
     const clickedImg = event.target;
@@ -399,7 +393,7 @@ function repeatDifficultWords() {
   wrapper.innerHTML = "";
   categoryTitle.innerHTML = "Difficult words";
   checkStatistic();
-  //console.log(statistic);
+  console.log(statistic);
   let newStat = [];
   for (let key in statistic) {
     if (statistic[key].incorrect != 0) {

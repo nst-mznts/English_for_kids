@@ -20,7 +20,6 @@ th {
 }
 
 .th-title {
-    width: 100%;
     @include font(normal, 500, 2.2rem, $color-card);
     @include media-tablet {
         @include font(normal, 500, 1.8rem, $color-card);

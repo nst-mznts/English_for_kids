@@ -31,6 +31,7 @@ export default class WordCards extends BaseCard {
     let audio = document.createElement("audio");
     audio.src = this.audio;
     audio.id = "audio" + this.id;
+    audio.setAttribute("data-word", this.word);
     card.appendChild(audio);
     return card;
   }

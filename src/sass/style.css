@@ -111,6 +111,11 @@ footer {
 .result-img {
   height: 200px;
 }
+@media (max-width: 414px) {
+  .result-img {
+    height: 100px;
+  }
+}
 
 .statistic {
   width: 50px;
@@ -331,10 +336,18 @@ footer {
 @media (max-width: 768px) {
   .wrapper {
     padding: 0 20px;
+    max-width: 768px;
+  }
+}
+@media (max-width: 414px) {
+  .wrapper {
+    max-width: 414px;
+    padding: 0 10px;
   }
 }
 @media (max-width: 320px) {
   .wrapper {
+    max-width: 320px;
     padding: 0 10px;
   }
 }
@@ -354,6 +367,7 @@ footer {
   .card-wrapper {
     column-gap: 20px;
     row-gap: 20px;
+    max-width: 768px;
   }
 }
 @media (max-width: 414px) {
@@ -363,11 +377,13 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 414px;
   }
 }
 @media (max-width: 320px) {
   .card-wrapper {
     row-gap: 20px;
+    max-width: 320px;
   }
 }
 
@@ -418,6 +434,21 @@ footer {
   align-items: center;
   padding: 16px 0 10px 0;
 }
+@media (max-width: 768px) {
+  .category-wrapper {
+    max-width: 768px;
+  }
+}
+@media (max-width: 414px) {
+  .category-wrapper {
+    max-width: 414px;
+  }
+}
+@media (max-width: 320px) {
+  .category-wrapper {
+    max-width: 320px;
+  }
+}
 
 .stars-wrapper {
   height: 50px;
@@ -426,11 +457,22 @@ footer {
   flex-direction: row;
   justify-content: start;
   align-items: center;
-  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+  .stars-wrapper {
+    max-width: 768px;
+  }
 }
 @media (max-width: 414px) {
   .stars-wrapper {
+    max-width: 414px;
     height: 30px;
+  }
+}
+@media (max-width: 320px) {
+  .stars-wrapper {
+    max-width: 320px;
   }
 }
 
@@ -442,12 +484,22 @@ footer {
   align-items: center;
   row-gap: 40px;
   width: 40%;
-  font-size: 30px;
-  font-weight: 400;
   background-color: #FFFFFF;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 3rem;
   color: #333333;
   margin: 90px auto;
   padding: 20px;
+}
+@media (max-width: 414px) {
+  .result-wrapper {
+    width: 60%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #333333;
+  }
 }
 
 .th-wrapper {
@@ -718,7 +770,6 @@ th:hover {
 }
 
 .th-title {
-  width: 100%;
   font-style: normal;
   font-weight: 500;
   font-size: 2.2rem;
