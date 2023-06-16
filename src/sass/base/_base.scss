@@ -32,6 +32,9 @@ header {
     };
     &:hover {
         color: $color-train-light;
+        @include media-tablet {
+            color: $color-train-dark;
+        };
     };
 }
 

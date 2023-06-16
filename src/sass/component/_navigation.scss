@@ -11,17 +11,19 @@
     padding-top: 10px;
     @include media-mobile {
         top: 70px;
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
     };
 }
 
 .link {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    @include font(normal, 400, 2.5rem, $color-card);
+    @include font(normal, 400, 2rem, $color-card);
     @extend %transition;
     display: block;
+    @include media-mobile {
+        @include font(normal, 400, 1.8rem, $color-card);
+        padding: 8px 8px 8px 32px;
+    };
     &.active {
         color: $color-card;
         background-color: $color-train-light;
@@ -29,6 +31,10 @@
     &:hover {
         color: $color-text;
         background-color: $color-header;
+        @include media-tablet {
+            color: $color-card;
+            background-color: $color-train-dark;
+        };
     };
 }
 

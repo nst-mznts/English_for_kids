@@ -290,7 +290,7 @@ function handleCardClick(event) {
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
     let starsLength = document.querySelectorAll(".star");
-    if (starsLength.length > 22) {
+    if (starsLength.length > 9) {
       const firstStar = document.querySelector(".star");
       const parent = firstStar.parentNode;
       parent.removeChild(firstStar);
@@ -408,7 +408,7 @@ function repeatDifficultWords() {
   }
   newStat.sort((a, b) => a.incorrect < b.incorrect ? 1 : -1);
   if (newStat.length !== 0) {
-    loadCards(newStat, 'Difficult words');
+    loadCards(newStat.slice(0, 8), 'Difficult words');
   }
 }
 
