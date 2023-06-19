@@ -1,16 +1,20 @@
 export default class GridView {
   constructor(element, attribute, stat, data) {
-    this._element = element;
+    this.element = element;
     this.attribute = attribute;
     this.stat = stat;
     this.data = data;
+    this.table = '';
+    this.thead = '';
+    this.tbody = '';
   }
   // Method for show GridViewTable
   render() {
     let numberCounter = 1;
-    const table = document.createElement("table");
-    table.classList.add("statistic-table");
-    table.id = "table";
+    this.table = this.createDomNode(this.table, 'table', 'statistic-table');
+    //const table = document.createElement("table");
+    //table.classList.add("statistic-table");
+    //table.id = "table";
     document.querySelector(this._element).appendChild(table);
     let thead = document.createElement("thead");
     table.appendChild(thead);
@@ -88,6 +92,16 @@ export default class GridView {
         numberCounter += 1;
       }
     }
+  }
+
+  createDomNode(node, element, ...classes) {
+    node = document.createElement(element);
+    node.classList.add(...classes);
+    return node;
+  }
+
+  setContent(element, content) {
+    element.append(content);
   }
 }
 function makeTD(value) {

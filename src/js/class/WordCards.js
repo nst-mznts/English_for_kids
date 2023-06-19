@@ -1,38 +1,22 @@
-import BaseCard from "./BaseCard.js";
-export default class WordCards extends BaseCard {
-  constructor(imgSrc, imgAlt, id, word, dataset, audio, translation) {
-    super(imgSrc, imgAlt, id);
-    this.word = word;
-    this.dataset = dataset;
-    this.audio = audio;
-    this.translation = translation
+export class WordCards {
+  constructor (id, data) {
+    this.id = id;
+    this.data = data;
   }
-  render() {
-    let card = super.makeCard();
-    let titleWrapper = document.createElement("div");
-    titleWrapper.classList.add("title-wrapper");
-    titleWrapper.classList.add("play-title");
-    card.appendChild(titleWrapper);
-    let title = document.createElement("h3");
-    title.classList.add("card-title");
-    title.innerText = this.word;
-    title.id = "title" + this.id;
-    title.setAttribute("data-translation", this.translation);
-    titleWrapper.appendChild(title);
-    let btn = document.createElement("div");
-    btn.classList.add("rotate");
-    btn.id = "rotate" + this.id;
-    titleWrapper.appendChild(btn);
-    let icon = document.createElement("span");
-    icon.classList.add("rotate-icon");
-    icon.id = this.id;
-    icon.setAttribute("data-about", this.dataset);
-    btn.appendChild(icon);
-    let audio = document.createElement("audio");
-    audio.src = this.audio;
-    audio.id = "audio" + this.id;
-    audio.setAttribute("data-word", this.word);
-    card.appendChild(audio);
-    return card;
+  makeCard() {
+      let template = '';
+      const card = document.createElement("div");
+      card.className = 'card play-card';
+      card.id = 'card'+ this.id;
+      template += `<img id='img${this.id}' class='card-image play-image' src=${this.data.image} alt='${this.data.word}'>`
+      template += `<div class='title-wrapper play-title'>`
+      template += `<h3 class='card-title' id='title${this.id}' data-translation=${this.data.translation}>${this.data.word.toUpperCase()}</h3>`
+      template += `<div id='rotate${this.id}' class='rotate'>`
+      template += `<span class='rotate-icon'></span>`
+      template += `</div>`
+      template += `<audio id='audio${this.id}' src=${this.data.audioSrc} data-word=${this.data.word}></audio>`
+      template += `</div>`
+      card.innerHTML = template;
+      return card;
   }
 }

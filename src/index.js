@@ -1,119 +1,123 @@
-/*
-switch pages
-*/
 import cards from "./js/cards.js";
 import GridView from "./js/class/GridView.js";
-import WordCards from "./js/class/WordCards.js";
-import CategoryCards from "./js/class/CategoryCards.js";
-
-const body = document.body;
+import { WordCards } from "./js/class/WordCards.js";
+import { CategoryCards } from "./js/class/CategoryCards.js";
 let statistic = {};
-checkStatistic();
-createStatistic();
-const wrapper = document.querySelector(".card-wrapper");
-let menuLinks = document.querySelectorAll(".cards-menu");
-const logo = document.querySelector(".logo");
-const starsWrapper = document.querySelector(".stars-wrapper");
-const categoryTitle = document.querySelector(".category-title");
-mainPage();
 
-function loadCards(data, dataset = "Main") {
+window.onload = function () {
   checkStatistic();
-  starsWrapper.innerHTML = "";
-  categoryTitle.innerHTML = dataset;
-  for (let i = 0; i < data.length; i++) {
-    if (dataset == "Main") {
-      let categoryCard = new CategoryCards(
-        cards[i + 1][6].image,
-        cards[i + 1][6].word,
-        i,
-        data[i].toUpperCase()
-      ).render();
-      categoryCard.classList.add("main");
-      categoryCard.setAttribute("data-about", data[i]);
-      categoryCard.addEventListener("click", changePage);
-    } else {
-      let card = new WordCards(
-        data[i].image,
-        data[i].word,
-        i,
-        data[i].word.toUpperCase(),
-        dataset,
-        data[i].audioSrc,
-        data[i].translation
-      ).render();
-      card.classList.add("play-card");
-      card.setAttribute("data-about", dataset);
-      if (toggleType.checked) {
-        document.querySelectorAll(".play-title").forEach((element) => {
-          element.style.display = "none";
-        });
-        document.querySelectorAll(".play-image").forEach((img) => {
-          img.style.width = "343px";
-          img.style.height = "235px";
-        });
-        document.querySelectorAll(".play-card").forEach((card) => {
-          card.style.height = "235px";
-          card.removeEventListener("click", playAudio);
-        });
-        arrayOfIndex = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
-      } else {
-        card.addEventListener("mouseleave", removeRotation);
-        card.addEventListener("click", playAudio);
-      }
-      //statistic[data[i].word][categories] = card.dataset.about;
-      saveStatisticToLS();
-      document.querySelectorAll(".card-image").forEach((img) => {
-        img.classList.add("play-image");
-        img.addEventListener("click", handleCardClick);
-      });
-      document.querySelectorAll(".rotate-icon").forEach((icon) => {
-        icon.addEventListener("click", rotation);
-      });
+  createStatistic();  
+  //написать функцию проверки режима тренивка\игра
+  //сделать отдельным модулем игру
+  document.querySelectorAll(".link").forEach((link) => {
+    link.addEventListener("click", changePage);
+    link.addEventListener("click", closeNav);
+  });
+
+  document.querySelector(".logo").addEventListener("click", changePage);
+  document.querySelector(".burger").addEventListener("click", openNav);
+
+  document.addEventListener("click", (e) => {
+    if (e.target === document.querySelector(".sidenav-background")) {
+      closeNav();
     }
-  }
+  });
+
+  loadCards();
+};
+
+function loadCards() {
+  const cardWrapper = getCardsWrapper();
+  let data = getArray();
+  generateCards(data).forEach(card => {
+    cardWrapper.append(card.makeCard());
+  });
+  addWordCardsClickHandlers();
+  addCategoryCardsClickHandler();
 }
 
-function getArray(dataset) {
-  let array = [];
-  for (let i = 0; i < cards[0].length; i++) {
-    if (dataset == cards[0][i]) {
-      array = cards[i + 1];
-    } else if (dataset == "Main") {
-      array = cards[0];
-    }
+function getCardsWrapper() {
+  const wrapper = document.querySelector(".card-wrapper");
+  wrapper.innerHTML = "";
+  return wrapper;
+}
+
+function generateCards(data) {
+  let newWordCards = [];
+  let coumter = 0;
+  let img, alt;
+  if (data[0] === cards[0][0]) {
+    data.forEach((card) => {
+      img = cards[coumter + 1][6].image;
+      alt = cards[coumter + 1][6].word;
+      newWordCards.push(new CategoryCards(coumter, card, img, alt));
+      coumter += 1;
+    });
+  } else {
+    data.forEach((card) => {
+      newWordCards.push(new WordCards(coumter, card));
+      coumter += 1;
+    });
   }
+  return newWordCards;
+}
+  
+function addWordCardsClickHandlers() {
+  document.querySelectorAll('.play-card').forEach(card => {
+    card.addEventListener('click', playAudio);
+    card.addEventListener('mouseleave', removeRotation);
+  });
+  document.querySelectorAll('.rotate').forEach(card => {
+    card.addEventListener('click', rotation);
+  });
+  document.querySelectorAll(".play-image").forEach((img) => {
+    img.addEventListener("click", handleCardClick);
+  });
+}
+
+function addCategoryCardsClickHandler() {
+  document.querySelectorAll('.main').forEach(card => {
+    card.addEventListener("click", changePage);
+  });
+}
+/*
+function addClickHandler(element, action) {
+  element.addEventListener('click', action);
+}
+*/
+// Get data to load word cards
+function getArray() {
+  let id = activeNavigationLink();
+  let array = cards[id];
   return array;
 }
 
-function changePage() {
-  let arr = document.querySelectorAll("a");
-  for (let i = 0; i < arr.length; i++) {
-    arr[i].classList.remove("active");
-    if (arr[i].dataset.about == this.dataset.about) {
-      arr[i].classList.add("active");
+function activeNavigationLink() {
+  let linksArray = document.querySelectorAll("a");
+  let id;
+  linksArray.forEach((link) => {
+    if (link.classList.contains("active")) {
+      id = link.id;
     }
-  }
-  wrapper.innerHTML = "";
-  loadCards(getArray(this.dataset.about), this.dataset.about);
+  });
+  return id;
 }
 
-menuLinks.forEach((link) => {
-  link.addEventListener("click", changePage);
-});
-
-function mainPage() {
-  wrapper.innerHTML = "";
-  loadCards(cards[0]);
+function changePage() {
+  let array = document.querySelectorAll("a");
+  array.forEach(link => {
+    link.classList.remove("active");
+    if (link.dataset.about == this.dataset.about) {
+      link.classList.add("active");
+      document.querySelector(".category-title").innerText = link.dataset.about;
+    }
+  });
+  loadCards();
 }
 
-logo.addEventListener("click", mainPage);
-logo.addEventListener("click", changePage);
-/*
-Rotation cards
-*/
+// Rotate the clicked card
 function rotation() {
-  let id = this.id;
+  let id = this.id[this.id.length - 1];
   let card = document.getElementById("card" + id);
   card.classList.add("card-rotited");
   let word = document.getElementById("title" + id);
@@ -133,59 +137,42 @@ function removeRotation() {
     btn.style.opacity = "1";
   }
 }
-/*
-Audio
-*/
+
 function playAudio() {
   if (!this.classList.contains("card-rotited")) {
     let id = this.id[this.id.length - 1];
     let audioSrc = document.getElementById("audio" + id);
-    let cardImg = document.getElementById("img" + id);
     let audio = new Audio();
     audio.src = audioSrc.src;
     audio.play();
     checkStatistic();
-    statistic[cardImg.alt].trained += 1;
+    statistic[audioSrc.dataset.word].trained += 1;
     saveStatisticToLS();
   }
 }
-/*
-Burger menu
-*/
-const navigation = document.getElementById("mySidenav");
-const burger = document.querySelector(".burger");
-const background = document.querySelector(".sidenav-background");
-const link = document.querySelectorAll(".link");
 
+// Open the side navigation by clicking on the hamburger icon
 function openNav() {
+  const burger = document.querySelector(".burger");
   if (burger.classList.contains("burger_active")) {
     closeNav();
   } else {
     burger.classList.add("burger_active");
-    navigation.style.width = "300px";
-    body.style.overflow = "hidden";
-    background.classList.add("active");
+    document.getElementById("mySidenav").style.width = "300px";
+    document.body.style.overflow = "hidden";
+    document.querySelector(".sidenav-background").classList.add("active");
   }
 }
 
+// Close the side navigation
 function closeNav() {
+  const burger = document.querySelector(".burger");
   burger.classList.remove("burger_active");
-  navigation.style.width = "0";
-  body.style.overflow = "";
-  background.classList.remove("active");
+  document.getElementById("mySidenav").style.width = "0";
+  document.body.style.overflow = "";
+  document.querySelector(".sidenav-background").classList.remove("active");
 }
 
-burger.addEventListener("click", openNav);
-
-document.addEventListener("click", (e) => {
-  if (e.target === background) {
-    closeNav();
-  }
-});
-
-link.forEach((element) => {
-  element.addEventListener("click", closeNav);
-});
 /*
 Toggle
 */
@@ -243,9 +230,9 @@ Start the game
 */
 function shuffle(length) {
   let array = [];
-  for (let i=0; i < length; i++) {
+  for (let i = 0; i < length; i++) {
     array.push(i);
-  };
+  }
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -260,11 +247,15 @@ let wrongAnswers = [];
 
 function StartGame() {
   if (footer.style.height === "60px") {
-    startIcon.style.backgroundImage = "url('../src/assets/img/icons/repeat.svg')";
+    startIcon.style.backgroundImage =
+      "url('../src/assets/img/icons/repeat.svg')";
     startIcon.setAttribute("alt", "repeat");
     let array = [];
     document.querySelectorAll("audio").forEach((audio) => {
-      array.push({audio:audio.src, word:audio.dataset.word.toLocaleLowerCase()});
+      array.push({
+        audio: audio.src,
+        word: audio.dataset.word.toLocaleLowerCase(),
+      });
     });
     console.log(array);
 
@@ -281,10 +272,12 @@ function handleCardClick(event) {
     footer.style.height === "60px" &&
     startIcon.getAttribute("alt") === "repeat"
   ) {
-
     let array = [];
     document.querySelectorAll("audio").forEach((audio) => {
-      array.push({audio:audio.src, word:audio.dataset.word.toLocaleLowerCase()});
+      array.push({
+        audio: audio.src,
+        word: audio.dataset.word.toLocaleLowerCase(),
+      });
     });
     console.log(array);
     const clickedImg = event.target;
@@ -303,7 +296,7 @@ function handleCardClick(event) {
       starWin.classList.add("star");
       starWin.src = "../src/assets/img/icons/star-win.svg";
       starWin.alt = "star";
-      starsWrapper.appendChild(starWin);
+      document.querySelector(".stars-wrapper").appendChild(starWin);
       let correctAudio = new Audio();
       correctAudio.src = "../src/assets/audio/correct.mp3";
       correctAudio.play();
@@ -323,7 +316,7 @@ function handleCardClick(event) {
       star.classList.add("star");
       star.src = "../src/assets/img/icons/star.svg";
       star.alt = "star";
-      starsWrapper.appendChild(star);
+      document.querySelector(".stars-wrapper").appendChild(star);
       let errorAudio = new Audio();
       errorAudio.src = "../src/assets/audio/error.mp3";
       errorAudio.play();
@@ -339,8 +332,8 @@ cardElements.forEach(function (cardElement) {
 });
 
 function EndTheGame() {
-  starsWrapper.innerHTML = "";
-  wrapper.innerHTML = "";
+  document.querySelector(".stars-wrapper").innerHTML = "";
+  let wrapper = getCardsWrapper();
   categoryTitle.innerHTML = "";
   startIcon.style.backgroundImage = "url('../src/assets/img/icons/play.svg')";
   startIcon.setAttribute("alt", "start");
@@ -389,7 +382,7 @@ function EndTheGame() {
 Statistic
 */
 function repeatDifficultWords() {
-  starsWrapper.innerHTML = "";
+  document.querySelector(".stars-wrapper").innerHTML = "";
   wrapper.innerHTML = "";
   categoryTitle.innerHTML = "Difficult words";
   checkStatistic();
@@ -402,13 +395,13 @@ function repeatDifficultWords() {
         translation: statistic[key].translation,
         image: statistic[key].img,
         incorrect: statistic[key].incorrect,
-        audioSrc: statistic[key].audioSrc
+        audioSrc: statistic[key].audioSrc,
       });
     }
   }
-  newStat.sort((a, b) => a.incorrect < b.incorrect ? 1 : -1);
+  newStat.sort((a, b) => (a.incorrect < b.incorrect ? 1 : -1));
   if (newStat.length !== 0) {
-    loadCards(newStat.slice(0, 8), 'Difficult words');
+    loadCards(newStat.slice(0, 8), "Difficult words");
   }
 }
 
@@ -417,19 +410,19 @@ function showStatistic() {
   checkStatistic();
   console.log(statistic);
   wrapper.innerHTML = "";
-  starsWrapper.innerHTML = "";
-  categoryTitle.innerHTML = 'Statistic';
+  document.querySelector(".stars-wrapper").innerHTML = "";
+  categoryTitle.innerHTML = "Statistic";
   let difficultWords = document.createElement("button");
   difficultWords.innerHTML = "Repeat difficult words";
   difficultWords.classList.add("statistic-btn");
   difficultWords.classList.add("repeat-words");
-  starsWrapper.appendChild(difficultWords);
+  document.querySelector(".stars-wrapper").appendChild(difficultWords);
   difficultWords.addEventListener("click", repeatDifficultWords);
   let reset = document.createElement("button");
   reset.innerHTML = "Reset";
   reset.classList.add("statistic-btn");
   reset.classList.add("reset");
-  starsWrapper.appendChild(reset);
+  document.querySelector(".stars-wrapper").appendChild(reset);
   reset.addEventListener("click", function () {
     for (let key in statistic) {
       statistic[key].trained = 0;
@@ -440,7 +433,7 @@ function showStatistic() {
     saveStatisticToLS();
     showStatistic();
   });
-  
+
   const attribute = [
     "№",
     "Words",
@@ -536,17 +529,17 @@ function saveStatisticToLS() {
 }
 
 function createStatistic() {
-  for (let i=1; i < cards.length; i++) {
-    for (let j=0; j < cards[i].length; j++) {
+  for (let i = 1; i < cards.length; i++) {
+    for (let j = 0; j < cards[i].length; j++) {
       if (statistic[cards[i][j].word] == undefined) {
         statistic[cards[i][j].word] = {
-        translation: cards[i][j].translation,
-        trained: 0,
-        correct: 0,
-        incorrect: 0,
-        percent: 0,
-        img: cards[i][j].image,
-        audioSrc: cards[i][j].audioSrc
+          translation: cards[i][j].translation,
+          trained: 0,
+          correct: 0,
+          incorrect: 0,
+          percent: 0,
+          img: cards[i][j].image,
+          audioSrc: cards[i][j].audioSrc,
         };
       }
     }
