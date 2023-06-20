@@ -1,4 +1,4 @@
-export default class GridView {
+export class GridView {
   constructor(element, attribute, stat, data) {
     this.element = element;
     this.attribute = attribute;

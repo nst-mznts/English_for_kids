@@ -41,7 +41,7 @@
 .header-wrapper {
     @include columns(row, space-between, center);
     padding: 20px 0;
-    @include media-mobilesmall {
+    @include media-mobile {
         padding: 10px 0;
     };
 }
@@ -101,7 +101,7 @@
 	width: 40%;
     background-color: $color-card;
     @include font(normal, 400, 3rem, $color-text);
-    margin: 90px auto;
+    margin: 0 auto;
     padding: 20px;
     @include media-mobile {
         width: 60%;

@@ -1,3 +1,11 @@
+.main-icon {
+    @include statistic-icons('../../../src/assets/img/icons/main.svg');
+    @include media-mobile {
+        height: 48px;
+        width: 48px;
+    };
+}
+
 .statistic-icon {
     @include icons('../../../src/assets/img/icons/statistic.svg', 100%, 100%);
 }

@@ -1,20 +1,26 @@
 import cards from "./js/cards.js";
-import GridView from "./js/class/GridView.js";
+
+import { GridView } from "./js/class/GridView.js";
 import { WordCards } from "./js/class/WordCards.js";
 import { CategoryCards } from "./js/class/CategoryCards.js";
-let statistic = {};
+
+import { check } from "./js/toggle.js";
+
+import { StartGame } from "./js/game.js";
+
+export let statistic = {};
 
 window.onload = function () {
   checkStatistic();
-  createStatistic();  
-  //написать функцию проверки режима тренивка\игра
-  //сделать отдельным модулем игру
+  createStatistic();
+  //написать функцию проверки режима тренировка\игра
   document.querySelectorAll(".link").forEach((link) => {
     link.addEventListener("click", changePage);
     link.addEventListener("click", closeNav);
   });
 
   document.querySelector(".logo").addEventListener("click", changePage);
+  document.querySelector(".main-icon").addEventListener("click", changePage);
   document.querySelector(".burger").addEventListener("click", openNav);
 
   document.addEventListener("click", (e) => {
@@ -22,21 +28,24 @@ window.onload = function () {
       closeNav();
     }
   });
+  document.querySelector(".statistic").addEventListener("click", showStatistic);
+  document.querySelector(".switch").addEventListener("click", check);
+  document.querySelector(".start").addEventListener("click", StartGame);
 
   loadCards();
 };
 
-function loadCards() {
+export function loadCards() {
   const cardWrapper = getCardsWrapper();
   let data = getArray();
-  generateCards(data).forEach(card => {
+  generateCards(data).forEach((card) => {
     cardWrapper.append(card.makeCard());
   });
   addWordCardsClickHandlers();
   addCategoryCardsClickHandler();
 }
 
-function getCardsWrapper() {
+export function getCardsWrapper() {
   const wrapper = document.querySelector(".card-wrapper");
   wrapper.innerHTML = "";
   return wrapper;
@@ -61,30 +70,23 @@ function generateCards(data) {
   }
   return newWordCards;
 }
-  
+
 function addWordCardsClickHandlers() {
-  document.querySelectorAll('.play-card').forEach(card => {
-    card.addEventListener('click', playAudio);
-    card.addEventListener('mouseleave', removeRotation);
+  document.querySelectorAll(".play-card").forEach((card) => {
+    card.addEventListener("click", playAudio);
+    card.addEventListener("mouseleave", removeRotation);
   });
-  document.querySelectorAll('.rotate').forEach(card => {
-    card.addEventListener('click', rotation);
-  });
-  document.querySelectorAll(".play-image").forEach((img) => {
-    img.addEventListener("click", handleCardClick);
+  document.querySelectorAll(".rotate").forEach((card) => {
+    card.addEventListener("click", rotation);
   });
 }
 
 function addCategoryCardsClickHandler() {
-  document.querySelectorAll('.main').forEach(card => {
+  document.querySelectorAll(".main").forEach((card) => {
     card.addEventListener("click", changePage);
   });
 }
-/*
-function addClickHandler(element, action) {
-  element.addEventListener('click', action);
-}
-*/
+
 // Get data to load word cards
 function getArray() {
   let id = activeNavigationLink();
@@ -105,7 +107,7 @@ function activeNavigationLink() {
 
 function changePage() {
   let array = document.querySelectorAll("a");
-  array.forEach(link => {
+  array.forEach((link) => {
     link.classList.remove("active");
     if (link.dataset.about == this.dataset.about) {
       link.classList.add("active");
@@ -138,7 +140,7 @@ function removeRotation() {
   }
 }
 
-function playAudio() {
+export function playAudio() {
   if (!this.classList.contains("card-rotited")) {
     let id = this.id[this.id.length - 1];
     let audioSrc = document.getElementById("audio" + id);
@@ -174,217 +176,11 @@ function closeNav() {
 }
 
 /*
-Toggle
-*/
-const toggle = document.querySelector(".switch");
-const toggleType = document.querySelector(".toggle");
-const train = document.querySelector(".train");
-const play = document.querySelector(".play");
-const footer = document.querySelector("footer");
-const startButton = document.querySelector(".start");
-let arrayOfIndex = [];
-
-function check() {
-  if (toggleType.checked) {
-    toggleType.checked = false;
-    play.style.color = "#ADACAC";
-    train.style.color = "#87C159";
-    footer.style.height = "0";
-    startButton.style.display = "none";
-    document.querySelectorAll(".play-title").forEach((element) => {
-      element.style.display = "flex";
-    });
-    document.querySelectorAll(".play-image").forEach((img) => {
-      img.style.width = "280px";
-      img.style.height = "172px";
-    });
-    document.querySelectorAll(".play-card").forEach((card) => {
-      card.style.height = "247px";
-      card.addEventListener("click", playAudio);
-    });
-  } else {
-    toggleType.checked = true;
-    play.style.color = "#F3C301";
-    train.style.color = "#ADACAC";
-    footer.style.height = "60px";
-    startButton.style.display = "flex";
-    document.querySelectorAll(".play-title").forEach((element) => {
-      element.style.display = "none";
-    });
-    document.querySelectorAll(".play-image").forEach((img) => {
-      img.style.width = "280px";
-      img.style.height = "192px";
-    });
-    document.querySelectorAll(".play-card").forEach((card) => {
-      card.style.height = "192px";
-      card.removeEventListener("click", playAudio);
-    });
-    arrayOfIndex = shuffle(document.querySelectorAll(".play-card").length);
-  }
-}
-
-toggle.addEventListener("click", check);
-startButton.addEventListener("click", StartGame);
-/*
-Start the game
-*/
-function shuffle(length) {
-  let array = [];
-  for (let i = 0; i < length; i++) {
-    array.push(i);
-  }
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-const startIcon = document.querySelector(".start-icon");
-let currentIndex = 0;
-let audioElement = null;
-let wrongAnswers = [];
-
-function StartGame() {
-  if (footer.style.height === "60px") {
-    startIcon.style.backgroundImage =
-      "url('../src/assets/img/icons/repeat.svg')";
-    startIcon.setAttribute("alt", "repeat");
-    let array = [];
-    document.querySelectorAll("audio").forEach((audio) => {
-      array.push({
-        audio: audio.src,
-        word: audio.dataset.word.toLocaleLowerCase(),
-      });
-    });
-    console.log(array);
-
-    if (audioElement === null) {
-      audioElement = new Audio();
-    }
-    audioElement.src = array[arrayOfIndex[currentIndex]].audio;
-    audioElement.play();
-  }
-}
-
-function handleCardClick(event) {
-  if (
-    footer.style.height === "60px" &&
-    startIcon.getAttribute("alt") === "repeat"
-  ) {
-    let array = [];
-    document.querySelectorAll("audio").forEach((audio) => {
-      array.push({
-        audio: audio.src,
-        word: audio.dataset.word.toLocaleLowerCase(),
-      });
-    });
-    console.log(array);
-    const clickedImg = event.target;
-    const clickedWord = event.target.getAttribute("alt");
-    let starsLength = document.querySelectorAll(".star");
-    if (starsLength.length > 9) {
-      const firstStar = document.querySelector(".star");
-      const parent = firstStar.parentNode;
-      parent.removeChild(firstStar);
-    }
-    if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
-      statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
-      clickedImg.style.opacity = "0.5";
-      clickedImg.removeEventListener("click", handleCardClick);
-      let starWin = document.createElement("img");
-      starWin.classList.add("star");
-      starWin.src = "../src/assets/img/icons/star-win.svg";
-      starWin.alt = "star";
-      document.querySelector(".stars-wrapper").appendChild(starWin);
-      let correctAudio = new Audio();
-      correctAudio.src = "../src/assets/audio/correct.mp3";
-      correctAudio.play();
-      currentIndex++;
-
-      if (currentIndex < array.length) {
-        setTimeout(StartGame, 2000);
-      } else {
-        audioElement = null;
-        setTimeout(EndTheGame, 2000);
-      }
-    } else {
-      statistic[array[currentIndex].word].incorrect += 1;
-      wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
-      console.log(wrongAnswers);
-      let star = document.createElement("img");
-      star.classList.add("star");
-      star.src = "../src/assets/img/icons/star.svg";
-      star.alt = "star";
-      document.querySelector(".stars-wrapper").appendChild(star);
-      let errorAudio = new Audio();
-      errorAudio.src = "../src/assets/audio/error.mp3";
-      errorAudio.play();
-    }
-    saveStatisticToLS();
-    checkStatistic();
-  }
-}
-const cardElements = document.querySelectorAll(".play-image");
-
-cardElements.forEach(function (cardElement) {
-  cardElement.addEventListener("click", handleCardClick);
-});
-
-function EndTheGame() {
-  document.querySelector(".stars-wrapper").innerHTML = "";
-  let wrapper = getCardsWrapper();
-  categoryTitle.innerHTML = "";
-  startIcon.style.backgroundImage = "url('../src/assets/img/icons/play.svg')";
-  startIcon.setAttribute("alt", "start");
-  const resultWrapper = document.createElement("div");
-  resultWrapper.classList.add("result-wrapper");
-  wrapper.appendChild(resultWrapper);
-  if (wrongAnswers.length === 0) {
-    let successAudio = new Audio();
-    successAudio.src = "../src/assets/audio/success.mp3";
-    successAudio.play();
-    resultWrapper.innerHTML = "YOU WIN!";
-    let imgSuccess = document.createElement("img");
-    imgSuccess.classList.add("result-img");
-    imgSuccess.src = "../src/assets/img/icons/success.jpg";
-    resultWrapper.appendChild(imgSuccess);
-  } else {
-    let failureAudio = new Audio();
-    failureAudio.src = "../src/assets/audio/failure.mp3";
-    failureAudio.play();
-    resultWrapper.innerHTML = "KEEP TRYING! NEXT TIME YOU WILL WIN!";
-    resultWrapper.innerHTML = "WRONG ANSWERS: " + wrongAnswers.length;
-    let imgFailure = document.createElement("img");
-    imgFailure.classList.add("result-img");
-    imgFailure.src = "../src/assets/img/icons/failure.jpg";
-    resultWrapper.appendChild(imgFailure);
-  }
-  setTimeout(mainPage, 4000);
-  currentIndex = 0;
-  wrongAnswers = [];
-  check();
-  for (let key in statistic) {
-    if (statistic[key].incorrect != 0) {
-      let res = statistic[key].incorrect / statistic[key].correct;
-      let percent = Math.round(res * 100);
-      if (percent > 100) {
-        statistic[key].percent = 100;
-      } else {
-        statistic[key].percent = percent;
-      }
-    }
-  }
-  saveStatisticToLS();
-}
-
-/*
 Statistic
 */
 function repeatDifficultWords() {
-  document.querySelector(".stars-wrapper").innerHTML = "";
-  wrapper.innerHTML = "";
-  categoryTitle.innerHTML = "Difficult words";
+  ClearWrappers();
+  document.querySelector(".category-title").innerHTML = "Difficult words";
   checkStatistic();
   console.log(statistic);
   let newStat = [];
@@ -409,30 +205,9 @@ function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
   console.log(statistic);
-  wrapper.innerHTML = "";
-  document.querySelector(".stars-wrapper").innerHTML = "";
-  categoryTitle.innerHTML = "Statistic";
-  let difficultWords = document.createElement("button");
-  difficultWords.innerHTML = "Repeat difficult words";
-  difficultWords.classList.add("statistic-btn");
-  difficultWords.classList.add("repeat-words");
-  document.querySelector(".stars-wrapper").appendChild(difficultWords);
-  difficultWords.addEventListener("click", repeatDifficultWords);
-  let reset = document.createElement("button");
-  reset.innerHTML = "Reset";
-  reset.classList.add("statistic-btn");
-  reset.classList.add("reset");
-  document.querySelector(".stars-wrapper").appendChild(reset);
-  reset.addEventListener("click", function () {
-    for (let key in statistic) {
-      statistic[key].trained = 0;
-      statistic[key].correct = 0;
-      statistic[key].incorrect = 0;
-      statistic[key].percent = 0;
-    }
-    saveStatisticToLS();
-    showStatistic();
-  });
+  ClearWrappers();
+  document.querySelector(".category-title").innerHTML = "Statistic";
+  showStatisticButtons();
 
   const attribute = [
     "№",
@@ -455,8 +230,6 @@ function showStatistic() {
     });
   });
 }
-
-document.querySelector(".statistic").addEventListener("click", showStatistic);
 
 function sortTable(n) {
   let table,
@@ -516,15 +289,61 @@ function sortTable(n) {
     }
   }
 }
+
+// Show buttons
+function showStatisticButtons() {
+  let difficultWords = createDomNode(
+    "button",
+    "Repeat difficult words",
+    ".stars-wrapper",
+    "statistic-btn",
+    "repeat-words"
+  );
+  difficultWords.addEventListener("click", repeatDifficultWords);
+  let reset = createDomNode(
+    "button",
+    "Reset",
+    ".stars-wrapper",
+    "statistic-btn",
+    "reset"
+  );
+  reset.addEventListener("click", ClearStatisticsTable);
+}
+
+function createDomNode(element, text = "", wrapper, ...classes) {
+  let node = document.createElement(element);
+  node.innerHTML = text;
+  node.classList.add(...classes);
+  document.querySelector(wrapper).appendChild(node);
+  return node;
+}
+
+// Clear all wrappers
+function ClearWrappers() {
+  let wrapper = getCardsWrapper();
+  document.querySelector(".stars-wrapper").innerHTML = "";
+}
+// Clear statistics table
+function ClearStatisticsTable() {
+  for (let key in statistic) {
+    statistic[key].trained = 0;
+    statistic[key].correct = 0;
+    statistic[key].incorrect = 0;
+    statistic[key].percent = 0;
+  }
+  saveStatisticToLS();
+  showStatistic();
+}
+
 // Check statistic in the localStorage
-function checkStatistic() {
+export function checkStatistic() {
   if (localStorage.getItem("statistic") !== null) {
     statistic = JSON.parse(localStorage.getItem("statistic"));
   }
 }
 
 // Save statistic to localStorage
-function saveStatisticToLS() {
+export function saveStatisticToLS() {
   localStorage.setItem("statistic", JSON.stringify(statistic));
 }
 
