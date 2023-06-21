@@ -54,7 +54,4 @@
     padding: 3px 10px;
     display: none;
     @extend %transition;
-    &:hover {
-        background-image: linear-gradient(-106deg,$color-additional,$color-play-dark);        
-    };
 }

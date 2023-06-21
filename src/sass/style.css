@@ -616,9 +616,6 @@ footer {
   padding: 3px 10px;
   display: none;
 }
-.play-mode:hover {
-  background-image: linear-gradient(-106deg, #FF6933, #F3C301);
-}
 
 .sidenav {
   height: 100%;

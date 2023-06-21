@@ -106,8 +106,8 @@ export function EndTheGame() {
         wrongAnswers.length
     );
   }
-
-  setTimeout(loadCards, 4000);
+  localStorage.removeItem('theme');
+  setTimeout(window.onload, 4000);
   currentIndex = 0;
   wrongAnswers = [];
   check();

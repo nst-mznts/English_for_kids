@@ -4,40 +4,14 @@ import { WordCards } from "./js/class/WordCards.js";
 import { CategoryCards } from "./js/class/CategoryCards.js";
 import { check } from "./js/toggle.js";
 import { StartGame } from "./js/game.js";
+import { addGameMode } from "./js/toggle.js";
 
 export let statistic = {};
 
 window.onload = function () {
   checkStatistic();
   createStatistic();
-  /*
-  document.addEventListener('DOMContentLoaded', function () {
-    let savedMode = localStorage.getItem('trainingMode');
-    if (savedMode === 'game') {
-      console.log(savedMode);
-    } else {
-      console.log(savedMode);
-    }
-  });
-  
-    document.querySelectorAll(".play-title").forEach((element) => {
-      element.style.display = "none";
-    });
-    document.querySelectorAll(".play-card").forEach((card) => {
-      card.removeEventListener("click", playAudio);
-    });
-    document.querySelectorAll(".play-image").forEach((img) => {
-        img.addEventListener("click", handleCardClick);
-    });
-    arrayOfIndex = shuffle(document.querySelectorAll(".play-card").length);
-  
-  
-  
-  */
-  //если режим игры - все карточки должны изначально генерироваться без подписей.
-  // при переключении страниц отображение карточек не дожно меняться, а соответствовать выбранному режиму
-  //написать функцию проверки режима тренировка\игра
-
+  localStorage.removeItem('theme');
   document.querySelectorAll(".link").forEach((link) => {
     link.addEventListener("click", changePage);
     link.addEventListener("click", closeNav);
@@ -55,31 +29,20 @@ window.onload = function () {
   document.querySelector(".statistic").addEventListener("click", showStatistic);
   document.querySelector(".switch").addEventListener("click", check);
   document.querySelector(".start").addEventListener("click", StartGame);
-
   loadCards();
 };
 
-document.querySelector('.toggle').addEventListener('change', function () {
-  let mode = this.checked ? 'game' : 'training';
-  localStorage.setItem('trainingMode', mode);
-});
-
 export function loadCards() {
+  
   document.querySelector(".stars-wrapper").innerHTML = "";
   const cardWrapper = getCardsWrapper();
   let data = getArray();
   generateCards(data).forEach((card) => {
     cardWrapper.append(card.makeCard());
   });
-  /*
-  let savedMode = localStorage.getItem('trainingMode');
-  if (savedMode === 'game') {
-    console.log(savedMode);
-  } else {
-    console.log(savedMode);
-  }*/
   addWordCardsClickHandlers();
   addCategoryCardsClickHandler();
+  addGameMode();
 }
 
 export function getCardsWrapper() {
@@ -326,8 +289,6 @@ export function saveStatisticToLS() {
 }
 
 function createStatistic() {
-  let savedMode = 'training';
-  localStorage.setItem('trainingMode', savedMode);
   for (let i = 1; i < cards.length; i++) {
     let category = cards[0][i-1];
     for (let j = 0; j < cards[i].length; j++) {
