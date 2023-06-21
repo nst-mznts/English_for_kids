@@ -1,3 +1,4 @@
+import cards from "../js/cards.js";
 import { arrayOfIndex } from "./toggle.js";
 import { check } from "./toggle.js";
 import { statistic } from "../index.js";
@@ -25,7 +26,7 @@ let wrongAnswers = [];
 export function StartGame() {
   if (document.querySelector(".toggle").checked === true) {
     changeStarIcon(true);
-    let array = gatData();
+    let array = getData();
 
     if (audioElement === null) {
       audioElement = new Audio();
@@ -40,7 +41,7 @@ export function handleCardClick(event) {
     document.querySelector(".toggle").checked === true &&
     document.querySelector(".start-icon").getAttribute("alt") === "repeat"
   ) {
-    let array = gatData();
+    let array = getData();
 
     const clickedImg = event.target;
     const clickedWord = event.target.getAttribute("alt");
@@ -84,7 +85,10 @@ export function EndTheGame() {
   let wrapper = getCardsWrapper();
   document.querySelector(".category-title").innerText = "";
   changeStarIcon(false);
-
+  document.querySelector("footer").style.height = "0";
+  document.querySelector(".start").style.display = "none";
+  localStorage.removeItem("theme");
+  check();
   const resultWrapper = document.createElement("div");
   resultWrapper.classList.add("result-wrapper");
   wrapper.appendChild(resultWrapper);
@@ -106,11 +110,11 @@ export function EndTheGame() {
         wrongAnswers.length
     );
   }
-  localStorage.removeItem('theme');
-  setTimeout(window.onload, 4000);
+  setTimeout(() => {
+    loadCards(cards[0]);
+  }, 4000);
   currentIndex = 0;
   wrongAnswers = [];
-  check();
   countPercent();
   saveStatisticToLS();
 }
@@ -126,7 +130,7 @@ function changeStarIcon(status) {
   }
 }
 
-function gatData() {
+function getData() {
   let array = [];
   document.querySelectorAll("audio").forEach((audio) => {
     array.push({
@@ -134,7 +138,6 @@ function gatData() {
       word: audio.dataset.word.toLocaleLowerCase(),
     });
   });
-  console.log(array);
   return array;
 }
 

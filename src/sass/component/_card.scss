@@ -53,5 +53,8 @@
     background-color: $color-play-dark;
     padding: 3px 10px;
     display: none;
-    @extend %transition;
+}
+
+.card:hover .play-mode {
+    background-image: linear-gradient(160deg,$color-additional,$color-play-dark);
 }

@@ -2,7 +2,7 @@
   max-width: 1200px;
 }
 
-.burger-line-second, .burger-line-third, .sidenav-background, .link, .sidenav, .play-mode, .rotate, .statistic, .logo {
+.burger-line-second, .burger-line-third, .sidenav-background, .link, .sidenav, .rotate, .statistic, .logo {
   transition: all 0.3s ease-out;
 }
 
@@ -615,6 +615,10 @@ footer {
   background-color: #F3C301;
   padding: 3px 10px;
   display: none;
+}
+
+.card:hover .play-mode {
+  background-image: linear-gradient(160deg, #FF6933, #F3C301);
 }
 
 .sidenav {

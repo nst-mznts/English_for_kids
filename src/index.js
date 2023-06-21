@@ -30,13 +30,16 @@ window.onload = function () {
   document.querySelector(".switch").addEventListener("click", check);
   document.querySelector(".start").addEventListener("click", StartGame);
   loadCards();
+  addGameMode();
 };
 
-export function loadCards() {
+export function loadCards(data=[]) {
   
   document.querySelector(".stars-wrapper").innerHTML = "";
   const cardWrapper = getCardsWrapper();
-  let data = getArray();
+  if (data.length == 0) {
+    data = getArray();
+  }
   generateCards(data).forEach((card) => {
     cardWrapper.append(card.makeCard());
   });
