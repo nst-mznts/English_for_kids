@@ -12,7 +12,8 @@ export class CategoryCards {
         card.id = 'card'+ this.id;
         card.setAttribute("data-about", this.data);
         template += `<img id='img${this.id}' class='card-image' src=${this.image} alt='${this.alt}'>`
-        template += `<h3 class='card-title' id='title${this.id}'>${this.data.toUpperCase()}</h3>`  
+        template += `<p class='play-mode'>play</p>`
+        template += `<h3 class='card-title main-title' id='title${this.id}'>${this.data.toUpperCase()}</h3>`  
         card.innerHTML = template;
         return card;
     }

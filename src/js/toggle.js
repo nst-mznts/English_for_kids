@@ -6,9 +6,7 @@ export let arrayOfIndex = [];
 
 export function check() {
   if (document.querySelector(".toggle").checked) {
-    document.querySelector(".toggle").checked = false;
-    document.querySelector(".play").style.color = "#ADACAC";
-    document.querySelector(".train").style.color = "#87C159";
+    changeGameMode(false, "#ADACAC", "#87C159");
     document.querySelector("footer").style.height = "0";
     document.querySelector(".start").style.display = "none";
     document.querySelectorAll(".play-title").forEach((element) => {
@@ -17,15 +15,30 @@ export function check() {
     document.querySelectorAll(".play-card").forEach((card) => {
       card.addEventListener("click", playAudio);
     });
+    document.querySelectorAll(".main-title").forEach((element) => {
+      element.style.marginTop = "25px";
+    });
     document.querySelectorAll(".play-image").forEach((img) => {
         img.removeEventListener("click", handleCardClick);
     });
+    document.querySelectorAll(".play-mode").forEach((element) => {
+      element.style.display = "none";
+    });
   } else {
-    document.querySelector(".toggle").checked = true;
-    document.querySelector(".play").style.color = "#F3C301";
-    document.querySelector(".train").style.color = "#ADACAC";
-    document.querySelector("footer").style.height = "60px";
-    document.querySelector(".start").style.display = "flex";
+    changeGameMode(true, "#F3C301", "#ADACAC");
+    if (document.querySelector(".main-link.active")) {
+      document.querySelector("footer").style.height = "0";
+      document.querySelector(".start").style.display = "none";
+    } else {
+      document.querySelector("footer").style.height = "60px";
+      document.querySelector(".start").style.display = "flex";
+    }
+    document.querySelectorAll(".play-mode").forEach((element) => {
+      element.style.display = "block";
+    });
+    document.querySelectorAll(".main-title").forEach((element) => {
+      element.style.marginTop = "1px";
+    });
     document.querySelectorAll(".play-title").forEach((element) => {
       element.style.display = "none";
     });
@@ -37,4 +50,10 @@ export function check() {
     });
     arrayOfIndex = shuffle(document.querySelectorAll(".play-card").length);
   }
+}
+
+function changeGameMode(boolean, playColor, trainColor) {
+  document.querySelector(".toggle").checked = boolean;
+  document.querySelector(".play").style.color = playColor;
+  document.querySelector(".train").style.color = trainColor;
 }

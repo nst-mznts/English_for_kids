@@ -1,6 +1,5 @@
 import { arrayOfIndex } from "./toggle.js";
 import { check } from "./toggle.js";
-
 import { statistic } from "../index.js";
 import { saveStatisticToLS } from "../index.js";
 import { checkStatistic } from "../index.js";

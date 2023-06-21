@@ -158,7 +158,7 @@ const cards = [
       audioSrc: '../../src/assets/audio/bird.mp3'
     },
     {
-      word: 'fish',
+      word: 'fish ',
       translation: 'рыба',
       image: '../../src/assets/img/card-imgs/fish1.png',
       audioSrc: '../../src/assets/audio/fish.mp3'

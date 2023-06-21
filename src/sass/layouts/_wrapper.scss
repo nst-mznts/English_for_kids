@@ -98,7 +98,7 @@
 .result-wrapper {
     @include columns(column, center, center);
     row-gap: 40px;
-	width: 40%;
+	width: 60%;
     background-color: $color-card;
     @include font(normal, 400, 3rem, $color-text);
     margin: 0 auto;

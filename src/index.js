@@ -1,11 +1,8 @@
 import cards from "./js/cards.js";
-
 import { GridView } from "./js/class/GridView.js";
 import { WordCards } from "./js/class/WordCards.js";
 import { CategoryCards } from "./js/class/CategoryCards.js";
-
 import { check } from "./js/toggle.js";
-
 import { StartGame } from "./js/game.js";
 
 export let statistic = {};
@@ -13,7 +10,34 @@ export let statistic = {};
 window.onload = function () {
   checkStatistic();
   createStatistic();
+  /*
+  document.addEventListener('DOMContentLoaded', function () {
+    let savedMode = localStorage.getItem('trainingMode');
+    if (savedMode === 'game') {
+      console.log(savedMode);
+    } else {
+      console.log(savedMode);
+    }
+  });
+  
+    document.querySelectorAll(".play-title").forEach((element) => {
+      element.style.display = "none";
+    });
+    document.querySelectorAll(".play-card").forEach((card) => {
+      card.removeEventListener("click", playAudio);
+    });
+    document.querySelectorAll(".play-image").forEach((img) => {
+        img.addEventListener("click", handleCardClick);
+    });
+    arrayOfIndex = shuffle(document.querySelectorAll(".play-card").length);
+  
+  
+  
+  */
+  //если режим игры - все карточки должны изначально генерироваться без подписей.
+  // при переключении страниц отображение карточек не дожно меняться, а соответствовать выбранному режиму
   //написать функцию проверки режима тренировка\игра
+
   document.querySelectorAll(".link").forEach((link) => {
     link.addEventListener("click", changePage);
     link.addEventListener("click", closeNav);
@@ -35,12 +59,25 @@ window.onload = function () {
   loadCards();
 };
 
+document.querySelector('.toggle').addEventListener('change', function () {
+  let mode = this.checked ? 'game' : 'training';
+  localStorage.setItem('trainingMode', mode);
+});
+
 export function loadCards() {
+  document.querySelector(".stars-wrapper").innerHTML = "";
   const cardWrapper = getCardsWrapper();
   let data = getArray();
   generateCards(data).forEach((card) => {
     cardWrapper.append(card.makeCard());
   });
+  /*
+  let savedMode = localStorage.getItem('trainingMode');
+  if (savedMode === 'game') {
+    console.log(savedMode);
+  } else {
+    console.log(savedMode);
+  }*/
   addWordCardsClickHandlers();
   addCategoryCardsClickHandler();
 }
@@ -219,75 +256,16 @@ function showStatistic() {
     "Wrong",
     "%",
   ];
-  let gridView = new GridView(".card-wrapper", attribute, statistic, cards);
+  let gridView = new GridView(attribute, statistic);
   gridView.render();
   document.querySelectorAll("a").forEach((link) => {
     link.classList.remove("active");
   });
   document.querySelectorAll("th").forEach((header) => {
     header.addEventListener("click", function () {
-      sortTable(this.id);
+      GridView.sortTable(this.id);
     });
   });
-}
-
-function sortTable(n) {
-  let table,
-    rows,
-    switching,
-    i,
-    x,
-    y,
-    shouldSwitch,
-    dir,
-    switchcount = 0;
-  table = document.querySelector("#table");
-  switching = true;
-  dir = "asc";
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-    for (i = 1; i < rows.length - 1; i++) {
-      shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      if (dir == "asc") {
-        if (x.classList.contains("number")) {
-          if (Number(x.innerHTML) > Number(y.innerHTML)) {
-            shouldSwitch = true;
-            break;
-          }
-        } else if (x.classList.contains("string")) {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            shouldSwitch = true;
-            break;
-          }
-        }
-      } else if (dir == "desc") {
-        if (x.classList.contains("number")) {
-          if (Number(x.innerHTML) < Number(y.innerHTML)) {
-            shouldSwitch = true;
-            break;
-          }
-        } else if (x.classList.contains("string")) {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-    }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      switchcount++;
-    } else {
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
 }
 
 // Show buttons
@@ -320,8 +298,8 @@ function createDomNode(element, text = "", wrapper, ...classes) {
 
 // Clear all wrappers
 function ClearWrappers() {
-  let wrapper = getCardsWrapper();
   document.querySelector(".stars-wrapper").innerHTML = "";
+  document.querySelector(".card-wrapper").innerHTML = "";
 }
 // Clear statistics table
 function ClearStatisticsTable() {
@@ -348,11 +326,15 @@ export function saveStatisticToLS() {
 }
 
 function createStatistic() {
+  let savedMode = 'training';
+  localStorage.setItem('trainingMode', savedMode);
   for (let i = 1; i < cards.length; i++) {
+    let category = cards[0][i-1];
     for (let j = 0; j < cards[i].length; j++) {
       if (statistic[cards[i][j].word] == undefined) {
         statistic[cards[i][j].word] = {
           translation: cards[i][j].translation,
+          category: category,
           trained: 0,
           correct: 0,
           incorrect: 0,

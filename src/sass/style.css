@@ -2,7 +2,7 @@
   max-width: 1200px;
 }
 
-.burger-line-second, .burger-line-third, .sidenav-background, .link, .sidenav, .rotate, .statistic, .logo {
+.burger-line-second, .burger-line-third, .sidenav-background, .link, .sidenav, .play-mode, .rotate, .statistic, .logo {
   transition: all 0.3s ease-out;
 }
 
@@ -516,7 +516,7 @@ footer {
   justify-content: center;
   align-items: center;
   row-gap: 40px;
-  width: 40%;
+  width: 60%;
   background-color: #FFFFFF;
   font-style: normal;
   font-weight: 400;
@@ -605,6 +605,19 @@ footer {
   .rotate:hover {
     background: #87C159;
   }
+}
+
+.play-mode {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  background-color: #F3C301;
+  padding: 3px 10px;
+  display: none;
+}
+.play-mode:hover {
+  background-image: linear-gradient(-106deg, #FF6933, #F3C301);
 }
 
 .sidenav {
