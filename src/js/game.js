@@ -1,6 +1,7 @@
 import cards from "../js/cards.js";
 import { arrayOfIndex } from "./toggle.js";
 import { check } from "./toggle.js";
+import { changeFooterStyle } from "./toggle.js";
 import { statistic } from "../index.js";
 import { saveStatisticToLS } from "../index.js";
 import { checkStatistic } from "../index.js";
@@ -25,7 +26,7 @@ let wrongAnswers = [];
 
 export function StartGame() {
   if (document.querySelector(".toggle").checked === true) {
-    changeStarIcon(true);
+    changeStartIcon(true);
     let array = getData();
 
     if (audioElement === null) {
@@ -67,7 +68,6 @@ export function handleCardClick(event) {
     } else {
       statistic[array[currentIndex].word].incorrect += 1;
       wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
-      console.log(wrongAnswers);
       showGameResult(
         "../src/assets/audio/error.mp3",
         "../src/assets/img/icons/star.svg",
@@ -84,9 +84,8 @@ export function EndTheGame() {
   document.querySelector(".stars-wrapper").innerHTML = "";
   let wrapper = getCardsWrapper();
   document.querySelector(".category-title").innerText = "";
-  changeStarIcon(false);
-  document.querySelector("footer").style.height = "0";
-  document.querySelector(".start").style.display = "none";
+  changeStartIcon(false);
+  changeFooterStyle();
   localStorage.removeItem("theme");
   check();
   const resultWrapper = document.createElement("div");
@@ -119,7 +118,7 @@ export function EndTheGame() {
   saveStatisticToLS();
 }
 
-function changeStarIcon(status) {
+function changeStartIcon(status) {
   let icon = document.querySelector(".start-icon");
   if (status) {
     icon.style.backgroundImage = "url('../src/assets/img/icons/repeat.svg')";

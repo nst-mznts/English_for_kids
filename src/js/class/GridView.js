@@ -5,26 +5,26 @@ export class GridView {
   }
   // Method for show GridViewTable
   render() {
-    let wrapper = document.querySelector('.card-wrapper');
+    let wrapper = document.querySelector(".card-wrapper");
     let numberCounter = 1;
     // Create table frame
-    let table = this.createDomNode('table', wrapper, 'statistic-table');
-    table.id = 'table';
-    let thead = this.createDomNode('thead', table);
-    let tbody = this.createDomNode('tbody', table);
-    let row = this.createDomNode('tr', thead);
+    let table = this.createDomNode("table", wrapper, "statistic-table");
+    table.id = "table";
+    let thead = this.createDomNode("thead", table);
+    let tbody = this.createDomNode("tbody", table);
+    let row = this.createDomNode("tr", thead);
     // Create content for table headers
     this.attribute.forEach((element, index) => {
       let tableHeader = document.createElement("th");
       tableHeader.id = index;
       if (index === 4) {
-        this.showHeadersWithIcons(tableHeader, 'train-icon', element);
+        this.showHeadersWithIcons(tableHeader, "train-icon", element);
       } else if (index === 5) {
-        this.showHeadersWithIcons(tableHeader, 'correct-icon', element);
+        this.showHeadersWithIcons(tableHeader, "correct-icon", element);
       } else if (index === 6) {
-        this.showHeadersWithIcons(tableHeader, 'wrong-icon', element);
+        this.showHeadersWithIcons(tableHeader, "wrong-icon", element);
       } else {
-        let thTitle = this.createDomNode('p', tableHeader, 'th-title');        
+        let thTitle = this.createDomNode("p", tableHeader, "th-title");
         thTitle.innerText = element;
       }
       row.appendChild(tableHeader);
@@ -41,8 +41,8 @@ export class GridView {
         this.stat[key].incorrect,
         this.stat[key].percent,
       ];
-      let tableRow = this.createDomNode('tr', tbody);
-      args.forEach(elem => {
+      let tableRow = this.createDomNode("tr", tbody);
+      args.forEach((elem) => {
         let tableData = this.makeTD(elem);
         tableRow.appendChild(tableData);
       });
@@ -121,9 +121,9 @@ export class GridView {
   }
 
   showHeadersWithIcons(tableHeader, iconClass, content) {
-    let thWrapper = this.createDomNode('div', tableHeader, 'th-wrapper');
-    let thIcon = this.createDomNode('span', thWrapper, 'th-icon', iconClass);
-    let thTitle = this.createDomNode('p', thWrapper, 'th-title', 'th-title-hidden'); 
+    let thWrapper = this.createDomNode("div", tableHeader, "th-wrapper");
+    let thIcon = this.createDomNode("span", thWrapper, "th-icon", iconClass);
+    let thTitle = this.createDomNode("p", thWrapper, "th-title", "th-title-hidden");
     thTitle.innerText = content;
   }
   // Create table data

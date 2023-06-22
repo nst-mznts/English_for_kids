@@ -32,9 +32,10 @@ window.onload = function () {
   loadCards();
   addGameMode();
 };
-
+/*
+* Pages with word cards
+*/
 export function loadCards(data=[]) {
-  
   document.querySelector(".stars-wrapper").innerHTML = "";
   const cardWrapper = getCardsWrapper();
   if (data.length == 0) {
@@ -155,7 +156,9 @@ export function playAudio() {
     saveStatisticToLS();
   }
 }
-
+/*
+* Side navigation
+*/
 // Open the side navigation by clicking on the hamburger icon
 function openNav() {
   const burger = document.querySelector(".burger");
@@ -177,37 +180,12 @@ function closeNav() {
   document.body.style.overflow = "";
   document.querySelector(".sidenav-background").classList.remove("active");
 }
-
 /*
-Statistic
+* Statistic page
 */
-function repeatDifficultWords() {
-  ClearWrappers();
-  document.querySelector(".category-title").innerHTML = "Difficult words";
-  checkStatistic();
-  console.log(statistic);
-  let newStat = [];
-  for (let key in statistic) {
-    if (statistic[key].incorrect != 0) {
-      newStat.push({
-        word: key,
-        translation: statistic[key].translation,
-        image: statistic[key].img,
-        incorrect: statistic[key].incorrect,
-        audioSrc: statistic[key].audioSrc,
-      });
-    }
-  }
-  newStat.sort((a, b) => (a.incorrect < b.incorrect ? 1 : -1));
-  if (newStat.length !== 0) {
-    loadCards(newStat.slice(0, 8), "Difficult words");
-  }
-}
-
 function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
-  console.log(statistic);
   ClearWrappers();
   document.querySelector(".category-title").innerHTML = "Statistic";
   showStatisticButtons();
@@ -232,6 +210,7 @@ function showStatistic() {
       GridView.sortTable(this.id);
     });
   });
+  addGameMode();
 }
 
 // Show buttons
@@ -252,6 +231,34 @@ function showStatisticButtons() {
     "reset"
   );
   reset.addEventListener("click", ClearStatisticsTable);
+}
+
+// Show cards with difficult words
+function repeatDifficultWords() {
+  ClearWrappers();
+  document.querySelector(".category-title").innerHTML = "Difficult words";
+  checkStatistic();
+  let newStat = getDataWithDifficultWords();
+  if (newStat.length !== 0) {
+    loadCards(newStat.slice(0, 8), "Difficult words");
+  }
+}
+
+function getDataWithDifficultWords() {
+  let newStat = [];
+  for (let key in statistic) {
+    if (statistic[key].incorrect != 0) {
+      newStat.push({
+        word: key,
+        translation: statistic[key].translation,
+        image: statistic[key].img,
+        incorrect: statistic[key].incorrect,
+        audioSrc: statistic[key].audioSrc,
+      });
+    }
+  }
+  newStat.sort((a, b) => (a.incorrect < b.incorrect ? 1 : -1));
+  return newStat;
 }
 
 function createDomNode(element, text = "", wrapper, ...classes) {
@@ -278,7 +285,9 @@ function ClearStatisticsTable() {
   saveStatisticToLS();
   showStatistic();
 }
-
+/*
+* Save data to the localStorage
+*/
 // Check statistic in the localStorage
 export function checkStatistic() {
   if (localStorage.getItem("statistic") !== null) {
