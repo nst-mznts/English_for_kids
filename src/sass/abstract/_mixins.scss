@@ -13,22 +13,6 @@
     align-items: $items;
 }
 
-@mixin icons ($url, $width, $height) {
-    background-image: url($url);
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: $width;
-    height: $height;
-    display: block;
-}
-
-@mixin statistic-icons ($url) {
-    background-image: url($url);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: inline-block;
-}
-
 @mixin media-laptop {
     @media (max-width: $content-width) { @content;};
 }

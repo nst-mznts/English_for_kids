@@ -5,7 +5,7 @@ import { CategoryCards } from "./js/class/CategoryCards.js";
 import { check } from "./js/toggle.js";
 import { StartGame } from "./js/game.js";
 import { addGameMode } from "./js/toggle.js";
-
+import "./sass/style.scss";
 export let statistic = {};
 
 window.onload = function () {

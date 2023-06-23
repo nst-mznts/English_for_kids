@@ -1,25 +1,30 @@
 .main-icon {
-    @include statistic-icons('../../../src/assets/img/icons/main.svg');
+    display: none;
     @include media-mobile {
+        display: inline-block;
         height: 48px;
         width: 48px;
     };
 }
 
 .statistic-icon {
-    @include icons('../../../src/assets/img/icons/statistic.svg', 100%, 100%);
+    width: 100%;
+    height: 100%t;
+    display: block;
 }
 
 .rotate-icon {
-    @include icons('../../../src/assets/img/icons/rotate.svg', 70%, 70%);
-    padding-top: 6px;
+    width: 70%;
+    display: block;
 }
 
 .start-icon {
-    @include icons('../../../src/assets/img/icons/play.svg', 50%, 50%);
+    width: 50%;
+    display: block;
 }
 
 .th-icon {
+    display: inline-block;
     height: 25px;
     width: 25px;
     margin-right: 6px;
@@ -33,16 +38,4 @@
         width: 18px;
         margin-right: 0;
     };
-}
-
-.train-icon {
-    @include statistic-icons('../../../src/assets/img/icons/train-icon.svg');
-}
-
-.correct-icon {
-    @include statistic-icons('../../../src/assets/img/icons/correct-icon.svg');
-}
-
-.wrong-icon {
-    @include statistic-icons('../../../src/assets/img/icons/wrong-icon.svg');
 }

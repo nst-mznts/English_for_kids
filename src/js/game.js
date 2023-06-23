@@ -121,10 +121,10 @@ export function EndTheGame() {
 function changeStartIcon(status) {
   let icon = document.querySelector(".start-icon");
   if (status) {
-    icon.style.backgroundImage = "url('../src/assets/img/icons/repeat.svg')";
+    icon.src = "../src/assets/img/icons/repeat.svg";
     icon.setAttribute("alt", "repeat");
   } else {
-    icon.style.backgroundImage = "url('../src/assets/img/icons/play.svg')";
+    icon.src = "../src/assets/img/icons/play.svg";
     icon.setAttribute("alt", "start");
   }
 }

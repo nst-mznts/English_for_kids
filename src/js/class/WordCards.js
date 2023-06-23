@@ -14,7 +14,7 @@ export class WordCards {
       this.data.translation
     }>${this.data.word.toUpperCase()}</h3>`;
     template += `<div id='rotate${this.id}' class='rotate'>`;
-    template += `<span class='rotate-icon'></span>`;
+    template += `<img class='rotate-icon' src='./src/assets/img/icons/rotate.svg' alt='rotate-icon'>`;
     template += `</div>`;
     template += `<audio id='audio${this.id}' src=${this.data.audioSrc} data-word='${this.data.word}'></audio>`;
     template += `</div>`;

@@ -122,8 +122,23 @@ export class GridView {
 
   showHeadersWithIcons(tableHeader, iconClass, content) {
     let thWrapper = this.createDomNode("div", tableHeader, "th-wrapper");
-    let thIcon = this.createDomNode("span", thWrapper, "th-icon", iconClass);
-    let thTitle = this.createDomNode("p", thWrapper, "th-title", "th-title-hidden");
+    let thIcon = this.createDomNode("img", thWrapper, "th-icon", iconClass);
+    if (iconClass == "train-icon") {
+      thIcon.src = "./src/assets/img/icons/train-icon.svg";
+      thIcon.alt = "train-icon";
+    } else if (iconClass == "correct-icon") {
+      thIcon.src = "./src/assets/img/icons/correct-icon.svg";
+      thIcon.alt = "correct-icon";
+    } else if (iconClass == "wrong-icon") {
+      thIcon.src = "./src/assets/img/icons/wrong-icon.svg";
+      thIcon.alt = "wrong-icon";
+    }
+    let thTitle = this.createDomNode(
+      "p",
+      thWrapper,
+      "th-title",
+      "th-title-hidden"
+    );
     thTitle.innerText = content;
   }
   // Create table data
