@@ -64,3 +64,9 @@ input:checked + .slider:before {
 .play {
   color: $color-inactive;
 }
+
+@media screen and (max-width: $tablet-width) and (min-width: $mobile-big-width) {
+  .train, .play {
+    display: none;
+  }
+}

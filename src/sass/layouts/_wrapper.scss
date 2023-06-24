@@ -112,3 +112,9 @@
 .th-wrapper {
     @include columns(row, center, center);
 }
+
+@media screen and (max-width: $tablet-width) and (min-width: $mobile-big-width) {
+    .card-wrapper {
+        justify-content: center;
+    }
+}

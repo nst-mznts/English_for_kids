@@ -27,6 +27,9 @@ header {
     @include font(normal, 500, 4.2rem, $color-train-dark);
     @extend %transition;
     cursor: pointer;
+    @include media-tablet {
+        font-size: 3.2rem;
+    };
     @include media-mobile {
         display: none;
     };
