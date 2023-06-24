@@ -281,47 +281,34 @@ footer {
 }
 
 .main-icon {
-  background-image: url("../../../src/assets/img/icons/main.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: inline-block;
+  display: none;
 }
 @media (max-width: 414px) {
   .main-icon {
+    display: inline-block;
     height: 48px;
     width: 48px;
   }
 }
 
 .statistic-icon {
-  background-image: url("../../../src/assets/img/icons/statistic.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 100%;
-  height: 100%;
+  height: 100% t;
   display: block;
 }
 
 .rotate-icon {
-  background-image: url("../../../src/assets/img/icons/rotate.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 70%;
-  height: 70%;
   display: block;
-  padding-top: 6px;
 }
 
 .start-icon {
-  background-image: url("../../../src/assets/img/icons/play.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 50%;
-  height: 50%;
   display: block;
 }
 
 .th-icon {
+  display: inline-block;
   height: 25px;
   width: 25px;
   margin-right: 6px;
@@ -339,27 +326,6 @@ footer {
     width: 18px;
     margin-right: 0;
   }
-}
-
-.train-icon {
-  background-image: url("../../../src/assets/img/icons/train-icon.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: inline-block;
-}
-
-.correct-icon {
-  background-image: url("../../../src/assets/img/icons/correct-icon.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: inline-block;
-}
-
-.wrong-icon {
-  background-image: url("../../../src/assets/img/icons/wrong-icon.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: inline-block;
 }
 
 .wrapper {
@@ -386,6 +352,7 @@ footer {
 }
 
 .card-wrapper {
+  height: 100vh;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;

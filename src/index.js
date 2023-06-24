@@ -11,7 +11,7 @@ export let statistic = {};
 window.onload = function () {
   checkStatistic();
   createStatistic();
-  localStorage.removeItem('theme');
+  localStorage.removeItem("theme");
   document.querySelectorAll(".link").forEach((link) => {
     link.addEventListener("click", changePage);
     link.addEventListener("click", closeNav);
@@ -33,9 +33,9 @@ window.onload = function () {
   addGameMode();
 };
 /*
-* Pages with word cards
-*/
-export function loadCards(data=[]) {
+ * Pages with word cards
+ */
+export function loadCards(data = []) {
   document.querySelector(".stars-wrapper").innerHTML = "";
   const cardWrapper = getCardsWrapper();
   if (data.length == 0) {
@@ -157,8 +157,8 @@ export function playAudio() {
   }
 }
 /*
-* Side navigation
-*/
+ * Side navigation
+ */
 // Open the side navigation by clicking on the hamburger icon
 function openNav() {
   const burger = document.querySelector(".burger");
@@ -181,8 +181,8 @@ function closeNav() {
   document.querySelector(".sidenav-background").classList.remove("active");
 }
 /*
-* Statistic page
-*/
+ * Statistic page
+ */
 function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
@@ -241,6 +241,17 @@ function repeatDifficultWords() {
   let newStat = getDataWithDifficultWords();
   if (newStat.length !== 0) {
     loadCards(newStat.slice(0, 8), "Difficult words");
+  } else {
+    const resultWrapper = createDomNode(
+      "div",
+      "There is no difficult words",
+      ".card-wrapper",
+      "result-wrapper"
+    );
+    const img = document.createElement("img");
+    img.src = "./src/assets/img/icons/emojis_smiling-face-with-sunglasses.svg";
+    img.alt = "emojis_smiling-face-with-sunglasses";
+    resultWrapper.append(img);
   }
 }
 
@@ -263,9 +274,11 @@ function getDataWithDifficultWords() {
 
 function createDomNode(element, text = "", wrapper, ...classes) {
   let node = document.createElement(element);
-  node.innerHTML = text;
+  if (text) {
+    node.innerHTML = text;
+  }
   node.classList.add(...classes);
-  document.querySelector(wrapper).appendChild(node);
+  document.querySelector(wrapper).append(node);
   return node;
 }
 
@@ -286,8 +299,8 @@ function ClearStatisticsTable() {
   showStatistic();
 }
 /*
-* Save data to the localStorage
-*/
+ * Save data to the localStorage
+ */
 // Check statistic in the localStorage
 export function checkStatistic() {
   if (localStorage.getItem("statistic") !== null) {
@@ -302,7 +315,7 @@ export function saveStatisticToLS() {
 
 function createStatistic() {
   for (let i = 1; i < cards.length; i++) {
-    let category = cards[0][i-1];
+    let category = cards[0][i - 1];
     for (let j = 0; j < cards[i].length; j++) {
       if (statistic[cards[i][j].word] == undefined) {
         statistic[cards[i][j].word] = {
