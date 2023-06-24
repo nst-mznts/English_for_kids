@@ -187,7 +187,7 @@ function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
   ClearWrappers();
-  document.querySelector(".category-title").innerHTML = "Statistic";
+  document.querySelector(".category-title").innerHTML = "Score";
   showStatisticButtons();
 
   const attribute = [
