@@ -1,34 +1,34 @@
-import cards from "./js/cards.js";
-import { GridView } from "./js/class/GridView.js";
-import { WordCards } from "./js/class/WordCards.js";
-import { CategoryCards } from "./js/class/CategoryCards.js";
-import { check } from "./js/toggle.js";
-import { StartGame } from "./js/game.js";
-import { addGameMode } from "./js/toggle.js";
-import "./sass/style.scss";
+import cards from './js/cards.js';
+import GridView from './js/class/GridView.js';
+import WordCards from './js/class/WordCards.js';
+import CategoryCards from './js/class/CategoryCards.js';
+import { check } from './js/toggle.js';
+import { StartGame } from './js/game.js';
+import { addGameMode } from './js/toggle.js';
+import './sass/style.scss';
 export let statistic = {};
 
 window.onload = function () {
   checkStatistic();
   createStatistic();
-  localStorage.removeItem("theme");
-  document.querySelectorAll(".link").forEach((link) => {
-    link.addEventListener("click", changePage);
-    link.addEventListener("click", closeNav);
+  localStorage.removeItem('theme');
+  document.querySelectorAll('.link').forEach((link) => {
+    link.addEventListener('click', changePage);
+    link.addEventListener('click', closeNav);
   });
 
-  document.querySelector(".logo").addEventListener("click", changePage);
-  document.querySelector(".main-icon").addEventListener("click", changePage);
-  document.querySelector(".burger").addEventListener("click", openNav);
+  document.querySelector('.logo').addEventListener('click', changePage);
+  document.querySelector('.main-icon').addEventListener('click', changePage);
+  document.querySelector('.burger').addEventListener('click', openNav);
 
-  document.addEventListener("click", (e) => {
-    if (e.target === document.querySelector(".sidenav-background")) {
+  document.addEventListener('click', (e) => {
+    if (e.target === document.querySelector('.sidenav-background')) {
       closeNav();
     }
   });
-  document.querySelector(".statistic").addEventListener("click", showStatistic);
-  document.querySelector(".switch").addEventListener("click", check);
-  document.querySelector(".start").addEventListener("click", StartGame);
+  document.querySelector('.statistic').addEventListener('click', showStatistic);
+  document.querySelector('.switch').addEventListener('click', check);
+  document.querySelector('.start').addEventListener('click', StartGame);
   loadCards();
   addGameMode();
 };
@@ -36,7 +36,7 @@ window.onload = function () {
  * Pages with word cards
  */
 export function loadCards(data = []) {
-  document.querySelector(".stars-wrapper").innerHTML = "";
+  document.querySelector('.stars-wrapper').innerHTML = '';
   const cardWrapper = getCardsWrapper();
   if (data.length == 0) {
     data = getArray();
@@ -50,15 +50,16 @@ export function loadCards(data = []) {
 }
 
 export function getCardsWrapper() {
-  const wrapper = document.querySelector(".card-wrapper");
-  wrapper.innerHTML = "";
+  const wrapper = document.querySelector('.card-wrapper');
+  wrapper.innerHTML = '';
   return wrapper;
 }
 
 function generateCards(data) {
-  let newWordCards = [];
+  const newWordCards = [];
   let coumter = 0;
-  let img, alt;
+  let img;
+  let alt;
   if (data[0] === cards[0][0]) {
     data.forEach((card) => {
       img = cards[coumter + 1][6].image;
@@ -76,33 +77,33 @@ function generateCards(data) {
 }
 
 function addWordCardsClickHandlers() {
-  document.querySelectorAll(".play-card").forEach((card) => {
-    card.addEventListener("click", playAudio);
-    card.addEventListener("mouseleave", removeRotation);
+  document.querySelectorAll('.play-card').forEach((card) => {
+    card.addEventListener('click', playAudio);
+    card.addEventListener('mouseleave', removeRotation);
   });
-  document.querySelectorAll(".rotate").forEach((card) => {
-    card.addEventListener("click", rotation);
+  document.querySelectorAll('.rotate').forEach((card) => {
+    card.addEventListener('click', rotation);
   });
 }
 
 function addCategoryCardsClickHandler() {
-  document.querySelectorAll(".main").forEach((card) => {
-    card.addEventListener("click", changePage);
+  document.querySelectorAll('.main').forEach((card) => {
+    card.addEventListener('click', changePage);
   });
 }
 
 // Get data to load word cards
 function getArray() {
-  let id = activeNavigationLink();
-  let array = cards[id];
+  const id = activeNavigationLink();
+  const array = cards[id];
   return array;
 }
 
 function activeNavigationLink() {
-  let linksArray = document.querySelectorAll("a");
+  const linksArray = document.querySelectorAll('a');
   let id;
   linksArray.forEach((link) => {
-    if (link.classList.contains("active")) {
+    if (link.classList.contains('active')) {
       id = link.id;
     }
   });
@@ -110,12 +111,12 @@ function activeNavigationLink() {
 }
 
 function changePage() {
-  let array = document.querySelectorAll("a");
+  const array = document.querySelectorAll('a');
   array.forEach((link) => {
-    link.classList.remove("active");
-    if (link.dataset.about == this.dataset.about) {
-      link.classList.add("active");
-      document.querySelector(".category-title").innerText = link.dataset.about;
+    link.classList.remove('active');
+    if (link.dataset.about === this.dataset.about) {
+      link.classList.add('active');
+      document.querySelector('.category-title').innerText = link.dataset.about;
     }
   });
   loadCards();
@@ -123,32 +124,32 @@ function changePage() {
 
 // Rotate the clicked card
 function rotation() {
-  let id = this.id[this.id.length - 1];
-  let card = document.getElementById("card" + id);
-  card.classList.add("card-rotited");
-  let word = document.getElementById("title" + id);
+  const id = this.id[this.id.length - 1];
+  const card = document.getElementById('card' + id);
+  card.classList.add('card-rotited');
+  const word = document.getElementById('title' + id);
   word.innerText = word.dataset.translation.toUpperCase();
-  let btn = document.getElementById("rotate" + id);
-  btn.style.opacity = "0";
+  const btn = document.getElementById('rotate' + id);
+  btn.style.opacity = '0';
 }
 
 function removeRotation() {
-  if (this.classList.contains("card-rotited")) {
-    this.classList.remove("card-rotited");
-    let id = this.id[this.id.length - 1];
-    let cardImg = document.getElementById("img" + id);
-    let word = document.getElementById("title" + id);
+  if (this.classList.contains('card-rotited')) {
+    this.classList.remove('card-rotited');
+    const id = this.id[this.id.length - 1];
+    const cardImg = document.getElementById('img' + id);
+    const word = document.getElementById('title' + id);
     word.innerText = cardImg.alt.toUpperCase();
-    let btn = document.getElementById("rotate" + id);
-    btn.style.opacity = "1";
+    const btn = document.getElementById('rotate' + id);
+    btn.style.opacity = '1';
   }
 }
 
 export function playAudio() {
-  if (!this.classList.contains("card-rotited")) {
-    let id = this.id[this.id.length - 1];
-    let audioSrc = document.getElementById("audio" + id);
-    let audio = new Audio();
+  if (!this.classList.contains('card-rotited')) {
+    const id = this.id[this.id.length - 1];
+    const audioSrc = document.getElementById('audio' + id);
+    const audio = new Audio();
     audio.src = audioSrc.src;
     audio.play();
     checkStatistic();
@@ -161,24 +162,24 @@ export function playAudio() {
  */
 // Open the side navigation by clicking on the hamburger icon
 function openNav() {
-  const burger = document.querySelector(".burger");
-  if (burger.classList.contains("burger_active")) {
+  const burger = document.querySelector('.burger');
+  if (burger.classList.contains('burger_active')) {
     closeNav();
   } else {
-    burger.classList.add("burger_active");
-    document.getElementById("mySidenav").style.width = "300px";
-    document.body.style.overflow = "hidden";
-    document.querySelector(".sidenav-background").classList.add("active");
+    burger.classList.add('burger_active');
+    document.getElementById('mySidenav').style.width = '300px';
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.sidenav-background').classList.add('active');
   }
 }
 
 // Close the side navigation
 function closeNav() {
-  const burger = document.querySelector(".burger");
-  burger.classList.remove("burger_active");
-  document.getElementById("mySidenav").style.width = "0";
-  document.body.style.overflow = "";
-  document.querySelector(".sidenav-background").classList.remove("active");
+  const burger = document.querySelector('.burger');
+  burger.classList.remove('burger_active');
+  document.getElementById('mySidenav').style.width = '0';
+  document.body.style.overflow = '';
+  document.querySelector('.sidenav-background').classList.remove('active');
 }
 /*
  * Statistic page
@@ -187,26 +188,26 @@ function showStatistic() {
   saveStatisticToLS();
   checkStatistic();
   ClearWrappers();
-  document.querySelector(".category-title").innerHTML = "Score";
+  document.querySelector('.category-title').innerHTML = 'Score';
   showStatisticButtons();
 
   const attribute = [
-    "№",
-    "Words",
-    "Translation",
-    "Categories",
-    "Trained",
-    "Correct",
-    "Wrong",
-    "%",
+    '№',
+    'Words',
+    'Translation',
+    'Categories',
+    'Trained',
+    'Correct',
+    'Wrong',
+    '%',
   ];
-  let gridView = new GridView(attribute, statistic);
+  const gridView = new GridView(attribute, statistic);
   gridView.render();
-  document.querySelectorAll("a").forEach((link) => {
-    link.classList.remove("active");
+  document.querySelectorAll('a').forEach((link) => {
+    link.classList.remove('active');
   });
-  document.querySelectorAll("th").forEach((header) => {
-    header.addEventListener("click", function () {
+  document.querySelectorAll('th').forEach((header) => {
+    header.addEventListener('click', function () {
       GridView.sortTable(this.id);
     });
   });
@@ -215,48 +216,48 @@ function showStatistic() {
 
 // Show buttons
 function showStatisticButtons() {
-  let difficultWords = createDomNode(
-    "button",
-    "Repeat difficult words",
-    ".stars-wrapper",
-    "statistic-btn",
-    "repeat-words"
+  const difficultWords = createDomNode(
+    'button',
+    'Repeat difficult words',
+    '.stars-wrapper',
+    'statistic-btn',
+    'repeat-words'
   );
-  difficultWords.addEventListener("click", repeatDifficultWords);
-  let reset = createDomNode(
-    "button",
-    "Reset",
-    ".stars-wrapper",
-    "statistic-btn",
-    "reset"
+  difficultWords.addEventListener('click', repeatDifficultWords);
+  const reset = createDomNode(
+    'button',
+    'Reset',
+    '.stars-wrapper',
+    'statistic-btn',
+    'reset'
   );
-  reset.addEventListener("click", ClearStatisticsTable);
+  reset.addEventListener('click', ClearStatisticsTable);
 }
 
 // Show cards with difficult words
 function repeatDifficultWords() {
   ClearWrappers();
-  document.querySelector(".category-title").innerHTML = "Difficult words";
+  document.querySelector('.category-title').innerHTML = 'Difficult words';
   checkStatistic();
-  let newStat = getDataWithDifficultWords();
+  const newStat = getDataWithDifficultWords();
   if (newStat.length !== 0) {
-    loadCards(newStat.slice(0, 8), "Difficult words");
+    loadCards(newStat.slice(0, 8), 'Difficult words');
   } else {
     const resultWrapper = createDomNode(
-      "div",
-      "There is no difficult words",
-      ".card-wrapper",
-      "result-wrapper"
+      'div',
+      'There is no difficult words',
+      '.card-wrapper',
+      'result-wrapper'
     );
-    const img = document.createElement("img");
-    img.src = "./src/assets/img/icons/emojis_smiling-face-with-sunglasses.svg";
-    img.alt = "emojis_smiling-face-with-sunglasses";
+    const img = document.createElement('img');
+    img.src = './src/assets/img/icons/emojis_smiling-face-with-sunglasses.svg';
+    img.alt = 'emojis_smiling-face-with-sunglasses';
     resultWrapper.append(img);
   }
 }
 
 function getDataWithDifficultWords() {
-  let newStat = [];
+  const newStat = [];
   for (let key in statistic) {
     if (statistic[key].incorrect != 0) {
       newStat.push({
@@ -272,8 +273,8 @@ function getDataWithDifficultWords() {
   return newStat;
 }
 
-function createDomNode(element, text = "", wrapper, ...classes) {
-  let node = document.createElement(element);
+function createDomNode(element, text = '', wrapper, ...classes) {
+  const node = document.createElement(element);
   if (text) {
     node.innerHTML = text;
   }
@@ -284,8 +285,8 @@ function createDomNode(element, text = "", wrapper, ...classes) {
 
 // Clear all wrappers
 function ClearWrappers() {
-  document.querySelector(".stars-wrapper").innerHTML = "";
-  document.querySelector(".card-wrapper").innerHTML = "";
+  document.querySelector('.stars-wrapper').innerHTML = '';
+  document.querySelector('.card-wrapper').innerHTML = '';
 }
 // Clear statistics table
 function ClearStatisticsTable() {
@@ -303,14 +304,14 @@ function ClearStatisticsTable() {
  */
 // Check statistic in the localStorage
 export function checkStatistic() {
-  if (localStorage.getItem("statistic") !== null) {
-    statistic = JSON.parse(localStorage.getItem("statistic"));
+  if (localStorage.getItem('statistic') !== null) {
+    statistic = JSON.parse(localStorage.getItem('statistic'));
   }
 }
 
 // Save statistic to localStorage
 export function saveStatisticToLS() {
-  localStorage.setItem("statistic", JSON.stringify(statistic));
+  localStorage.setItem('statistic', JSON.stringify(statistic));
 }
 
 function createStatistic() {

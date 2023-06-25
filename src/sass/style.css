@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 1.6rem;
@@ -44,7 +44,7 @@ header {
 }
 
 .logo {
-  font-family: "Neucha", cursive;
+  font-family: 'Neucha', cursive;
   font-style: normal;
   font-weight: 500;
   font-size: 4.2rem;
@@ -208,7 +208,7 @@ footer {
   background-color: transparent;
   border-radius: 8px;
   border-style: none;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 1.8rem;
@@ -687,7 +687,7 @@ ul {
 }
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;

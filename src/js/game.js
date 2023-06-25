@@ -1,15 +1,15 @@
-import cards from "../js/cards.js";
-import { arrayOfIndex } from "./toggle.js";
-import { check } from "./toggle.js";
-import { changeFooterStyle } from "./toggle.js";
-import { statistic } from "../index.js";
-import { saveStatisticToLS } from "../index.js";
-import { checkStatistic } from "../index.js";
-import { getCardsWrapper } from "../index.js";
-import { loadCards } from "../index.js";
+import cards from '../js/cards.js';
+import { arrayOfIndex } from './toggle.js';
+import { check } from './toggle.js';
+import { changeFooterStyle } from './toggle.js';
+import { statistic } from '../index.js';
+import { saveStatisticToLS } from '../index.js';
+import { checkStatistic } from '../index.js';
+import { getCardsWrapper } from '../index.js';
+import { loadCards } from '../index.js';
 
 export function shuffle(length) {
-  let array = [];
+  const array = [];
   for (let i = 0; i < length; i++) {
     array.push(i);
   }
@@ -25,9 +25,9 @@ let audioElement = null;
 let wrongAnswers = [];
 
 export function StartGame() {
-  if (document.querySelector(".toggle").checked === true) {
+  if (document.querySelector('.toggle').checked === true) {
     changeStartIcon(true);
-    let array = getData();
+    const array = getData();
 
     if (audioElement === null) {
       audioElement = new Audio();
@@ -39,23 +39,23 @@ export function StartGame() {
 
 export function handleCardClick(event) {
   if (
-    document.querySelector(".toggle").checked === true &&
-    document.querySelector(".start-icon").getAttribute("alt") === "repeat"
+    document.querySelector('.toggle').checked === true &&
+    document.querySelector('.start-icon').getAttribute('alt') === 'repeat'
   ) {
-    let array = getData();
+    const array = getData();
 
     const clickedImg = event.target;
-    const clickedWord = event.target.getAttribute("alt");
+    const clickedWord = event.target.getAttribute('alt');
     checkStarCount();
     if (clickedWord === array[arrayOfIndex[currentIndex]].word) {
       statistic[array[arrayOfIndex[currentIndex]].word].correct += 1;
-      clickedImg.style.opacity = "0.5";
-      clickedImg.removeEventListener("click", handleCardClick);
+      clickedImg.style.opacity = '0.5';
+      clickedImg.removeEventListener('click', handleCardClick);
       showGameResult(
-        "./src/assets/audio/correct.mp3",
-        "./src/assets/img/icons/star-win.svg",
-        "star",
-        ".stars-wrapper"
+        './src/assets/audio/correct.mp3',
+        './src/assets/img/icons/star-win.svg',
+        'star',
+        '.stars-wrapper'
       );
       currentIndex++;
 
@@ -69,10 +69,10 @@ export function handleCardClick(event) {
       statistic[array[currentIndex].word].incorrect += 1;
       wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
       showGameResult(
-        "./src/assets/audio/error.mp3",
-        "./src/assets/img/icons/star.svg",
-        "star",
-        ".stars-wrapper"
+        './src/assets/audio/error.mp3',
+        './src/assets/img/icons/star.svg',
+        'star',
+        '.stars-wrapper'
       );
     }
     saveStatisticToLS();
@@ -81,31 +81,31 @@ export function handleCardClick(event) {
 }
 
 export function EndTheGame() {
-  document.querySelector(".stars-wrapper").innerHTML = "";
-  let wrapper = getCardsWrapper();
-  document.querySelector(".category-title").innerText = "";
+  document.querySelector('.stars-wrapper').innerHTML = '';
+  const wrapper = getCardsWrapper();
+  document.querySelector('.category-title').innerText = '';
   changeStartIcon(false);
   changeFooterStyle();
-  localStorage.removeItem("theme");
+  localStorage.removeItem('theme');
   check();
-  const resultWrapper = document.createElement("div");
-  resultWrapper.classList.add("result-wrapper");
+  const resultWrapper = document.createElement('div');
+  resultWrapper.classList.add('result-wrapper');
   wrapper.appendChild(resultWrapper);
   if (wrongAnswers.length === 0) {
     showGameResult(
-      "./src/assets/audio/success.mp3",
-      "./src/assets/img/icons/success.jpg",
-      "result-img",
-      ".result-wrapper",
-      "YOU WIN!"
+      './src/assets/audio/success.mp3',
+      './src/assets/img/icons/success.jpg',
+      'result-img',
+      '.result-wrapper',
+      'YOU WIN!'
     );
   } else {
     showGameResult(
-      "./src/assets/audio/failure.mp3",
-      "./src/assets/img/icons/failure.jpg",
-      "result-img",
-      ".result-wrapper",
-      "KEEP TRYING! NEXT TIME YOU WILL WIN!\nWRONG ANSWERS: " +
+      './src/assets/audio/failure.mp3',
+      './src/assets/img/icons/failure.jpg',
+      'result-img',
+      '.result-wrapper',
+      'KEEP TRYING! NEXT TIME YOU WILL WIN!\nWRONG ANSWERS: ' +
         wrongAnswers.length
     );
   }
@@ -119,19 +119,19 @@ export function EndTheGame() {
 }
 
 function changeStartIcon(status) {
-  let icon = document.querySelector(".start-icon");
+  const icon = document.querySelector('.start-icon');
   if (status) {
-    icon.src = "./src/assets/img/icons/repeat.svg";
-    icon.setAttribute("alt", "repeat");
+    icon.src = './src/assets/img/icons/repeat.svg';
+    icon.setAttribute('alt', 'repeat');
   } else {
-    icon.src = "./src/assets/img/icons/play.svg";
-    icon.setAttribute("alt", "start");
+    icon.src = './src/assets/img/icons/play.svg';
+    icon.setAttribute('alt', 'start');
   }
 }
 
 function getData() {
-  let array = [];
-  document.querySelectorAll("audio").forEach((audio) => {
+  const array = [];
+  document.querySelectorAll('audio').forEach((audio) => {
     array.push({
       audio: audio.src,
       word: audio.dataset.word.toLocaleLowerCase(),
@@ -141,22 +141,22 @@ function getData() {
 }
 
 function checkStarCount() {
-  let starsLength = document.querySelectorAll(".star");
+  const starsLength = document.querySelectorAll('.star');
   if (starsLength.length > 9) {
-    const firstStar = document.querySelector(".star");
+    const firstStar = document.querySelector('.star');
     const parent = firstStar.parentNode;
     parent.removeChild(firstStar);
   }
 }
 
-function showGameResult(audioSrc, imgSrc, imgClass, wrapper, text = "") {
-  let audio = new Audio();
+function showGameResult(audioSrc, imgSrc, imgClass, wrapper, text = '') {
+  const audio = new Audio();
   audio.src = audioSrc;
   audio.play();
   if (text) {
     document.querySelector(wrapper).innerHTML = text;
   }
-  let img = document.createElement("img");
+  const img = document.createElement('img');
   img.classList.add(imgClass);
   img.src = imgSrc;
   img.alt = imgClass;
@@ -166,8 +166,8 @@ function showGameResult(audioSrc, imgSrc, imgClass, wrapper, text = "") {
 function countPercent() {
   for (let key in statistic) {
     if (statistic[key].incorrect != 0) {
-      let res = statistic[key].incorrect / statistic[key].correct;
-      let percent = Math.round(res * 100);
+      const res = statistic[key].incorrect / statistic[key].correct;
+      const percent = Math.round(res * 100);
       if (percent > 100) {
         statistic[key].percent = 100;
       } else {

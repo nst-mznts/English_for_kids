@@ -1,37 +1,38 @@
-export class GridView {
+export default class GridView {
   constructor(attribute, stat) {
     this.attribute = attribute;
     this.stat = stat;
   }
+
   // Method for show GridViewTable
   render() {
-    let wrapper = document.querySelector(".card-wrapper");
+    const wrapper = document.querySelector('.card-wrapper');
     let numberCounter = 1;
     // Create table frame
-    let table = this.createDomNode("table", wrapper, "statistic-table");
-    table.id = "table";
-    let thead = this.createDomNode("thead", table);
-    let tbody = this.createDomNode("tbody", table);
-    let row = this.createDomNode("tr", thead);
+    const table = this.createDomNode('table', wrapper, 'statistic-table');
+    table.id = 'table';
+    const thead = this.createDomNode('thead', table);
+    const tbody = this.createDomNode('tbody', table);
+    const row = this.createDomNode('tr', thead);
     // Create content for table headers
     this.attribute.forEach((element, index) => {
-      let tableHeader = document.createElement("th");
+      const tableHeader = document.createElement('th');
       tableHeader.id = index;
       if (index === 4) {
-        this.showHeadersWithIcons(tableHeader, "train-icon", element);
+        this.showHeadersWithIcons(tableHeader, 'train-icon', element);
       } else if (index === 5) {
-        this.showHeadersWithIcons(tableHeader, "correct-icon", element);
+        this.showHeadersWithIcons(tableHeader, 'correct-icon', element);
       } else if (index === 6) {
-        this.showHeadersWithIcons(tableHeader, "wrong-icon", element);
+        this.showHeadersWithIcons(tableHeader, 'wrong-icon', element);
       } else {
-        let thTitle = this.createDomNode("p", tableHeader, "th-title");
+        const thTitle = this.createDomNode('p', tableHeader, 'th-title');
         thTitle.innerText = element;
       }
       row.appendChild(tableHeader);
     });
     // Create content for table body
     for (let key in this.stat) {
-      let args = [
+      const args = [
         numberCounter,
         key,
         this.stat[key].translation,
@@ -41,9 +42,9 @@ export class GridView {
         this.stat[key].incorrect,
         this.stat[key].percent,
       ];
-      let tableRow = this.createDomNode("tr", tbody);
+      const tableRow = this.createDomNode('tr', tbody);
       args.forEach((elem) => {
-        let tableData = this.makeTD(elem);
+        const tableData = this.makeTD(elem);
         tableRow.appendChild(tableData);
       });
       numberCounter += 1;
@@ -60,35 +61,35 @@ export class GridView {
       shouldSwitch,
       dir,
       switchcount = 0;
-    table = document.querySelector("#table");
+    table = document.querySelector('#table');
     switching = true;
-    dir = "asc";
+    dir = 'asc';
     while (switching) {
       switching = false;
       rows = table.rows;
       for (i = 1; i < rows.length - 1; i++) {
         shouldSwitch = false;
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        if (dir == "asc") {
-          if (x.classList.contains("number")) {
+        x = rows[i].getElementsByTagName('TD')[n];
+        y = rows[i + 1].getElementsByTagName('TD')[n];
+        if (dir == 'asc') {
+          if (x.classList.contains('number')) {
             if (Number(x.innerHTML) > Number(y.innerHTML)) {
               shouldSwitch = true;
               break;
             }
-          } else if (x.classList.contains("string")) {
+          } else if (x.classList.contains('string')) {
             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
               break;
             }
           }
-        } else if (dir == "desc") {
-          if (x.classList.contains("number")) {
+        } else if (dir == 'desc') {
+          if (x.classList.contains('number')) {
             if (Number(x.innerHTML) < Number(y.innerHTML)) {
               shouldSwitch = true;
               break;
             }
-          } else if (x.classList.contains("string")) {
+          } else if (x.classList.contains('string')) {
             if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
               break;
@@ -101,8 +102,8 @@ export class GridView {
         switching = true;
         switchcount++;
       } else {
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
+        if (switchcount == 0 && dir == 'asc') {
+          dir = 'desc';
           switching = true;
         }
       }
@@ -121,33 +122,34 @@ export class GridView {
   }
 
   showHeadersWithIcons(tableHeader, iconClass, content) {
-    let thWrapper = this.createDomNode("div", tableHeader, "th-wrapper");
-    let thIcon = this.createDomNode("img", thWrapper, "th-icon", iconClass);
-    if (iconClass == "train-icon") {
-      thIcon.src = "./src/assets/img/icons/train-icon.svg";
-      thIcon.alt = "train-icon";
-    } else if (iconClass == "correct-icon") {
-      thIcon.src = "./src/assets/img/icons/correct-icon.svg";
-      thIcon.alt = "correct-icon";
-    } else if (iconClass == "wrong-icon") {
-      thIcon.src = "./src/assets/img/icons/wrong-icon.svg";
-      thIcon.alt = "wrong-icon";
+    const thWrapper = this.createDomNode('div', tableHeader, 'th-wrapper');
+    const thIcon = this.createDomNode('img', thWrapper, 'th-icon', iconClass);
+    if (iconClass == 'train-icon') {
+      thIcon.src = './src/assets/img/icons/train-icon.svg';
+      thIcon.alt = 'train-icon';
+    } else if (iconClass == 'correct-icon') {
+      thIcon.src = './src/assets/img/icons/correct-icon.svg';
+      thIcon.alt = 'correct-icon';
+    } else if (iconClass == 'wrong-icon') {
+      thIcon.src = './src/assets/img/icons/wrong-icon.svg';
+      thIcon.alt = 'wrong-icon';
     }
-    let thTitle = this.createDomNode(
-      "p",
+    const thTitle = this.createDomNode(
+      'p',
       thWrapper,
-      "th-title",
-      "th-title-hidden"
+      'th-title',
+      'th-title-hidden'
     );
     thTitle.innerText = content;
   }
+
   // Create table data
   makeTD(value) {
-    let td = document.createElement("td");
-    if (typeof value === "number") {
-      td.classList.add("number");
-    } else if (typeof value === "string") {
-      td.classList.add("string");
+    let td = document.createElement('td');
+    if (typeof value === 'number') {
+      td.classList.add('number');
+    } else if (typeof value === 'string') {
+      td.classList.add('string');
     }
     td.innerHTML = value;
     return td;

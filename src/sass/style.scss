@@ -1,19 +1,19 @@
 // Abstract
-@import "abstract/constants";
-@import "abstract/placeholders";
-@import "abstract/mixins";
+@import 'abstract/constants';
+@import 'abstract/placeholders';
+@import 'abstract/mixins';
 
 // Base
-@import "base/base";
-@import "base/buttons";
-@import "base/icons";
+@import 'base/base';
+@import 'base/buttons';
+@import 'base/icons';
 
 // Layouts
-@import "layouts/wrapper";
+@import 'layouts/wrapper';
 
 // Component
-@import "component/card";
-@import "component/navigation";
-@import "component/toggle";
-@import "component/burger";
-@import "component/table";
+@import 'component/card';
+@import 'component/navigation';
+@import 'component/toggle';
+@import 'component/burger';
+@import 'component/table';
