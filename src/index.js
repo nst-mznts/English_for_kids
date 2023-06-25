@@ -252,7 +252,6 @@ function repeatDifficultWords() {
     img.src = "./src/assets/img/icons/emojis_smiling-face-with-sunglasses.svg";
     img.alt = "emojis_smiling-face-with-sunglasses";
     resultWrapper.append(img);
-    resultWrapper.style.marginBottom = "400px";
   }
 }
 

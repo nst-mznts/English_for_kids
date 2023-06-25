@@ -99,12 +99,11 @@
     @include columns(column, center, center);
     row-gap: 40px;
 	width: 60%;
-    background-color: $color-card;
+    background-color: $color-background;
     @include font(normal, 400, 3rem, $color-text);
     margin: 0 auto;
     padding: 20px;
     @include media-mobile {
-        width: 60%;
         @include font(normal, 400, 2rem, $color-text);
     };
 }
