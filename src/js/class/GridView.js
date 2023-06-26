@@ -52,26 +52,22 @@ export default class GridView {
   }
 
   static sortTable(n) {
-    let table,
-      rows,
-      switching,
-      i,
-      x,
-      y,
-      shouldSwitch,
-      dir,
-      switchcount = 0;
-    table = document.querySelector('#table');
-    switching = true;
+    let rows;
+    let i;
+    let shouldSwitch;
+    let dir;
+    let switchcount = 0;
+    const table = document.querySelector('#table');
+    let switching = true;
     dir = 'asc';
     while (switching) {
       switching = false;
       rows = table.rows;
       for (i = 1; i < rows.length - 1; i++) {
         shouldSwitch = false;
-        x = rows[i].getElementsByTagName('TD')[n];
-        y = rows[i + 1].getElementsByTagName('TD')[n];
-        if (dir == 'asc') {
+        const x = rows[i].getElementsByTagName('TD')[n];
+        const y = rows[i + 1].getElementsByTagName('TD')[n];
+        if (dir === 'asc') {
           if (x.classList.contains('number')) {
             if (Number(x.innerHTML) > Number(y.innerHTML)) {
               shouldSwitch = true;
@@ -83,7 +79,7 @@ export default class GridView {
               break;
             }
           }
-        } else if (dir == 'desc') {
+        } else if (dir === 'desc') {
           if (x.classList.contains('number')) {
             if (Number(x.innerHTML) < Number(y.innerHTML)) {
               shouldSwitch = true;
@@ -102,7 +98,7 @@ export default class GridView {
         switching = true;
         switchcount++;
       } else {
-        if (switchcount == 0 && dir == 'asc') {
+        if (switchcount === 0 && dir === 'asc') {
           dir = 'desc';
           switching = true;
         }
