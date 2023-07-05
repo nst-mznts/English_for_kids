@@ -26,17 +26,6 @@ module.exports = {
           'sass-loader',
         ],
       },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.svg$/,
-        type: 'asset/resource',
-        generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]'),
-        },
-      },
     ],
   },
   plugins: [

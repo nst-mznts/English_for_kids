@@ -1,6 +1,6 @@
 import cards from '../js/cards.js';
-import { arrayOfIndex, check,changeFooterStyle } from './toggle.js';
-import { statistic, saveStatisticToLS, saveStatisticToLS, checkStatistic, getCardsWrapper, loadCards } from '../index.js';
+import { arrayOfIndex, check, changeFooterStyle } from './toggle.js';
+import { statistic, saveStatisticToLS, checkStatistic, getCardsWrapper, loadCards } from '../index.js';
 
 export function shuffle(length) {
   const array = Array.from({ length }, (_, index) => index);
