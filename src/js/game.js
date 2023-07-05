@@ -100,9 +100,7 @@ export function EndTheGame() {
         wrongAnswers.length
     );
   }
-  setTimeout(() => {
-    loadCards(cards[0]);
-  }, 4000);
+  setTimeout(toMainPage, 4000);
   currentIndex = 0;
   wrongAnswers = [];
   countPercent();
@@ -152,6 +150,16 @@ function showGameResult(audioSrc, imgSrc, imgClass, wrapper, text = '') {
   img.src = imgSrc;
   img.alt = imgClass;
   document.querySelector(wrapper).append(img);
+}
+
+function toMainPage() {
+  const array = document.querySelectorAll('a');
+  array.forEach((link) => {
+    link.classList.remove('active');
+  });
+  document.querySelector('.main-link').classList.add('active');
+  document.querySelector('.category-title').innerText = 'Main';
+  loadCards();
 }
 
 function countPercent() {
