@@ -29,16 +29,16 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html'),
-      filename: 'index.html',
-    }),
     new FileManagerPlugin({
       events: {
         onStart: {
           delete: ['dist'],
         },
       },
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'index.html'),
+      filename: 'index.html',
     }),
     new MiniCssExtractPlugin({
       filename: 'style.css',
