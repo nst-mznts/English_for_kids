@@ -3,10 +3,7 @@ import { arrayOfIndex, check,changeFooterStyle } from './toggle.js';
 import { statistic, saveStatisticToLS, saveStatisticToLS, checkStatistic, getCardsWrapper, loadCards } from '../index.js';
 
 export function shuffle(length) {
-  const array = [];
-  for (let i = 0; i < length; i++) {
-    array.push(i);
-  }
+  const array = Array.from({ length }, (_, index) => index);
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
