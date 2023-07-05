@@ -1,12 +1,6 @@
 import cards from '../js/cards.js';
-import { arrayOfIndex } from './toggle.js';
-import { check } from './toggle.js';
-import { changeFooterStyle } from './toggle.js';
-import { statistic } from '../index.js';
-import { saveStatisticToLS } from '../index.js';
-import { checkStatistic } from '../index.js';
-import { getCardsWrapper } from '../index.js';
-import { loadCards } from '../index.js';
+import { arrayOfIndex, check,changeFooterStyle } from './toggle.js';
+import { statistic, saveStatisticToLS, saveStatisticToLS, checkStatistic, getCardsWrapper, loadCards } from '../index.js';
 
 export function shuffle(length) {
   const array = [];
