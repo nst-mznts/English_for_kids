@@ -121,13 +121,13 @@ export default class GridView {
     const thWrapper = this.createDomNode('div', tableHeader, 'th-wrapper');
     const thIcon = this.createDomNode('img', thWrapper, 'th-icon', iconClass);
     if (iconClass == 'train-icon') {
-      thIcon.src = './src/assets/img/icons/train-icon.svg';
+      thIcon.src = './assets/img/icons/train-icon.svg';
       thIcon.alt = 'train-icon';
     } else if (iconClass == 'correct-icon') {
-      thIcon.src = './src/assets/img/icons/correct-icon.svg';
+      thIcon.src = './assets/img/icons/correct-icon.svg';
       thIcon.alt = 'correct-icon';
     } else if (iconClass == 'wrong-icon') {
-      thIcon.src = './src/assets/img/icons/wrong-icon.svg';
+      thIcon.src = './assets/img/icons/wrong-icon.svg';
       thIcon.alt = 'wrong-icon';
     }
     const thTitle = this.createDomNode(

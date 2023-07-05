@@ -2,9 +2,8 @@ import cards from './js/cards.js';
 import GridView from './js/class/GridView.js';
 import WordCards from './js/class/WordCards.js';
 import CategoryCards from './js/class/CategoryCards.js';
-import { check } from './js/toggle.js';
+import { check, addGameMode } from './js/toggle.js';
 import { StartGame } from './js/game.js';
-import { addGameMode } from './js/toggle.js';
 import './sass/style.scss';
 export let statistic = {};
 
@@ -38,7 +37,7 @@ window.onload = function () {
 export function loadCards(data = []) {
   document.querySelector('.stars-wrapper').innerHTML = '';
   const cardWrapper = getCardsWrapper();
-  if (data.length == 0) {
+  if (data.length === 0) {
     data = getArray();
   }
   generateCards(data).forEach((card) => {
@@ -250,7 +249,7 @@ function repeatDifficultWords() {
       'result-wrapper'
     );
     const img = document.createElement('img');
-    img.src = './src/assets/img/icons/emojis_smiling-face-with-sunglasses.svg';
+    img.src = './assets/img/icons/emojis_smiling-face-with-sunglasses.svg';
     img.alt = 'emojis_smiling-face-with-sunglasses';
     resultWrapper.append(img);
   }

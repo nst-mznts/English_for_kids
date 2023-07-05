@@ -43,8 +43,8 @@ export function handleCardClick(event) {
       clickedImg.style.opacity = '0.5';
       clickedImg.removeEventListener('click', handleCardClick);
       showGameResult(
-        './src/assets/audio/correct.mp3',
-        './src/assets/img/icons/star-win.svg',
+        './assets/audio/correct.mp3',
+        './assets/img/icons/star-win.svg',
         'star',
         '.stars-wrapper'
       );
@@ -60,8 +60,8 @@ export function handleCardClick(event) {
       statistic[array[currentIndex].word].incorrect += 1;
       wrongAnswers.push(array[arrayOfIndex[currentIndex]].word);
       showGameResult(
-        './src/assets/audio/error.mp3',
-        './src/assets/img/icons/star.svg',
+        './assets/audio/error.mp3',
+        './assets/img/icons/star.svg',
         'star',
         '.stars-wrapper'
       );
@@ -84,16 +84,16 @@ export function EndTheGame() {
   wrapper.appendChild(resultWrapper);
   if (wrongAnswers.length === 0) {
     showGameResult(
-      './src/assets/audio/success.mp3',
-      './src/assets/img/icons/success.jpg',
+      './assets/audio/success.mp3',
+      './assets/img/icons/success.jpg',
       'result-img',
       '.result-wrapper',
       'YOU WIN!'
     );
   } else {
     showGameResult(
-      './src/assets/audio/failure.mp3',
-      './src/assets/img/icons/failure.jpg',
+      './assets/audio/failure.mp3',
+      './assets/img/icons/failure.jpg',
       'result-img',
       '.result-wrapper',
       'KEEP TRYING! NEXT TIME YOU WILL WIN!\nWRONG ANSWERS: ' +
@@ -112,10 +112,10 @@ export function EndTheGame() {
 function changeStartIcon(status) {
   const icon = document.querySelector('.start-icon');
   if (status) {
-    icon.src = './src/assets/img/icons/repeat.svg';
+    icon.src = './assets/img/icons/repeat.svg';
     icon.setAttribute('alt', 'repeat');
   } else {
-    icon.src = './src/assets/img/icons/play.svg';
+    icon.src = './assets/img/icons/play.svg';
     icon.setAttribute('alt', 'start');
   }
 }

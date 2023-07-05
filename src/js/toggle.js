@@ -1,6 +1,5 @@
 import { playAudio } from '../index.js';
-import { handleCardClick } from './game.js';
-import { shuffle } from './game.js';
+import { handleCardClick, shuffle } from './game.js';
 
 export let arrayOfIndex = [];
 
