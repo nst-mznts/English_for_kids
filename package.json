@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --config webpack.config.js",
-    "prod": "webpack --mode production --config webpack.config.js",
-    "style": "sass --watch src/sass/style.scss src/sass/style.css"
+    "prod": "webpack --mode production --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
