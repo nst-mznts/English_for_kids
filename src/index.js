@@ -315,9 +315,9 @@ export function saveStatisticToLS() {
 
 function createStatistic() {
   for (let i = 1; i < cards.length; i++) {
-    let category = cards[0][i - 1];
+    const category = cards[0][i - 1];
     for (let j = 0; j < cards[i].length; j++) {
-      if (statistic[cards[i][j].word] == undefined) {
+      if (statistic[cards[i][j].word] === undefined) {
         statistic[cards[i][j].word] = {
           translation: cards[i][j].translation,
           category: category,
@@ -328,6 +328,9 @@ function createStatistic() {
           img: cards[i][j].image,
           audioSrc: cards[i][j].audioSrc,
         };
+      } else {
+        statistic[cards[i][j].word].img = cards[i][j].image;
+        statistic[cards[i][j].word].audioSrc = cards[i][j].audioSrc;
       }
     }
     saveStatisticToLS();
