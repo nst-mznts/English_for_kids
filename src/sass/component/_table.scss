@@ -27,6 +27,9 @@ th {
     @include media-mobile {
         @include font(normal, 400, 1.4rem, $color-card);
     };
+    @include media-mobilesmall {
+        @include font(normal, 400, 1.2rem, $color-card);
+    };
 }
 
 .th-title-hidden {
@@ -55,7 +58,7 @@ td {
         padding: 3px;
     };
     @include media-mobilesmall {
-        @include font(normal, 400, 1.2rem, $color-text);
+        @include font(normal, 400, 1.1rem, $color-text);
         padding: 1.5px;
     };
 }
